@@ -195,7 +195,7 @@ t_list1 *mock_lst()
 	tmp->fd_out = -1;
 	tmp->cmd = malloc(sizeof(char *) * 3);
 	tmp->cmd[0] = strdup("wc");
-	tmp->cmd[1] = strdup("-sdf");
+	tmp->cmd[1] = strdup("-l");
 	tmp->cmd[2] = NULL;
 	tmp->prev_pipe = -1;
 	tmp->next = NULL;
