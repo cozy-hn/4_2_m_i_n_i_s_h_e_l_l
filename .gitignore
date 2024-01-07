@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 libft/
+=======
+main.c
+Makefile
+minishell_util.c
+minishell.h
+readme.md
+>>>>>>> execute dir
