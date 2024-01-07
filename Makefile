@@ -6,7 +6,7 @@
 #    By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 16:32:40 by jiko              #+#    #+#              #
-#    Updated: 2024/01/07 01:24:08 by jiko             ###   ########.fr        #
+#    Updated: 2024/01/07 22:51:21 by jiko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CFLAGS		= -Wall -Wextra -Werror
 LIBFTFLAG	= -Llibft -lft
 LFLAGS		= -lreadline
 RMF			= rm -f
-BASE		= main minishell_util wlibft
+BASE		= main minishell_util wlibft token_checker_1 token_checker_2 token_checker_3
 SRCS		= $(addsuffix .c, $(BASE))
 OBJS		= $(addsuffix .o, $(BASE))
 NAME		= minishell
