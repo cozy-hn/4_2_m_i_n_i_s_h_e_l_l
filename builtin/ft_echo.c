@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:15:16 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/04 02:40:20 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/07 22:18:58 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ int	check_option(char **args)
 			while (args[i][++j])
 			{
 				if (args[i][j] != 'n')
-					return (NO_OPTION);
+					return (0);
 			}
-			return (OPTION);
+			return (1);
 		}
 		else
-			return (NO_OPTION);
+			return (0);
 	}
-	return (NO_OPTION);
+	return (0);
 }
 
 int	ft_echo(char **args)
@@ -45,9 +45,9 @@ int	ft_echo(char **args)
 	if (args[1] == NULL)
 	{
 		write(1, "\n", 1);
-		return (1);
+		return (0);
 	}
-	option_flag = check_option(args);
+	idx = check_option(args);
 	if (option_flag == OPTION)
 		idx = 1;
 	else
@@ -60,7 +60,7 @@ int	ft_echo(char **args)
 	}
 	if (option_flag == NO_OPTION)
 		write(1, "\n", 1);
-	return (1);
+	return (0);
 }
 
 // int main(int argc, char **argv)
