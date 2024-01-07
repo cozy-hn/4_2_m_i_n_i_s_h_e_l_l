@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/07 02:26:58 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/07 22:41:50 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ char	*set_word(char *line, int *i)
 		word = ft_strjoin_char(word, line[*i]);
 		(*i)++;
 	}
+	if (dquote || squote)
+	{
+		printf("minishell: syntax error(quote)\n");
+		exit(1);
+	}
 	return (word);
 }
 
@@ -81,11 +86,9 @@ void	tokenizer(char *line, t_token **token)
 	remove_space(line, &i);
 	while (line[i])
 	{	
-		new = wft_calloc(1, sizeof(t_token));
-		new->word = NULL;
 		if (remove_space(line, &i))
 			continue ;
-		printf("i: %d\n", i);
+		new = wft_calloc(1, sizeof(t_token));
 		if (is_meta(&line[i]))
 			new->type = set_type(line, &i);
 		else
@@ -93,8 +96,6 @@ void	tokenizer(char *line, t_token **token)
 			new->type = T_WORD;
 			new->word = set_word(line, &i);
 		}
-		if (line[i] == '\0')
-			i++;
 		wft_lstadd_back(token, new);
 	}
 }
@@ -128,6 +129,7 @@ int	main(int argc, char **argv, char **env)
 		if (strcmp(line, "exit") == 0)
 			break ;
 		free(line);
+		free_token(token);
 	}
 	free(line);
 	free_token(token);
