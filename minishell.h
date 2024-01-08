@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/07 02:26:27 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/08 19:53:03 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,13 @@
 # include <readline/history.h>
 # include <string.h> // for tmp
 # include "./libft/libft.h"
-// # include <signal.h>
-// # include <unistd.h>
-// # include <sys/types.h>
-// # include <sys/wait.h>
-// # include <sys/stat.h>
-// # include <fcntl.h>
-// # include <dirent.h>
-// # include <errno.h>	
+# include <termios.h>
+# include <signal.h>
+# include <sys/wait.h>
+
+# define SHE 0
+# define DFL 1
+# define IGN 2
 
 typedef enum type
 {
@@ -40,6 +39,10 @@ typedef enum type
 	T_R_D_REDIR = 9,
 	T_WORD = 10,
 	T_NEWLINE = 11,
+	BNF_LIST = 12,
+	BNF_PIPELINE = 13,
+	BNF_COMMAND = 14,
+	BNF_COMMAND_PART = 15
 }	t_type;
 
 typedef struct s_token
@@ -49,10 +52,18 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_cmd_tree
+{
+	t_token				*token;
+	t_type				bnf_type;
+	struct s_cmd_tree	*left;
+	struct s_cmd_tree	*right;
+}	t_cmd_tree;
+
 int		remove_space(char *line, int *i);
 int		is_space(char c);
 int		is_pipe(char *line, int *i);
-int 	is_meta(char *line);
+int		is_meta(char *line);
 int		is_or(char *line, int *i);
 int		is_and(char *line, int *i);
 int		is_l_redir(char *line, int *i);
@@ -64,7 +75,18 @@ int		is_r_par(char *line, int *i);
 void	wft_lstadd_back(t_token **lst, t_token *new);
 void	*wft_calloc(size_t count, size_t size);
 char	*ft_strjoin_char(char const *s1, char const s2);
-void 	free_token(t_token *token);
+void	free_token(t_token *token);
+int		set_type(char *line, int *i);
+int		word_checker(char *line, int dquote, int squote);
+char	*set_word(char *line, int *i);
+void	tokenizer(char *line, t_token **token);
+void	print_token(t_token *token);
+void	parser(t_cmd_tree **head, t_token **token);
+int		cmd_list(t_cmd_tree **head, t_token **now);
+int		cmd_pipeline(t_cmd_tree **head, t_token **now);
+int		cmd_command(t_cmd_tree **head, t_token **now);
+int		cmd_command_part(t_cmd_tree **head, t_token **now);
 
+int	test_tr_print_tree(t_cmd_tree *root);
 
 #endif

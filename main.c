@@ -6,133 +6,114 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/07 22:41:50 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/08 23:00:34 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_code;
 
 void	check_leak(void)
 {
 	system("leaks --list -- minishell");
 }
 
-int	set_type(char *line, int *i)
+void	signal_handler(int signo)
 {
-	if (is_or(line, i))
-		return (T_OR);
-	if (is_pipe(line, i))
-		return (T_PIPE);
-	if (is_and(line, i))
-		return (T_AND);
-	if (is_l_d_redir(line, i))
-		return (T_L_D_REDIR);
-	if (is_r_d_redir(line, i))
-		return (T_R_D_REDIR);
-	if (is_l_redir(line, i))
-		return (T_L_REDIR);
-	if (is_r_redir(line, i))
-		return (T_R_REDIR);
-	if (is_l_par(line, i))
-		return (T_L_PAR);
-	if (is_r_par(line, i))
-		return (T_R_PAR);
-	return (0);
-}
-
-int	word_checker(char *line, int dquote, int squote)
-{
-	if (dquote || squote)
-		return (1);
-	if (is_space(line[0]))
-		return (0);
-	if (is_meta(line))
-		return (0);
-	return (1);
-}
-
-char	*set_word(char *line, int *i)
-{
-	int		dquote;
-	int		squote;
-	char	*word;
-
-	dquote = 0;
-	squote = 0;
-	word = wft_calloc(1, sizeof(char));
-	while (line[*i] && word_checker(&line[*i], dquote, squote))
+	if (signo == SIGINT)
 	{
-		if (line[*i] == '"' && !squote)
-			dquote = !dquote;
-		else if (line[*i] == '\'' && !dquote)
-			squote = !squote;
-		word = ft_strjoin_char(word, line[*i]);
-		(*i)++;
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	if (dquote || squote)
+	if (signo == SIGQUIT)
 	{
-		printf("minishell: syntax error(quote)\n");
-		exit(1);
+		rl_on_new_line();
+		rl_redisplay();
 	}
-	return (word);
 }
 
-void	tokenizer(char *line, t_token **token)
+void	set_signal(int sig_int, int sig_quit)
 {
-	int		i;
-	t_token	*new;
-
-	i = 0;
-	remove_space(line, &i);
-	while (line[i])
-	{	
-		if (remove_space(line, &i))
-			continue ;
-		new = wft_calloc(1, sizeof(t_token));
-		if (is_meta(&line[i]))
-			new->type = set_type(line, &i);
-		else
-		{
-			new->type = T_WORD;
-			new->word = set_word(line, &i);
-		}
-		wft_lstadd_back(token, new);
-	}
+	if (sig_int == IGN)
+		signal(SIGINT, SIG_IGN);
+	if (sig_int == DFL)
+		signal(SIGINT, SIG_DFL);
+	if (sig_int == SHE)
+		signal(SIGINT, signal_handler);
+	if (sig_quit == IGN)
+		signal(SIGQUIT, SIG_IGN);
+	if (sig_quit == DFL)
+		signal(SIGQUIT, SIG_DFL);
+	if (sig_quit == SHE)
+		signal(SIGQUIT, signal_handler);
 }
 
-void	print_token(t_token *token)
+void	main_init(int argc, char **argv)
 {
-	while (token)
-	{
-		printf("type: %d\n", token->type);
-		printf("word: %s\n", token->word);
-		printf("==========\n");
-		token = token->next;
-	}
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	set_signal(SHE, SHE);
+	(void)argc;
+	(void)argv;
 }
+
+// void	wait_child(void)
+// {
+// 	int		status;
+// 	int		signo;
+// 	int		i;
+
+// 	i = 0;
+// 	while (wait(&status) != -1)
+// 	{
+// 		if (WIFSIGNALED(status))
+// 		{
+// 			signo = WTERMSIG(status);
+// 			if (signo == SIGINT && i++ == 0)
+// 				ft_putstr_fd("^C\n", STDERR_FILENO);
+// 			else if (signo == SIGQUIT && i++ == 0)
+// 				ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
+// 			g_exit_code = 128 + signo;
+// 		}
+// 		else
+// 			g_exit_code = WEXITSTATUS(status);
+// 	}
+// }
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*line;
-	t_token	*token;
+	char			*line;
+	t_token			*token;
+	t_cmd_tree		*cmd_tree;
+	struct termios	term;
 
+	tcgetattr(STDIN_FILENO, &term);
+	main_init(argc, argv);
 	while (1)
 	{
 		token = NULL;
-		(void)argc;
-		(void)argv;
+		cmd_tree = NULL;
 		(void)env;
 		line = readline("minishell$ ");
 		add_history(line);
-		tokenizer(line, &token);
-		print_token(token);
 		if (strcmp(line, "exit") == 0)
 			break ;
+		tokenizer(line, &token);
 		free(line);
+		parser(&cmd_tree, &token);
+		print_token(token);
+		test_tr_print_tree(cmd_tree);
 		free_token(token);
 	}
 	free(line);
 	free_token(token);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	atexit(check_leak);
 	return (0);
 }

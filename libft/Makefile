@@ -34,6 +34,6 @@ pclean:
 	@$(RMF) $(NAME)
 
 re: fclean
-	make
+	@make
 
 .PHONY : all clean fclean re
