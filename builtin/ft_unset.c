@@ -6,37 +6,39 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 04:25:00 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/06 20:07:31 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/08 21:23:54 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include <stdio.h>
 
-int	unset_env(char ***env, int env_idx)
+int	unset_env(t_arg *arg, int env_idx)
 {
+	t_env	*tmp;
+	t_env	*tmp2;
 	int		i;
-	int		j;
-	char	**new_dup_env;
 
 	i = 0;
-	j = 0;
-	while ((*env)[i])
-		i++;
-	new_dup_env = (char **)malloc(sizeof(char *) * i);
-	i = 0;
-	while ((*env)[i])
+	tmp = arg->env;
+	if (env_idx == 0)
 	{
-		if (i != env_idx)
-		{
-			new_dup_env[j] = ft_strdup((*env)[i]);
-			j++;
-		}
+		arg->env = tmp->next;
+		free(tmp->key);
+		free(tmp->value);
+		free(tmp);
+		return (0);
+	}
+	while (i < env_idx - 1)
+	{
+		tmp = tmp->next;
 		i++;
 	}
-	new_dup_env[j] = NULL;
-	ft_free_arr(*env);
-	*env = new_dup_env;
+	tmp2 = tmp->next;
+	tmp->next = tmp2->next;
+	free(tmp2->key);
+	free(tmp2->value);
+	free(tmp2);
 	return (0);
 }
 
@@ -64,53 +66,65 @@ int	unset_check_str(char *str, int *exit_status)
 	return (1);
 }
 
-int	ft_unset(char ***env, char **str)
+int	ft_unset(t_arg *arg, char **cmd)
 {
 	int		i;
 	int		j;
 	int		exit_status;
-	char	**dup_env;
+	t_env	*tmp;
 
-	i = 0;
-	if (!str[1])
+	if (!cmd[1])
 		return (0);
-	dup_env = ft_dup_env(*env);
-	while (str[++i])
+	i = 0;
+	exit_status = 0;
+	while (cmd[++i])
 	{
-		j = -1;
-		if (!unset_check_str(str[i], &exit_status))
-			continue ;
-		while (dup_env[++j])
+		if (unset_check_str(cmd[i], &exit_status))
 		{
-			if (same_env(dup_env[j], str[i]))
+			j = 0;
+			tmp = arg->env;
+			while (tmp)
 			{
-				unset_env(&dup_env, j);
-				break ;
+				if (ft_strncmp(tmp->key, cmd[i], ft_strlen(cmd[i])) == 0
+					&& ft_strlen(tmp->key) == ft_strlen(cmd[i]))
+				{
+					unset_env(arg, j);
+					break ;
+				}
+				tmp = tmp->next;
+				j++;
 			}
 		}
 	}
-	*env = dup_env;
 	return (exit_status);
 }
 
 int main(int argc, char** argv, char **env)
 {
 	argc = 0;
+	t_arg arg;
+	t_lst lst;
 
-	char **arr = (char **)malloc(sizeof(char *) * 10);
-	arr[0] = ft_strdup("command");
-	arr[1] = ft_strdup("a=1");
-	arr[2] = ft_strdup("b=2");
-	arr[3] = ft_strdup("c=3");
-	arr[4] = ft_strdup("d=4");
-	arr[5] = ft_strdup("e=5");
-	arr[6] = ft_strdup("f=6");
-	arr[7] = ft_strdup("g=7");
-	arr[8] = ft_strdup("h=8");
-	arr[9] = NULL;
-	ft_export(&env, arr);
-	ft_unset(&env, argv);
-	// ft_print_env(env);
-	// system("leaks a.out");
-	return 0;
+	char **export_test = (char **)malloc(sizeof(char *) * 4);
+	export_test[0] = ft_strdup("export");
+	export_test[1] = ft_strdup("test=123");
+	export_test[2] = ft_strdup("test2=456");
+	export_test[3] = NULL;
+
+	make_env_lst(&arg, env);
+	ft_export(&arg, export_test);
+	// char **arr = ft_sort_env(env_lst_to_arr(arg.env));
+	// ft_print_env(arr);
+	
+//unset test
+	char **unset_test = (char **)malloc(sizeof(char *) * 4);
+	unset_test[0] = ft_strdup("unset");
+	unset_test[1] = ft_strdup("test");
+	unset_test[2] = ft_strdup("TEST3");
+	unset_test[3] = NULL;
+
+	lst.cmd = argv;
+	ft_unset(&arg, lst.cmd);
+	char **arr = ft_sort_env(env_lst_to_arr(arg.env));
+	ft_print_env(arr);
 }

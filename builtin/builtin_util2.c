@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 03:09:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/06 20:20:33 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/08 20:09:54 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@ int	ft_print_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-		ft_putstr_fd(env[i], 1);
-		write(1, "\n", 1);
+		if (env[i][ft_strlen(env[i]) - 1] == '=')
+		{
+			ft_putstr_fd(env[i], 1);
+			ft_putendl_fd("\"\"", 1);
+		}
+		else
+			ft_putendl_fd(env[i], 1);
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 char	**ft_sort_env(char **env)

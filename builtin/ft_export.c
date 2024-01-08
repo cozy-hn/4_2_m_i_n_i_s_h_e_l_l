@@ -6,55 +6,66 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:46:33 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/06 20:05:07 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/08 21:52:32 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "builtin.h"
 
-int	add_env(char ***env, char *str)
+int set_env(t_arg *arg, char *key, char *value)
 {
-	int		i;
+	t_env	*tmp;
+	t_env	*new;
 
-	i = 0;
-	while ((*env)[i])
+	tmp = arg->env;
+	while (tmp)
 	{
-		if (same_env((*env)[i], str))
+		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0)
 		{
-			if (has_char(str, '='))
+			if (value != NULL)
 			{
-				modify_env(&str);
-				(*env)[i] = ft_strdup(str);
+				free(key);
+				free(tmp->value);
+				tmp->value = value;
 			}
 			return (0);
 		}
-		i++;
+		tmp = tmp->next;
 	}
-	*env = set_env(*env, str);
-	return (1);
+	new = (t_env *)malloc(sizeof(t_env));
+	new->key = key;
+	new->value = value;
+	new->next = arg->env;
+	arg->env = new;
+	return (0);
 }
 
-char	**set_env(char **env, char *str)
+int	add_env(t_arg *arg, char *str)
 {
-	int		i;
-	char	**dup_env;
+	char	*key;
+	char	*value;
 
-	i = 0;
-	while (env[i])
-		i++;
-	dup_env = (char **)malloc(sizeof(char *) * (i + 2));
-	i = 0;
-	while (env[i])
+	if (has_char(str, '='))
 	{
-		dup_env[i] = ft_strdup(env[i]);
-		i++;
+		if (str[ft_strlen(str) - 1] == '=')
+		{
+			key = ft_strndup(str, ft_strchr(str, '='));
+			value = ft_strdup("");
+		}
+		else
+		{
+			key = ft_strndup(str, ft_strchr(str, '='));
+			value = ft_strdup(ft_strchr(str, '=') + 1);
+		}
 	}
-	ft_free_arr(env);
-	modify_env(&str);
-	dup_env[i] = ft_strdup(str);
-	dup_env[i + 1] = NULL;
-	return (dup_env);
+	else
+	{
+		key = ft_strdup(str);
+		value = 0;
+	}
+	set_env(arg, key, value);
+	return (0);
 }
 
 int	export_check_str2(char *str, int *exit_status)
@@ -81,56 +92,39 @@ int	export_check_str2(char *str, int *exit_status)
 	return (1);
 }
 
-int	export_check_str1(char **str)
+int	ft_export(t_arg *arg, char **cmd)
 {
-	int	i;
-	int	j;
-
-	i = 1;
-	j = 0;
-
-	if (str[1] == NULL)
-		return (0);
-	while (str[i])
-	{
-		j = 0;
-		while (str[i][j])
-		{
-			if (str[i][j] != ' ')
-				return (1);
-			j++;
-		}
-	}
-	return (0);
-}
-
-int	ft_export(char ***env, char **str)
-{
-	char	**dup_env;
+	char	**env_arr;
 	int		exit_status;
 	int		i;
 
-	dup_env = ft_dup_env(*env);
 	exit_status = 0;
 	i = 0;
-	if (!export_check_str1(str))
+	if (cmd[1] == NULL)
 	{
-		ft_print_env(ft_sort_env(dup_env));
-		ft_free_arr(dup_env);
+		env_arr = env_lst_to_arr(arg->env);
+		ft_print_env(ft_sort_env(env_arr));
+		ft_free_arr(env_arr);
 		return (exit_status);
 	}
-	while (str[++i])
+	while (cmd[++i])
 	{
-		if (!export_check_str2(str[i], &exit_status))
+		if (!export_check_str2(cmd[i], &exit_status))
 			continue ;
-		add_env(&dup_env, str[i]);
+		add_env(arg, cmd[i]);
 	}
-	*env = dup_env;
 	return (exit_status);
 }
 // int	main(int argc, char **argv, char **env)
 // {
-// 	(void)argc;
-// 	ft_export(&env, argv);
-// 	ft_print_env(env);
+// 	argc = 0;
+// 	t_arg arg;
+// 	t_lst lst;
+
+// 	lst.cmd = argv;
+
+// 	make_env_lst(&arg, env);
+// 	ft_export(&arg, lst->cmd);
+// 	char **arr = ft_sort_env(env_lst_to_arr(arg.env));
+// 	ft_print_env(arr);
 // }
