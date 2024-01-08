@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/08 17:50:47 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/08 19:25:14 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,32 @@ int	make_env_lst(t_arg *arg, char **env)
 	return (0);
 }
 
+char	**env_lst_to_arr(t_arg *arg)
+{
+	t_env *tmp;
+	char **ret;
+	int i;
+
+	tmp = arg->env;
+	i = 0;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	ret = (char **)malloc(sizeof(char *) * (i + 1));
+	i = -1;
+	tmp = arg->env;
+	while (tmp)
+	{
+		ret[++i] = ft_strjoin(tmp->key, "=");
+		ret[i] = ft_strjoin(ret[i], tmp->value);
+		tmp = tmp->next;
+	}
+	ret[i + 1] = NULL;
+	return (ret);
+}
+
 int main(int ac, char **av, char **env)
 {
 	t_arg arg;
@@ -84,25 +110,5 @@ int main(int ac, char **av, char **env)
 	ac = 0;
 	av = 0;
 	
-	int i = 0;
-	while (env[i])
-	{
-		printf("%s\n", env[i]);
-		i++;
-	}
 
-	make_env_lst(&arg, env);
-
-	// t_env *tmp;
-	// tmp = arg.env;
-	
-	// printf("\n");
-	// printf("\n");
-	// printf("\n");
-	// while (tmp)
-	// {
-	// 	printf("%s", tmp->key);
-	// 	printf("=%s\n", tmp->value);
-	// 	tmp = tmp->next;
-	// }
 }
