@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:46:33 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/08 20:06:20 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/08 21:07:44 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	export_check_str2(char *str, int *exit_status)
 	return (1);
 }
 
-int	ft_export(t_arg *arg, t_lst *lst)
+int	ft_export(t_arg *arg, char **cmd)
 {
 	char	**env_arr;
 	int		exit_status;
@@ -100,31 +100,31 @@ int	ft_export(t_arg *arg, t_lst *lst)
 
 	exit_status = 0;
 	i = 0;
-	if (lst->cmd[1] == NULL)
+	if (cmd[1] == NULL)
 	{
 		env_arr = env_lst_to_arr(arg->env);
 		ft_print_env(ft_sort_env(env_arr));
 		ft_free_arr(env_arr);
 		return (exit_status);
 	}
-	while (lst->cmd[++i])
+	while (cmd[++i])
 	{
-		if (!export_check_str2(lst->cmd[i], &exit_status))
+		if (!export_check_str2(cmd[i], &exit_status))
 			continue ;
-		add_env(arg, lst->cmd[i]);
+		add_env(arg, cmd[i]);
 	}
 	return (exit_status);
 }
-int	main(int argc, char **argv, char **env)
-{
-	argc = 0;
-	t_arg arg;
-	t_lst lst;
+// int	main(int argc, char **argv, char **env)
+// {
+// 	argc = 0;
+// 	t_arg arg;
+// 	t_lst lst;
 
-	lst.cmd = argv;
+// 	lst.cmd = argv;
 
-	make_env_lst(&arg, env);
-	ft_export(&arg, &lst);
-	char **arr = ft_sort_env(env_lst_to_arr(arg.env));
-	ft_print_env(arr);
-}
+// 	make_env_lst(&arg, env);
+// 	ft_export(&arg, lst->cmd);
+// 	char **arr = ft_sort_env(env_lst_to_arr(arg.env));
+// 	ft_print_env(arr);
+// }

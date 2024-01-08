@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/08 19:57:55 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/08 20:20:22 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,21 @@ char	**env_lst_to_arr(t_env *env)
 	}
 	ret[i + 1] = NULL;
 	return (ret);
+}
+
+
+char *get_env_value(t_arg *arg, char *key)
+{
+	t_env	*tmp;
+
+	tmp = arg->env;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0)
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (NULL);
 }
 
 // int main(int ac, char **av, char **env)
