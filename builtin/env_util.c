@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/08 20:20:22 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/08 21:51:40 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ char	**env_lst_to_arr(t_env *env)
 	return (ret);
 }
 
+<<<<<<< HEAD
 
 char *get_env_value(t_arg *arg, char *key)
 {
@@ -124,6 +125,8 @@ char *get_env_value(t_arg *arg, char *key)
 	return (NULL);
 }
 
+=======
+>>>>>>> export
 // int main(int ac, char **av, char **env)
 // {
 // 	t_arg arg;

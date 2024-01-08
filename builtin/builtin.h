@@ -11,7 +11,7 @@ char	**ft_dup_env(char **env);
 int		ft_env(char **env);
 int		ft_echo(char **args);
 int		ft_free_arr(char **arr);
-int		ft_print_env(char **env);
+int	ft_print_env(char **env);
 char	**ft_sort_env(char **env);
 int		has_char(char *str, char c);
 int		env_len(char *env);
