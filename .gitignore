@@ -1,3 +1,4 @@
+libft/
 main.c
 Makefile
 minishell_util.c

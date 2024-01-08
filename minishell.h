@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/07 02:26:27 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/08 21:34:28 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,28 @@ typedef struct s_token
 	char			*word;
 	struct s_token	*next;
 }	t_token;
+
+typedef struct s_lst{
+    int				fd_in;
+    int				fd_out;
+	char			**cmd;
+	int				prev_pipe;
+	struct s_lst	*next;
+} t_lst;
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_arg
+{
+	t_env	*env;
+	char	**path;
+	t_lst	*lst;
+} t_arg;
 
 int		remove_space(char *line, int *i);
 int		is_space(char c);
