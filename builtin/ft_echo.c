@@ -6,11 +6,10 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:15:16 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/10 18:36:29 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/10 19:31:23 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
 #include "builtin.h"
 
 int	check_option(char **cmd)
@@ -37,6 +36,33 @@ int	check_option(char **cmd)
 	return (0);
 }
 
+void	run_echo(char **cmd, int idx)
+{
+	int	i;
+	int	j;
+
+	i = idx;
+	j = 0;
+	while (cmd[++i])
+	{
+		j = 0;
+		while (cmd[i][j])
+		{
+			if (cmd[i][j] == '$')
+			{
+				if (cmd[i][j + 1] == '?')
+				{
+					ft_putnbr_fd(g_exit_status, 1);
+					j++;
+				}
+			}
+			else
+				write(1, &cmd[i][j], 1);
+			j++;
+		}
+	}
+}
+
 int	ft_echo(char **cmd)
 {
 	int	idx;
@@ -52,15 +78,7 @@ int	ft_echo(char **cmd)
 		idx = 1;
 	else
 		idx = 0;
-	while (cmd[++idx])
-	{
-		if (ft_strncmp(cmd[idx], "$?", 2) == 0)
-			ft_putstr_fd(ft_itoa(g_exit_status), 1);
-		else
-			ft_putstr_fd(cmd[idx], 1);
-		if (cmd[idx + 1] != NULL)
-			write(1, " ", 1);
-	}
+	run_echo(cmd, idx);
 	if (option_flag == NO_OPTION)
 		write(1, "\n", 1);
 	return (0);

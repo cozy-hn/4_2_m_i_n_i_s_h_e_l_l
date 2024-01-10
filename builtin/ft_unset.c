@@ -3,42 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 04:25:00 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/09 21:52:04 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/10 19:21:17 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-#include <stdio.h>
 
-int	unset_env(t_arg *arg, int env_idx)
+int	unset_env(t_arg *arg, char *cmd)
 {
 	t_env	*tmp;
-	t_env	*tmp2;
-	int		i;
+	t_env	*prev;
 
-	i = 0;
 	tmp = arg->env;
-	if (env_idx == 0)
+	prev = NULL;
+	while (tmp)
 	{
-		arg->env = tmp->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
-		return (0);
-	}
-	while (i < env_idx - 1)
-	{
+		if (same_env(tmp->key, cmd))
+		{
+			if (prev)
+				prev->next = tmp->next;
+			else
+				arg->env = tmp->next;
+			free(tmp->key);
+			free(tmp->value);
+			free(tmp);
+			return (0);
+		}
+		prev = tmp;
 		tmp = tmp->next;
-		i++;
 	}
-	tmp2 = tmp->next;
-	tmp->next = tmp2->next;
-	free(tmp2->key);
-	free(tmp2->value);
-	free(tmp2);
 	return (0);
 }
 
@@ -63,36 +59,32 @@ int	unset_check_str(char *str, int *exit_status)
 		}
 		i++;
 	}
+	*exit_status = 0;
 	return (1);
 }
 
 int	ft_unset(t_arg *arg, char **cmd)
 {
 	int		i;
-	int		j;
 	int		exit_status;
 	t_env	*tmp;
 
 	if (!cmd[1])
 		return (0);
 	i = 0;
-	exit_status = 0;
 	while (cmd[++i])
 	{
 		if (unset_check_str(cmd[i], &exit_status))
 		{
-			j = 0;
 			tmp = arg->env;
 			while (tmp)
 			{
-				if (ft_strncmp(tmp->key, cmd[i], ft_strlen(cmd[i])) == 0
-					&& ft_strlen(tmp->key) == ft_strlen(cmd[i]))
+				if (same_env(tmp->key, cmd[i]))
 				{
-					unset_env(arg, j);
+					unset_env(arg, cmd[i]);
 					break ;
 				}
 				tmp = tmp->next;
-				j++;
 			}
 		}
 	}
@@ -115,7 +107,7 @@ int	ft_unset(t_arg *arg, char **cmd)
 // 	ft_export(&arg, export_test);
 // 	// char **arr = ft_sort_env(env_lst_to_arr(arg.env));
 // 	// ft_print_env(arr);
-	
+
 // //unset test
 // 	char **unset_test = (char **)malloc(sizeof(char *) * 4);
 // 	unset_test[0] = ft_strdup("unset");

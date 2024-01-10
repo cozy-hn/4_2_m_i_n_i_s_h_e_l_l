@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:41:48 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/10 13:55:47 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/10 19:18:34 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
 int	ft_env(t_env *env)
 {
 	while (env)

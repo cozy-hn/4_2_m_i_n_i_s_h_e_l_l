@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   env_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/10 14:17:16 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/10 19:53:52 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "../minishell.h"
 #include "builtin.h"
 
-char *ft_strndup(char *s, char *end)
+char	*ft_strndup(char *s, char *end)
 {
-	int i;
-	char *ret;
+	int		i;
+	char	*ret;
 
 	if (!end)
 	{
@@ -35,7 +33,7 @@ char *ft_strndup(char *s, char *end)
 int	make_env_lst(t_arg *arg, char **env)
 {
 	t_env	*tmp;
-	int i;
+	int		i;
 
 	arg->env = (t_env *)malloc(sizeof(t_env));
 	tmp = arg->env;
@@ -55,19 +53,28 @@ int	make_env_lst(t_arg *arg, char **env)
 	return (0);
 }
 
-char	**env_lst_to_arr(t_env *env)
+int	env_lst_count(t_env *env)
 {
 	t_env	*tmp;
-	char **ret;
-	int i;
+	int		count;
 
-	i = 0;
+	count = 0;
 	tmp = env;
 	while (tmp)
 	{
 		tmp = tmp->next;
-		i++;
+		count++;
 	}
+	return (count);
+}
+
+char	**env_lst_to_arr(t_env *env)
+{
+	t_env	*tmp;
+	char	**ret;
+	int		i;
+
+	i = env_lst_count(env);
 	ret = (char **)malloc(sizeof(char *) * (i + 1));
 	i = -1;
 	tmp = env;
@@ -86,7 +93,7 @@ char	**env_lst_to_arr(t_env *env)
 	return (ret);
 }
 
-char *get_env_value(t_env *env, char *key)
+char	*get_env_value(t_env *env, char *key)
 {
 	t_env	*tmp;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:17 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/10 13:51:12 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/10 20:07:08 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,6 @@ int	ft_exit(t_arg *arg, char **cmd)
 		if (cmd[2])
 			return (throw_error("exit", NULL, "too many arguments"));
 	}
-	free_env_lst(arg->env);
-	ft_free_arr(arg->path);
-
 	t_lst *tmp;
 	while (arg->lst)
 	{
@@ -93,6 +90,9 @@ int	ft_exit(t_arg *arg, char **cmd)
 		ft_free_arr(tmp->cmd);
 		free(tmp);
 	}
+	free_env_lst(arg->env);
+	ft_free_arr(arg->path);
+	g_exit_status = exit_code;
 	exit(exit_code);
 	return (1);
 }

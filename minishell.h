@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/10 18:34:39 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/10 19:07:15 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@
 # include <readline/history.h>
 # include <string.h> // for tmp
 # include "./libft/libft.h"
-
-
-// # include "./builtin/builtin.h"
-// # include "./execute/execute.h"
 
 // # include <signal.h>
 // # include <unistd.h>

@@ -4,7 +4,6 @@
 #define OPTION  1
 #define NO_OPTION  0
 
-#include "../libft/libft.h"
 #include "../minishell.h"
 
 char	**ft_dup_env(char **env);
