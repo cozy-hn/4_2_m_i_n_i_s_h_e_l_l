@@ -6,13 +6,11 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/10 23:13:39 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/10 23:53:43 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_exit_code;
 
 void	check_leak(void)
 {

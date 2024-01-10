@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"sstream": "c",
-		"ios": "c"
+		"ios": "c",
+		"complex": "c"
 	}
 }

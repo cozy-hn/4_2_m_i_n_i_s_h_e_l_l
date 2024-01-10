@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:52:55 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/10 21:33:11 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/10 23:52:13 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,14 @@ void	parser(t_cmd_tree **head, t_token **token)
 
 	now = *token;
 	cmd_list(head, &now);
+	// if (cmd_list(head, &now) == 1)
+	// {
+	// 	ft_putstr_fd("syntax error\n", STDERR_FILENO);
+	// 	g_exit_code = 258;
+	// }
+	// else if (now)
+	// {
+	// 	ft_putstr_fd("syntax error\n", STDERR_FILENO);
+	// 	g_exit_code = 258;
+	// }
 }

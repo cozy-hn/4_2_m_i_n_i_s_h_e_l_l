@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 19:20:53 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/09 16:52:19 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/10 23:56:16 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void test_print_node(t_cmd_tree *node)
 			printf(">> %s", node->token->word);
 		else
 			printf("%s", node->token->word);
+		printf("segfault check\n");
 	}
 	printf("\n");
 }
