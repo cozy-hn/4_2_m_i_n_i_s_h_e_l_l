@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/08 21:34:28 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/10 19:07:15 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <string.h> // for tmp
 # include "./libft/libft.h"
+
 // # include <signal.h>
 // # include <unistd.h>
 // # include <sys/types.h>
@@ -26,6 +27,9 @@
 // # include <fcntl.h>
 // # include <dirent.h>
 // # include <errno.h>	
+
+extern int g_exit_status;
+int g_exit_status;
 
 typedef enum type
 {

@@ -6,58 +6,41 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/08 21:51:25 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/10 19:18:29 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include "../minishell.h"
+#include "builtin.h"
 
-typedef struct s_lst{
-    int     fd_in;
-    int     fd_out;
-	char	**cmd;
-    int     prev_pipe;
-	struct s_lst *next;
-} t_lst;
-
-typedef struct s_arg
+int ft_cd(t_arg *arg, char **cmd)
 {
-	char	**env;
-	char	**path;
-	t_lst	*lst;
-} t_arg;
+	char *home;
 
-// int ft_cd(t_arg *arg, char **cmd)
-// {
-// 	if (!check_cmd(cmd))
-// 		return (1);
-// }
-
-int main(int ac, char **av)
-{
-
-	if (access(av[1], F_OK) == 0)
-		printf("File exists\n");
+	if (cmd[1] == NULL)
+	{
+		home = get_env_value(arg->env, "HOME");
+		if (chdir(home) == 0)
+			printf("success! current path : %s\n", getcwd(NULL, 0));
+		else
+		{
+			printf("fail! current path : %s\n", getcwd(NULL, 0));
+			exit(1);
+		}
+	}
+	else if (cmd[2] == NULL)
+	{
+		if (chdir(cmd[1]) == 0)
+			printf("success! current path : %s\n", getcwd(NULL, 0));
+		else
+		{
+			printf("fail! current path : %s\n", getcwd(NULL, 0));
+			exit(1);
+		}
+	}
 	else
 	{
-		printf("File does not exist\n");
+		printf("cd: too many arguments\n");
 		exit(1);
 	}
-	if (access(av[1], R_OK) == 0)
-		printf("File is readable\n");
-	else
-	{
-		printf("File is not readable\n");
-		exit(1);
-	}
-	if (chdir(av[1]) == 0)
-		printf("Directory changed\n");
-	else
-	{
-		printf("Directory not changed\n");
-		exit(1);
-	}
+	return (0);
 }

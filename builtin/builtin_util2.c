@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 03:09:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/08 20:09:54 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/10 19:35:38 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,26 @@ int	modify_env(char **str)
 
 int	throw_error(char *cmd, char *str, char *msg)
 {
-	ft_putendl_fd("minishell: ", 2);
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": `", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("':", 2);
 	ft_putendl_fd(msg, 2);
 	return (1);
+}
+
+int	free_env_lst(t_env *env)
+{
+	t_env	*tmp;
+
+	while (env)
+	{
+		tmp = env->next;
+		free(env->key);
+		free(env->value);
+		free(env);
+		env = tmp;
+	}
+	return (0);
 }

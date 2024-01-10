@@ -6,14 +6,13 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:46:33 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/08 21:52:32 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/10 19:18:38 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "builtin.h"
 
-int set_env(t_arg *arg, char *key, char *value)
+int	set_env(t_arg *arg, char *key, char *value)
 {
 	t_env	*tmp;
 	t_env	*new;
