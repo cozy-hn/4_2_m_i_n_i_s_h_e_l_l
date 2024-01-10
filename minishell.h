@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/08 21:34:28 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/10 13:48:53 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <readline/history.h>
 # include <string.h> // for tmp
 # include "./libft/libft.h"
+// # include "./builtin/builtin.h"
+// # include "./execute/execute.h"
+
 // # include <signal.h>
 // # include <unistd.h>
 // # include <sys/types.h>

@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/07 21:47:45 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/10 14:09:44 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../minishell.h"
 #include "execute.h"
 
 int	run_execve(t_lst *lst, t_arg *arg)
@@ -17,7 +18,7 @@ int	run_execve(t_lst *lst, t_arg *arg)
 	char	**cmd;
 
 	cmd = return_commands(arg, lst->cmd);
-	return (execve(cmd[0], cmd, arg->env));
+	return (execve(cmd[0], cmd, env_lst_to_arr(arg->env)));
 }
 
 int	is_builtin(t_lst *lst)
@@ -39,24 +40,22 @@ int	is_builtin(t_lst *lst)
 	return (0);
 }
 
-int run_builtin(t_lst *lst, t_arg *arg)
+int	run_builtin(t_lst *lst, t_arg *arg)
 {
-	// if (ft_strncmp(lst->cmd[0], "echo", 4) == 0)
-	// 	return (ft_echo(lst->cmd));
-	// else if (ft_strncmp(lst->cmd[0], "cd", 2) == 0)
-	// 	return (ft_cd(lst->cmd, arg));
-	// else if (ft_strncmp(lst->cmd[0], "pwd", 3) == 0)
-	// 	return (ft_pwd());
-	// else if (ft_strncmp(lst->cmd[0], "export", 6) == 0)
-	// 	return (ft_export(lst->cmd, arg));
-	// else if (ft_strncmp(lst->cmd[0], "unset", 5) == 0)
-	// 	return (ft_unset(lst->cmd, arg));
-	// else if (ft_strncmp(lst->cmd[0], "env", 3) == 0)
-	// 	return (ft_env(arg));
-	// else if (ft_strncmp(lst->cmd[0], "exit", 4) == 0)
-	// 	return (ft_exit(lst->cmd));
-	(void)arg;
-	(void)lst;
+	if (ft_strncmp(lst->cmd[0], "echo", 4) == 0)
+		return (ft_echo(lst->cmd));
+	else if (ft_strncmp(lst->cmd[0], "cd", 2) == 0)
+		return (ft_cd(arg, lst->cmd));
+	else if (ft_strncmp(lst->cmd[0], "pwd", 3) == 0)
+		return (ft_pwd());
+	else if (ft_strncmp(lst->cmd[0], "export", 6) == 0)
+		return (ft_export(arg, lst->cmd));
+	else if (ft_strncmp(lst->cmd[0], "unset", 5) == 0)
+		return (ft_unset(arg, lst->cmd));
+	else if (ft_strncmp(lst->cmd[0], "env", 3) == 0)
+		return (ft_env(arg->env));
+	else if (ft_strncmp(lst->cmd[0], "exit", 4) == 0)
+		return (ft_exit(arg, lst->cmd));
 	return (0);
 }
 
@@ -86,6 +85,7 @@ void	run_middle(t_lst *lst, t_arg *arg, int *pipe_fd)
 			dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
 		execute(lst, arg);
+		exit(0);
 	}
 	else
 	{
@@ -95,7 +95,6 @@ void	run_middle(t_lst *lst, t_arg *arg, int *pipe_fd)
 		wait(NULL);
 	}
 }
-
 
 void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
 {
@@ -112,6 +111,7 @@ void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
 			dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
 		execute(lst, arg);
+		exit(0);
 	}
 	else
 	{
@@ -124,6 +124,7 @@ void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
 int	run_last(t_lst *lst, t_arg *arg)
 {
 	int			pid;
+	int			status;
 
 	pid = fork();
 	if (pid == 0)
@@ -134,7 +135,8 @@ int	run_last(t_lst *lst, t_arg *arg)
 			dup2(lst->prev_pipe, STDIN_FILENO);
 		if (lst->fd_out != -1)
 			dup2(lst->fd_out, STDOUT_FILENO);
-		return (execute(lst, arg));
+		status = execute(lst, arg);
+		exit(status);
 	}
 	return (pid);
 }

@@ -3,39 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/08 21:52:29 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/10 14:17:16 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../minishell.h"
 #include "builtin.h"
-
-// typedef struct s_lst{
-//     int     fd_in;
-//     int     fd_out;
-// 	char	**cmd;
-//     int     prev_pipe;
-// 	struct s_lst *next;
-// } t_lst;
-
-
-// typedef struct s_env
-// {
-// 	char			*key;
-// 	char			*value;
-// 	struct s_env	*next;
-// }	t_env;
-
-// typedef struct s_arg
-// {
-// 	t_env	*env;
-// 	char	**path;
-// 	t_lst	*lst;
-// } t_arg;
 
 char *ft_strndup(char *s, char *end)
 {
@@ -109,16 +86,11 @@ char	**env_lst_to_arr(t_env *env)
 	return (ret);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> usnet
-
-char *get_env_value(t_arg *arg, char *key)
+char *get_env_value(t_env *env, char *key)
 {
 	t_env	*tmp;
 
-	tmp = arg->env;
+	tmp = env;
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0)
@@ -127,18 +99,3 @@ char *get_env_value(t_arg *arg, char *key)
 	}
 	return (NULL);
 }
-
-<<<<<<< HEAD
-=======
->>>>>>> export
-=======
->>>>>>> usnet
-// int main(int ac, char **av, char **env)
-// {
-// 	t_arg arg;
-	
-// 	ac = 0;
-// 	av = 0;
-	
-	
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_util.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:15:56 by josumin           #+#    #+#             */
-/*   Updated: 2024/01/06 19:53:27 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/10 13:54:45 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,20 @@ int	ft_free_arr(char **arr)
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
+	return (0);
+}
+
+int free_env_lst(t_env *env)
+{
+	t_env	*tmp;
+
+	while (env)
+	{
+		tmp = env->next;
+		free(env->key);
+		free(env->value);
+		free(env);
+		env = tmp;
+	}
 	return (0);
 }
