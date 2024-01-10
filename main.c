@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/08 23:00:34 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/09 16:40:54 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,18 @@ int	main(int argc, char **argv, char **env)
 		(void)env;
 		line = readline("minishell$ ");
 		add_history(line);
-		if (strcmp(line, "exit") == 0)
-			break ;
 		tokenizer(line, &token);
-		free(line);
 		parser(&cmd_tree, &token);
-		print_token(token);
-		test_tr_print_tree(cmd_tree);
+		print_token(token); //test
+		test_tr_print_tree(cmd_tree); //test
+		if (strcmp(line, "exit") == 0) //test
+			break ; //test
+		safe_free(line);
+		free_cmd_tree(cmd_tree);
 		free_token(token);
 	}
-	free(line);
+	safe_free(line);
+	free_cmd_tree(cmd_tree);
 	free_token(token);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	atexit(check_leak);

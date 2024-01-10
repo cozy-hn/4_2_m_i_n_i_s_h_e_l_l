@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/08 19:53:03 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/09 16:21:07 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ int		cmd_list(t_cmd_tree **head, t_token **now);
 int		cmd_pipeline(t_cmd_tree **head, t_token **now);
 int		cmd_command(t_cmd_tree **head, t_token **now);
 int		cmd_command_part(t_cmd_tree **head, t_token **now);
+void	free_cmd_tree(t_cmd_tree *cmd_tree);
+void	safe_free(void *str);
+char	*wft_strdup(const char *src);
 
 int	test_tr_print_tree(t_cmd_tree *root);
 

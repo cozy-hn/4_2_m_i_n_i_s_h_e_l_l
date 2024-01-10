@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:27:20 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/08 15:32:47 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/09 14:25:17 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,3 @@ int	remove_space(char *line, int *i)
 	return (flag);
 }
 
-void	free_token(t_token *token)
-{
-	t_token	*tmp;
-
-	while (token)
-	{
-		tmp = token->next;
-		if (token->word)
-			free(token->word);
-		free(token);
-		token = tmp;
-	}
-}

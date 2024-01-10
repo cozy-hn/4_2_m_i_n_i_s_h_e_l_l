@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 19:20:53 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/08 20:25:27 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/09 16:52:19 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void test_print_node(t_cmd_tree *node)
 		else
 			printf("%s", node->token->word);
 	}
-	else
-		printf("[COMD]");
 	printf("\n");
 }
 
