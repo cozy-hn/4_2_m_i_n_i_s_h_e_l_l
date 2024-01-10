@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/10 13:57:43 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/10 16:42:30 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,5 @@ int ft_cd(t_arg *arg, char **cmd)
 		printf("cd: too many arguments\n");
 		exit(1);
 	}
+	return (0);
 }

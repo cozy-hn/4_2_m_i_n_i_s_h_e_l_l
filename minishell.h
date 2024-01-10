@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/10 13:48:53 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/10 18:34:39 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <readline/history.h>
 # include <string.h> // for tmp
 # include "./libft/libft.h"
+
+
 // # include "./builtin/builtin.h"
 // # include "./execute/execute.h"
 
@@ -29,6 +31,9 @@
 // # include <fcntl.h>
 // # include <dirent.h>
 // # include <errno.h>	
+
+extern int g_exit_status;
+int g_exit_status;
 
 typedef enum type
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/10 14:09:44 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/10 18:39:19 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	run_last(t_lst *lst, t_arg *arg)
 		if (lst->fd_out != -1)
 			dup2(lst->fd_out, STDOUT_FILENO);
 		status = execute(lst, arg);
-		exit(status);
+		exit(WEXITSTATUS(status));
 	}
 	return (pid);
 }
@@ -173,17 +173,20 @@ int	main(int ac, char **av, char **env)
 {
 	t_arg	*arg;
 	t_lst	*lst;
-	int		status;
 
 	ac = 0;
 	av = 0;
 
 	arg = malloc(sizeof(t_arg));
 	init_arg(arg, env);
-	lst = mock_lst();
-	arg->lst = lst;
-
-	status = executor(arg);
-	return (status);
+	while (1)
+	{
+		char *line = readline("minishell$ ");
+		lst = mock_lst(line);
+		arg->lst = lst;
+		g_exit_status = executor(arg);
+		free(line);
+		free(arg->lst);
+	}	
+	return (g_exit_status);
 }
-
