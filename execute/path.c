@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:39:21 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/07 20:04:15 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/10 19:34:57 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*return_path(char **env)
 		i++;
 	}
 	throw_error("PATH not found", "", "");
-	exit(1);
+	return (NULL);
 }
 
 void	get_path(t_arg *arg, char **env)

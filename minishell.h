@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/10 23:23:18 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/10 23:36:57 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # define SHE 0
 # define DFL 1
 # define IGN 2
+
+extern int g_exit_status;
+int g_exit_status;
 
 typedef enum type
 {
@@ -59,6 +62,28 @@ typedef struct s_cmd_tree
 	struct s_cmd_tree	*left;
 	struct s_cmd_tree	*right;
 }	t_cmd_tree;
+
+typedef struct s_lst{
+    int				fd_in;
+    int				fd_out;
+	char			**cmd;
+	int				prev_pipe;
+	struct s_lst	*next;
+} t_lst;
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_arg
+{
+	t_env	*env;
+	char	**path;
+	t_lst	*lst;
+} t_arg;
 
 int		remove_space(char *line, int *i);
 int		is_space(char c);
