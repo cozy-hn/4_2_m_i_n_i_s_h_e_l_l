@@ -3,37 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   env_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/08 21:53:17 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/10 14:16:12 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+// typedef struct s_lst{
+//     int     fd_in;
+//     int     fd_out;
+// 	char	**cmd;
+//     int     prev_pipe;
+// 	struct s_lst *next;
+// } t_lst;
+
+
+// typedef struct s_env
+// {
+// 	char			*key;
+// 	char			*value;
+// 	struct s_env	*next;
+// }	t_env;
+
+// typedef struct s_arg
+// {
+// 	t_env	*env;
+// 	char	**path;
+// 	t_lst	*lst;
+// } t_arg;
 #include "../minishell.h"
-
-typedef struct s_lst{
-    int     fd_in;
-    int     fd_out;
-	char	**cmd;
-    int     prev_pipe;
-	struct s_lst *next;
-} t_lst;
-
-
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
-
-typedef struct s_arg
-{
-	t_env	*env;
-	char	**path;
-	t_lst	*lst;
-} t_arg;
 
 char *ft_strndup(char *s, char *end)
 {
@@ -102,15 +102,11 @@ char	**env_lst_to_arr(t_arg *arg)
 	return (ret);
 }
 
-int main(int ac, char **av, char **env)
-{
-	t_arg arg;
+// int main(int ac, char **av, char **env)
+// {
+// 	t_arg arg;
 	
-	ac = 0;
-	av = 0;
-	
-<<<<<<< HEAD
-=======
+// 	ac = 0;
+// 	av = 0;
 
->>>>>>> env util
-}
+// }
