@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 20:38:09 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/09 16:21:04 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/11 22:46:34 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,29 @@ void	wft_lstadd_back(t_token **lst, t_token *new)
 		(tmp)->next = new;
 	}
 }
+int	wft_lstsize(t_token *lst)
+{
+	int	cnt;
+
+	cnt = 1;
+	if (!lst)
+		return (0);
+	while (lst->next)
+	{
+		cnt += 1;
+		lst = lst->next;
+	}
+	return (cnt);
+}
+
+t_token	*wft_lstlast(t_token *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
 
 char	*wft_strdup(const char *src)
 {
@@ -82,4 +105,3 @@ char	*wft_strdup(const char *src)
 	}
 	return (NULL);
 }
-

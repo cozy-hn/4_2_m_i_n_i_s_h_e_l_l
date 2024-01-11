@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:25:20 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/09 16:16:13 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/11 22:27:03 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,3 @@ void	free_cmd_tree(t_cmd_tree *cmd_tree)
 		free_cmd_tree(cmd_tree->right);
 	safe_free(cmd_tree);
 }
-
-

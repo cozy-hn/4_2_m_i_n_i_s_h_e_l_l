@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 19:20:53 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/10 23:56:16 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/11 22:23:05 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "minishell.h"
 
 void test_print_command_part(t_cmd_tree *node)
-{
+{	
 	if (node->token->type == T_L_REDIR)
 		printf("< ");
 	else if (node->token->type == T_R_REDIR)
@@ -46,6 +46,11 @@ void test_print_node(t_cmd_tree *node)
 		printf("[COMD]");
 	else if (node->bnf_type == BNF_COMMAND_PART)
 	{
+		if (node->token== NULL)
+		{
+			printf("[NULL]\n");
+			return ;
+		}
 		if (node->token->type == T_L_REDIR)
 			printf("< %s", node->token->word);
 		else if (node->token->type == T_R_REDIR)
@@ -56,7 +61,6 @@ void test_print_node(t_cmd_tree *node)
 			printf(">> %s", node->token->word);
 		else
 			printf("%s", node->token->word);
-		printf("segfault check\n");
 	}
 	printf("\n");
 }

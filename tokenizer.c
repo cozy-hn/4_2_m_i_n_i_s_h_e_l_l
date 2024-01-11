@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 15:33:57 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/09 16:36:56 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/11 22:35:09 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,30 @@ char	*set_word(char *line, int *i)
 	return (word);
 }
 
+char	*set_meta_word(int type)
+{
+	if (type == T_OR)
+		return (ft_strdup("||"));
+	if (type == T_PIPE)
+		return (ft_strdup("|"));
+	if (type == T_AND)
+		return (ft_strdup("&&"));
+	if (type == T_L_D_REDIR)
+		return (ft_strdup("<<"));
+	if (type == T_R_D_REDIR)
+		return (ft_strdup(">>"));
+	if (type == T_L_REDIR)
+		return (ft_strdup("<"));
+	if (type == T_R_REDIR)
+		return (ft_strdup(">"));
+	if (type == T_L_PAR)
+		return (ft_strdup("("));
+	if (type == T_R_PAR)
+		return (ft_strdup(")"));
+	return (NULL);
+}
 
-void	tokenizer(char *line, t_token **token)
+int	tokenizer(char *line, t_token **token)
 {
 	int		i;
 	t_token	*new;
@@ -86,7 +108,10 @@ void	tokenizer(char *line, t_token **token)
 			continue ;
 		new = wft_calloc(1, sizeof(t_token));
 		if (is_meta(&line[i]))
+		{
 			new->type = set_type(line, &i);
+			new->word = set_meta_word(new->type);
+		}
 		else
 		{
 			new->type = T_WORD;
@@ -94,4 +119,10 @@ void	tokenizer(char *line, t_token **token)
 		}
 		wft_lstadd_back(token, new);
 	}
+	if (wft_lstsize(*token) == 0)
+	{
+		safe_free(line);
+		return (1);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/10 23:47:12 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/11 22:46:40 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ void	free_token(t_token *token);
 int		set_type(char *line, int *i);
 int		word_checker(char *line, int dquote, int squote);
 char	*set_word(char *line, int *i);
-void	tokenizer(char *line, t_token **token);
+int		tokenizer(char *line, t_token **token);
 void	print_token(t_token *token);
-void	parser(t_cmd_tree **head, t_token **token);
+int		parser(t_cmd_tree **head, t_token **token);
 int		cmd_list(t_cmd_tree **head, t_token **now);
 int		cmd_pipeline(t_cmd_tree **head, t_token **now);
 int		cmd_command(t_cmd_tree **head, t_token **now);
@@ -115,6 +115,8 @@ int		cmd_command_part(t_cmd_tree **head, t_token **now);
 void	free_cmd_tree(t_cmd_tree *cmd_tree);
 void	safe_free(void *str);
 char	*wft_strdup(const char *src);
+int		wft_lstsize(t_token *lst);
+t_token	*wft_lstlast(t_token *lst);
 
 int	test_tr_print_tree(t_cmd_tree *root);
 

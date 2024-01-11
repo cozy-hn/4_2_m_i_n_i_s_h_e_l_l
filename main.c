@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/10 23:53:43 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/11 22:53:03 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,18 @@ int	main(int argc, char **argv, char **env)
 		if (!line)
 			break ;
 		add_history(line);
-		tokenizer(line, &token);
-		parser(&cmd_tree, &token);
-		print_token(token); //test
-		test_tr_print_tree(cmd_tree); //test
+		if (tokenizer(line, &token))
+			continue ;
+		// print_token(token); //test
+		if (parser(&cmd_tree, &token))
+		{
+			// test_tr_print_tree(cmd_tree); //test
+			safe_free(line);
+			free_cmd_tree(cmd_tree);
+			free_token(token);
+			continue ;
+		}
+		// test_tr_print_tree(cmd_tree); //test
 		safe_free(line);
 		free_cmd_tree(cmd_tree);
 		free_token(token);
