@@ -6,7 +6,7 @@
 #    By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 16:32:40 by jiko              #+#    #+#              #
-#    Updated: 2024/01/09 14:29:51 by jiko             ###   ########.fr        #
+#    Updated: 2024/01/12 23:21:25 by jiko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LIBFTFLAG	= -Llibft -lft
 LFLAGS		= -lreadline
 RMF			= rm -f
 BASE		= main minishell_util wlibft token_checker_1 token_checker_2 token_checker_3 \
-tokenizer print_for_test parser print_tree minishell_free
+tokenizer print_for_test parser print_tree minishell_free expansion
 SRCS		= $(addsuffix .c, $(BASE))
 OBJS		= $(addsuffix .o, $(BASE))
 NAME		= minishell

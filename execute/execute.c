@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/10 20:10:57 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/12 21:19:46 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		char *line = readline("minishell$ ");
+		add_history(line);
 		lst = mock_lst(line);
 		arg->lst = lst;
 		g_exit_status = executor(arg);

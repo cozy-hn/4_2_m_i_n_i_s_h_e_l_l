@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:52:55 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/11 23:27:54 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/12 21:09:50 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ int	parser(t_cmd_tree **head, t_token **token)
 		else
 			ft_putstr_fd("newline", 2);
 		ft_putstr_fd("'\n", 2);
+		free_cmd_tree(*head);
+		free_token(*token);
 		return (1);
 	}
 	return (0);

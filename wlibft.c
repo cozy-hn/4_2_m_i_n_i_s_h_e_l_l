@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 20:38:09 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/11 22:46:34 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/12 22:46:42 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,21 @@ char	*wft_strdup(const char *src)
 		return (cp);
 	}
 	return (NULL);
+}
+
+char	*wft_strjoin(char const *s1, char const *s2)
+{
+	char	*tmp;
+	int		s1_len;
+	int		s2_len;
+
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	tmp = wft_calloc(s1_len + s2_len + 1, 1);
+	if (!tmp)
+		return (tmp);
+	ft_strlcat(tmp, (char *)s1, s1_len + 1);
+	ft_strlcat(tmp, (char *)s2, s1_len + s2_len + 1);
+	safe_free((char *)s1);
+	return (tmp);
 }

@@ -21,5 +21,4 @@ int		init_arg(t_arg *arg, char **env);
 t_lst	*mock_lst(char *str);
 int		execute(t_lst *lst, t_arg *arg);
 
-
 # endif

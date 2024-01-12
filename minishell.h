@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/11 22:46:40 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/12 23:26:47 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int		set_type(char *line, int *i);
 int		word_checker(char *line, int dquote, int squote);
 char	*set_word(char *line, int *i);
 int		tokenizer(char *line, t_token **token);
-void	print_token(t_token *token);
 int		parser(t_cmd_tree **head, t_token **token);
 int		cmd_list(t_cmd_tree **head, t_token **now);
 int		cmd_pipeline(t_cmd_tree **head, t_token **now);
@@ -117,7 +116,14 @@ void	safe_free(void *str);
 char	*wft_strdup(const char *src);
 int		wft_lstsize(t_token *lst);
 t_token	*wft_lstlast(t_token *lst);
+int		ft_is_env_word(char c, int i);
+int		expander(t_cmd_tree **cmd_tree, t_arg *arg);
+char	*wft_strjoin(char const *s1, char const *s2);
+
 
 int	test_tr_print_tree(t_cmd_tree *root);
+void	print_env(t_env *env);
+void	print_token(t_token *token);
+char	*get_env_value(t_env *env, char *key);
 
 #endif
