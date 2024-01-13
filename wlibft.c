@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 20:38:09 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/12 22:46:42 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/14 04:05:02 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,3 +122,36 @@ char	*wft_strjoin(char const *s1, char const *s2)
 	safe_free((char *)s1);
 	return (tmp);
 }
+
+void	ft_lstadd_front(t_list **lst, t_list *new)
+{
+	if (!new)
+		return ;
+	new->next = *lst;
+	*lst = new;
+}
+
+void	wft_lstadd_front_arg(t_arg **lst, t_arg *new, \
+t_env *env_lst, t_cmd_tree *cmd_tree)
+{
+	if (!new)
+		return ;
+	new->env = env_lst;
+	new->next = *lst;
+	if (cmd_tree->token->type == T_OR)
+		new->condition = T_OR;
+	else if (cmd_tree->token->type == T_AND)
+		new->condition = T_AND;
+	else
+		new->condition = T_NONE;
+	*lst = new;
+}
+
+void	wft_lstadd_front_lst(t_lst **lst, t_lst *new)
+{
+	if (!new)
+		return ;
+	new->next = *lst;
+	*lst = new;
+}
+

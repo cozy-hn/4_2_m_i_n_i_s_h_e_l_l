@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/12 23:26:47 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/14 04:10:24 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	g_exit_code;
 
 typedef enum type
 {
+	T_NONE = 0,
 	T_PIPE = 1,
 	T_OR = 2,
 	T_AND = 3,
@@ -42,7 +43,6 @@ typedef enum type
 	T_L_D_REDIR = 8,
 	T_R_D_REDIR = 9,
 	T_WORD = 10,
-	T_NEWLINE = 11,
 	BNF_LIST = 12,
 	BNF_PIPELINE = 13,
 	BNF_COMMAND = 14,
@@ -81,10 +81,12 @@ typedef struct s_env
 
 typedef struct s_arg
 {
-	t_env	*env;
-	char	**path;
-	t_lst	*lst;
-} t_arg;
+	t_type			condition;
+	t_env			*env;
+	char			**path;
+	t_lst			*lst;
+	struct s_arg	*next;
+}	t_arg;
 
 int		remove_space(char *line, int *i);
 int		is_space(char c);
@@ -117,11 +119,16 @@ char	*wft_strdup(const char *src);
 int		wft_lstsize(t_token *lst);
 t_token	*wft_lstlast(t_token *lst);
 int		ft_is_env_word(char c, int i);
-int		expander(t_cmd_tree **cmd_tree, t_arg *arg);
+int		expander(t_cmd_tree **cmd_tree, t_env *env_lst);
 char	*wft_strjoin(char const *s1, char const *s2);
+void	wft_lstadd_front_arg(t_arg **lst, t_arg *new, t_env *env_lst,\
+t_cmd_tree *cmd_tree)
+void	wft_lstadd_front_lst(t_lst **lst, t_lst *new);
 
 
-int	test_tr_print_tree(t_cmd_tree *root);
+
+
+int		test_tr_print_tree(t_cmd_tree *root);
 void	print_env(t_env *env);
 void	print_token(t_token *token);
 char	*get_env_value(t_env *env, char *key);

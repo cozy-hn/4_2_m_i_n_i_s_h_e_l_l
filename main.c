@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/12 22:06:15 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/14 03:12:10 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,6 @@ void	main_init(int argc, char **argv)
 // 			g_exit_code = WEXITSTATUS(status);
 // 	}
 // }
-int	throw_error(char *cmd, char *str, char *msg)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": `", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("':", 2);
-	ft_putendl_fd(msg, 2);
-	return (1);
-}
 
 char	*ft_strndup(char *s, char *end)
 {
@@ -112,13 +102,10 @@ char	*ft_strndup(char *s, char *end)
 	return (ret);
 }
 
-int	make_env_lst(t_arg *arg, char **env)
+int	make_env_lst(t_env *tmp, char **env)
 {
-	t_env	*tmp;
 	int		i;
 
-	arg->env = (t_env *)malloc(sizeof(t_env));
-	tmp = arg->env;
 	i = -1;
 	while (env[++i])
 	{
@@ -135,46 +122,11 @@ int	make_env_lst(t_arg *arg, char **env)
 	return (0);
 }
 
-char	*return_path(char **env)
+int	init_arg(t_env **env_lst, char **env)
 {
-	char	*arr;
-	int		i;
-
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strncmp("PATH=", env[i], 5) == 0)
-		{
-			arr = ft_strdup(env[i] + 5);
-			return (arr);
-		}
-		i++;
-	}
-	throw_error("PATH not found", "", "");
-	return (NULL);
-}
-
-void	get_path(t_arg *arg, char **env)
-{
-	char	*arr;
-	int		i;
-
-	i = 0;
-	arr = return_path(env);
-	arg->path = ft_split(arr, ':');
-	while (arg->path[i])
-	{
-		arg->path[i] = ft_strjoin(arg->path[i], "/");
-		i++;
-	}
-	free(arr);
-}
-
-int	init_arg(t_arg **arg, char **env)
-{
-	*arg = wft_calloc(sizeof(t_arg), 1);
-	get_path(*arg, env);
-	make_env_lst(*arg, env);
+	*env_lst = wft_calloc(sizeof(t_env), 1);
+	// get_path(*env_lst, env);
+	make_env_lst(*env_lst, env);
 	return (0);
 }
 
@@ -197,13 +149,12 @@ int	main(int argc, char **argv, char **env)
 	char			*line;
 	t_token			*token;
 	t_cmd_tree		*cmd_tree;
-	t_arg			*arg;
+	t_env			*env_lst;
 	struct termios	term;
 
 	tcgetattr(STDIN_FILENO, &term);
 	main_init(argc, argv);
-	init_arg(&arg, env);
-	// print_env(arg->env);
+	init_arg(&env_lst, env);
 	while (1)
 	{
 		token = NULL;
@@ -221,12 +172,11 @@ int	main(int argc, char **argv, char **env)
 			safe_free(line);
 			continue ;
 		}
-		if (expander(&cmd_tree, arg))
-		{
-			test_tr_print_tree(cmd_tree); //test
-			continue ;
-		}
 		test_tr_print_tree(cmd_tree); //test
+		printf("expander\n\n");
+		expander(&cmd_tree, env_lst);
+		test_tr_print_tree(cmd_tree); //test
+		start_exec(cmd_tree, env_lst);
 		safe_free(line);
 		free_cmd_tree(cmd_tree);
 		free_token(token);
