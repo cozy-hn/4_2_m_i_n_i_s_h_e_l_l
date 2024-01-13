@@ -4,8 +4,7 @@
 
 int	init_arg(t_arg *arg, char **env)
 {
-	get_path(arg, env);
-	make_env_lst(arg, env);
+	get_path(arg);
 	return (0);
 }
 
