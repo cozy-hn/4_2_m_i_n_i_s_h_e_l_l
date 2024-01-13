@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_util2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 03:09:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/10 19:35:38 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/13 18:35:34 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,21 @@
 int	ft_print_env(char **env)
 {
 	int	i;
+	int	j;
 
 	i = 0;
 	while (env[i])
 	{
-		if (env[i][ft_strlen(env[i]) - 1] == '=')
+		j = -1;
+		while (env[i][++j])
 		{
-			ft_putstr_fd(env[i], 1);
-			ft_putendl_fd("\"\"", 1);
+			ft_putchar_fd(env[i][j], 1);
+			if (env[i][j] == '=')
+				ft_putchar_fd('\"', 1);
 		}
-		else
-			ft_putendl_fd(env[i], 1);
+		if (has_char(env[i], '=') && env[i][j] == '\0')
+			ft_putstr_fd("\"", 1);
+		ft_putchar_fd('\n', 1);
 		i++;
 	}
 	return (0);

@@ -10,8 +10,8 @@
 #include "../builtin/builtin.h"
 
 char	**return_commands(t_arg *arg, char **cmd);
-char	*return_path(char **env);
-void	get_path(t_arg *arg, char **env);
+void	get_path(t_arg *arg);
+char	*return_path(t_env *env);
 int		throw_error(char *cmd, char *str, char *msg);
 void	parse_commands(t_arg *arg, char **cmd);
 int		init_arg(t_arg *arg, char **env);

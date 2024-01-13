@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:48:59 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/10 20:03:36 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/13 18:16:24 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	parse_commands(t_arg *arg, char **cmd)
 	char	*arr;
 
 	i = 0;
+	if (arg->path == NULL)
+	{
+		throw_error("No Such file or directory", cmd[0], "");
+		exit(127);
+	}
 	while (arg->path[i])
 	{
 		arr = ft_strdup(arg->path[i]);
@@ -36,10 +41,15 @@ void	parse_commands(t_arg *arg, char **cmd)
 
 char	**return_commands(t_arg	*arg, char **cmd)
 {
-	if (cmd[0][0] != '/')
+	if (cmd[0][0] != '/' && cmd[0][0] != '.')
 	{
 		parse_commands(arg, cmd);
 		return (cmd);
+	}
+	if (access(cmd[0], F_OK) == -1)
+	{
+		throw_error("No Such file or directory", cmd[0], "");
+		exit(127);
 	}
 	return (cmd);
 }

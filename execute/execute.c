@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/12 21:19:46 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/13 19:01:05 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,14 +131,14 @@ int	main(int ac, char **av, char **env)
 	av = 0;
 
 	arg = malloc(sizeof(t_arg));
-	init_arg(arg, env);
+	make_env_lst(arg, env);
 	while (1)
 	{
 		char *line = readline("minishell$ ");
 		add_history(line);
 		lst = mock_lst(line);
 		arg->lst = lst;
-		g_exit_status = executor(arg);
+		executor(arg);
 		free(line);
 		free(arg->lst);
 	}	

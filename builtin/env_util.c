@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/12 20:55:03 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/13 19:00:39 by josumin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ char	*get_env_value(t_env *env, char *key)
 {
 	t_env	*tmp;
 
+	if (ft_strncmp(key, "?", 1) == 0)
+		return (ft_itoa(g_exit_status));
 	tmp = env;
 	while (tmp)
 	{
