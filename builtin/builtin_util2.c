@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_util2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 03:09:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/13 18:35:34 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/14 03:00:10 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	ft_print_env(char **env)
+int	ft_print_env_arr(char **env)
 {
 	int	i;
 	int	j;

@@ -18,7 +18,7 @@ int		init_arg(t_arg *arg, char **env);
 int		is_builtin(t_lst *lst);
 int		run_builtin(t_lst *lst, t_arg *arg);
 int		init_arg(t_arg *arg, char **env);
-t_lst	*mock_lst(char *str);
+t_lst	*mock_lst(char *str, char **env);
 int		execute(t_lst *lst, t_arg *arg);
 
 # endif

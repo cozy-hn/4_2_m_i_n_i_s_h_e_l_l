@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/13 19:01:05 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/14 02:39:28 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,28 +119,6 @@ int	executor(t_arg *arg)
 		executor_helper(lst, arg, &status);
 		lst = lst->next;
 	}
+	g_exit_status = status;
 	return (status);
-}
-
-int	main(int ac, char **av, char **env)
-{
-	t_arg	*arg;
-	t_lst	*lst;
-
-	ac = 0;
-	av = 0;
-
-	arg = malloc(sizeof(t_arg));
-	make_env_lst(arg, env);
-	while (1)
-	{
-		char *line = readline("minishell$ ");
-		add_history(line);
-		lst = mock_lst(line);
-		arg->lst = lst;
-		executor(arg);
-		free(line);
-		free(arg->lst);
-	}	
-	return (g_exit_status);
 }
