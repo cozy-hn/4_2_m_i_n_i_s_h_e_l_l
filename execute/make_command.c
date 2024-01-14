@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:48:59 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/13 18:16:24 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/14 18:34:42 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	parse_commands(t_arg *arg, char **cmd)
 		free(arr);
 		i++;
 	}
-	throw_error("command not found", cmd[0], "");
+	throw_error("No Such file or directory", cmd[0], "");
 	exit(127);
 }
 

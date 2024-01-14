@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:46:33 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/10 19:18:38 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/14 17:48:38 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	set_env(t_arg *arg, char *key, char *value)
 		}
 		tmp = tmp->next;
 	}
-	new = (t_env *)malloc(sizeof(t_env));
+	// new = (t_env *)malloc(sizeof(t_env));
+	new = wft_calloc(sizeof(t_env), 1);
 	new->key = key;
 	new->value = value;
 	new->next = arg->env;

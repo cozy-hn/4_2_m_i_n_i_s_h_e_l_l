@@ -22,7 +22,6 @@ int	ft_pwd(void);
 int	ft_exit(t_arg *arg, char **cmd);
 int free_env_lst(t_env *env);
 char *ft_strndup(char *s, char *end);
-int	make_env_lst(t_arg *arg, char **env);
 char *get_env_value(t_env *env, char *key);
 
 
@@ -35,7 +34,7 @@ int		same_env(char *env, char *str);
 int		throw_error(char *cmd, char *str, char *msg);
 int		modify_env(char **str);
 char	*ft_strndup(char *s, char *end);
-int		make_env_lst(t_arg *arg, char **env);
+t_env		*make_env_lst(char **env);
 char	**env_lst_to_arr(t_env *env);
 int ft_free_env_lst(t_env *env);
 
