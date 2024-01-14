@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 03:09:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/14 18:00:22 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/14 19:10:57 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	throw_error(char *cmd, char *str, char *msg)
 	return (1);
 }
 
-int	free_env_lst(t_env *env)
+void	free_env_lst(t_env *env)
 {
 	t_env	*tmp;
 
@@ -105,5 +105,5 @@ int	free_env_lst(t_env *env)
 		free(env);
 		env = tmp;
 	}
-	return (0);
+	return ;
 }

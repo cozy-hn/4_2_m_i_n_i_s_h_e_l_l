@@ -3,7 +3,6 @@
 #include "execute.h"
 #include "../minishell.h"
 
-
 int	init_arg(t_arg *arg)
 {
 	get_path(arg);
@@ -31,7 +30,7 @@ t_arg *mock_lst(char *str, char **env1)
 	tmp2 = lst;
 	tmp2->cmd = wft_calloc(sizeof(char *), 100);
 	tmp2->cmd[0] = ft_strdup("export");
-	tmp2->cmd[1] = ft_strdup("test=hello world");
+	tmp2->cmd[1] = ft_strdup("test=Hello World");
 	tmp2->cmd[2] = NULL;
 	tmp2->fd_in = -1;
 	tmp2->fd_out = -1;
@@ -42,7 +41,6 @@ t_arg *mock_lst(char *str, char **env1)
 	tmp->next = wft_calloc(sizeof(t_arg), 1);
 	tmp = tmp->next;
 	tmp->env = env;
-
 
 	lst = wft_calloc(sizeof(t_lst), 1);
 	tmp2 = lst;
@@ -77,8 +75,6 @@ t_arg *mock_lst(char *str, char **env1)
 	// tmp2 = tmp2->next;
 	// printf("arg->next->lst->next->cmd[0] = %s\n", tmp2->cmd[0]);
 	// printf("arg->next->lst->next->cmd[1] = %s\n", tmp2->cmd[1]);
-
-
 	return (arg);
 
 }

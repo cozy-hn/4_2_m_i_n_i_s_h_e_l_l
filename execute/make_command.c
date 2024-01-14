@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:48:59 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/14 18:34:42 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/14 19:02:49 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	parse_commands(t_arg *arg, char **cmd)
 		free(arr);
 		i++;
 	}
-	throw_error("No Such file or directory", cmd[0], "");
-	exit(127);
 }
 
 char	**return_commands(t_arg	*arg, char **cmd)
@@ -50,6 +48,11 @@ char	**return_commands(t_arg	*arg, char **cmd)
 	{
 		throw_error("No Such file or directory", cmd[0], "");
 		exit(127);
+	}
+	if (access(cmd[0], X_OK) == -1)
+	{
+		throw_error("Permission denied", cmd[0], "");
+		exit(126);
 	}
 	return (cmd);
 }

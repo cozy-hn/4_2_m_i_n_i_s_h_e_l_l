@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:21 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/14 18:48:35 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/14 20:20:53 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,17 @@
 void	free_lst(t_lst *lst)
 {
 	t_lst	*tmp;
+	char	**tmp2;
 
 	while (lst)
 	{
 		tmp = lst->next;
+		tmp2 = lst->cmd;
+		while (*tmp2)
+		{
+			safe_free(*tmp2);
+			tmp2++;
+		}
 		safe_free(lst->cmd);
 		safe_free(lst);
 		lst = tmp;
@@ -68,6 +75,7 @@ void	execute_start(t_arg *arg)
 			break ;
 		tmp = tmp->next;
 	}	
+	free_env_lst (arg->env);
 	free_arg_lst(arg);
 	return ;
 }
@@ -83,10 +91,8 @@ int main(int ac, char **av, char **env)
 	int		i;
 
 	i = 1;
-	// arg = (t_arg *)malloc(sizeof(t_arg));
 	arg = wft_calloc(sizeof(t_arg), 1);	
 	tmp = arg;
-
 
 	arg = mock_lst(0, env);
 	execute_start(arg);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:57:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/13 19:00:48 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/14 19:26:26 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,13 @@ int	run_execve(t_lst *lst, t_arg *arg)
 
 	get_path(arg);
 	cmd = return_commands(arg, lst->cmd);
-	return (execve(cmd[0], cmd, env_lst_to_arr(arg->env)));
+
+	if (execve(cmd[0], cmd, env_lst_to_arr(arg->env)) == -1)
+	{
+		throw_error("command not found", cmd[0], "");
+		exit(127);
+	}
+	return (0);
 }
 
 int	execute(t_lst *lst, t_arg *arg)

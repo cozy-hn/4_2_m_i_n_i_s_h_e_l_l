@@ -15,12 +15,12 @@ int		env_len(char *env);
 
 int ft_cd(t_arg *arg, char **cmd);
 int	ft_echo(char **cmd);
-int	ft_export(t_arg *arg, char **cmd);
-int	ft_unset(t_arg *arg, char **cmd);
+int	ft_export(t_env *env, char **cmd);
+int	ft_unset(t_env **env, char **cmd);
 int	ft_env(t_env *env);
 int	ft_pwd(void);
 int	ft_exit(t_arg *arg, char **cmd);
-int free_env_lst(t_env *env);
+void free_env_lst(t_env *env);
 char *ft_strndup(char *s, char *end);
 char *get_env_value(t_env *env, char *key);
 
@@ -29,7 +29,6 @@ char *get_env_value(t_env *env, char *key);
 
 // char	**set_env(char **env, char *str);
 // int		ft_export(char ***env, char **str);
-int		ft_export(t_arg *arg, char **cmd);
 int		same_env(char *env, char *str);
 int		throw_error(char *cmd, char *str, char *msg);
 int		modify_env(char **str);
