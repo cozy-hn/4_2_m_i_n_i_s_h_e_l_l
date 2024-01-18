@@ -6,56 +6,149 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/14 04:03:03 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/19 04:12:17 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-void	add_front_lst(t_lst **lst, t_cmd_tree *cmd_tree)
+
+// void print_lst(t_lst *lst)
+// {
+// 	int i;
+// 	printf("====print arg====\n");
+// 	while (lst)
+// 	{
+// 		i = 0;
+// 		printf("====print lst====\n");
+// 		while (lst->cmd[i])
+// 		{
+// 			printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
+// 			printf("lst->cmd[%d]: ", i);
+// 			printf("%s\n", lst->cmd[i]);
+// 			i++;
+// 		}
+// 		lst = lst->next;
+// 	}
+// }
+
+void	play_executor(t_lst **tmp_lst, t_env *env_lst)
 {
-	//전위순회 하면서 command_part를 char **로 만들어서 t_lst의 char **cmd에 넣어줌
-	t_lst	*tmp;
+	t_arg	*arg;
+
+	arg = wft_calloc(1, sizeof(t_arg));
+	arg->env = env_lst;
+	arg->lst = *tmp_lst;
+	executor(arg);
+	// print_lst(*tmp_lst);
+}
+
+void free_double_char(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		safe_free(str[i]);
+		i++;
+	}
+	safe_free(str);
+}
+
+void free_lst(t_lst **lst)
+{
+	t_lst *tmp;
+
+	while (*lst)
+	{
+		tmp = *lst;
+		*lst = (*lst)->next;
+		free_double_char(tmp->cmd);
+		safe_free(tmp);
+	}
+}
+
+void	stack_cmd(t_cmd_tree *cmd_tree, t_lst **tmp_lst, t_lst *new, char ***cmd)
+{
+	char	**tmp;
+	int		cmd_len;
+
+	if (cmd_tree == NULL)
+		return ;
+	if (cmd_tree->bnf_type == BNF_COMMAND_PART)
+	{
+		cmd_len = 0;
+		while ((*cmd)[cmd_len])
+			cmd_len++;
+		tmp = wft_calloc(cmd_len + 2, sizeof(char *));
+		ft_memcpy(tmp, *cmd, cmd_len * sizeof(char *));
+		tmp[cmd_len] = ft_strdup(cmd_tree->token->word);
+		safe_free(*cmd);
+		*cmd = tmp;
+		return ;
+	}
+	else
+	{
+		stack_cmd(cmd_tree->left, tmp_lst, new, cmd);
+		stack_cmd(cmd_tree->right, tmp_lst, new, cmd);
+	}
+}
+
+
+void	play_cmd(t_cmd_tree *cmd_tree, t_env *env_lst, t_lst **tmp_lst)
+{
+	t_lst	*new;
 	char	**cmd;
 
-	tmp = wft_calloc(1, sizeof(t_lst));
-	cmd = wft_calloc(1, sizeof(char *));
-	wft_lstadd_front_lst(lst, tmp);
-	
-}
-void	add_front_arg(t_arg **arg_lst, t_cmd_tree *cmd_tree, t_env *env_lst)
-{
-	t_lst	*cmd_lst;
-	t_arg	*tmp;
-
-	cmd_lst = NULL;
-	tmp = wft_calloc(1, sizeof(t_arg));
-	wft_lstadd_front_arg(arg_lst, tmp, env_lst, cmd_tree);
-	if (cmd_tree->right)
-		add_front_lst(&cmd_lst, cmd_tree->right);
-	while (cmd_tree->left->bnf_type == BNF_PIPELINE)
+	if (cmd_tree == NULL)
+		return ;
+	if (cmd_tree->bnf_type == BNF_COMMAND)
 	{
-		cmd_tree = cmd_tree->left;
-		if (cmd_tree->right)
-			add_front_lst(&cmd_lst, cmd_tree->right);
-		else if (cmd_tree->left->bnf_type == BNF_COMMAND)
-			add_front_lst(&cmd_lst, cmd_tree->left);
+		new = wft_calloc(1, sizeof(t_lst));
+		cmd = wft_calloc(1, sizeof(char *));
+		new->prev_pipe = -1;
+		stack_cmd(cmd_tree, tmp_lst, new, &cmd);
+		new->cmd = cmd;
+		wft_lstadd_back_lst(tmp_lst, new);
 	}
-	(*arg_lst)->lst = cmd_lst;
+	else if (cmd_tree->bnf_type == BNF_PIPELINE)
+	{
+		play_cmd(cmd_tree->left, env_lst, tmp_lst);
+		play_cmd(cmd_tree->right, env_lst, tmp_lst);
+	}
 }
 
 void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst)
 {
-	t_arg	*arg_lst;
+	t_lst	*tmp_lst;
 
-	arg_lst = NULL;
-	if (cmd_tree->right)
-		add_front_arg(&arg_lst, cmd_tree->right, env_lst);
-	while (cmd_tree->left->bnf_type == BNF_LIST)
+	if (cmd_tree == NULL)
+		return ;
+	if (cmd_tree -> bnf_type == BNF_LIST)
 	{
-		cmd_tree = cmd_tree->left;
-		if (cmd_tree->right)
-			add_front_arg(&arg_lst, cmd_tree->right, env_lst);
-		else if (cmd_tree->left->bnf_type == BNF_PIPELINE)
-			add_front_arg(&arg_lst, cmd_tree->left, env_lst);
+		start_exec(cmd_tree->left, env_lst);
+		if (cmd_tree->left->token && ((cmd_tree->left->token->type == T_AND && !g_exit_status) || \
+			(cmd_tree->left->token->type == T_OR && g_exit_status)))
+			start_exec(cmd_tree->right, env_lst);
+	}
+	else if (cmd_tree -> bnf_type == BNF_PIPELINE)
+	{
+		tmp_lst = NULL;
+		if (cmd_tree -> left -> bnf_type == BNF_LIST)
+			start_exec(cmd_tree->left, env_lst);
+		else
+			play_cmd(cmd_tree->left, env_lst, &tmp_lst);
+		if (cmd_tree -> right)
+		{
+			if (cmd_tree -> right -> bnf_type == BNF_LIST)
+				start_exec(cmd_tree->right, env_lst);
+			else
+				play_cmd(cmd_tree->right, env_lst, &tmp_lst);
+		}
+		if (tmp_lst)
+		{
+			play_executor(&tmp_lst, env_lst);
+			free_lst(&tmp_lst);
+		}
 	}
 }

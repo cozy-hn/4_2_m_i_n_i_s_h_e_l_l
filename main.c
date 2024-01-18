@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/14 03:12:10 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/18 23:43:10 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ int	main(int argc, char **argv, char **env)
 		expander(&cmd_tree, env_lst);
 		test_tr_print_tree(cmd_tree); //test
 		start_exec(cmd_tree, env_lst);
+		printf("falut test out\n");
 		safe_free(line);
 		free_cmd_tree(cmd_tree);
 		free_token(token);

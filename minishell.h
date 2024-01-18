@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/14 04:10:24 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/18 23:30:16 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define DFL 1
 # define IGN 2
 
-extern int g_exit_status;
 int g_exit_status;
+extern int g_exit_status;
 int	g_exit_code;
 
 typedef enum type
@@ -65,12 +65,12 @@ typedef struct s_cmd_tree
 }	t_cmd_tree;
 
 typedef struct s_lst{
-    int				fd_in;
-    int				fd_out;
+	int				fd_in;
+	int				fd_out;
 	char			**cmd;
 	int				prev_pipe;
 	struct s_lst	*next;
-} t_lst;
+}	t_lst;
 
 typedef struct s_env
 {
@@ -81,11 +81,9 @@ typedef struct s_env
 
 typedef struct s_arg
 {
-	t_type			condition;
 	t_env			*env;
 	char			**path;
 	t_lst			*lst;
-	struct s_arg	*next;
 }	t_arg;
 
 int		remove_space(char *line, int *i);
@@ -121,10 +119,8 @@ t_token	*wft_lstlast(t_token *lst);
 int		ft_is_env_word(char c, int i);
 int		expander(t_cmd_tree **cmd_tree, t_env *env_lst);
 char	*wft_strjoin(char const *s1, char const *s2);
-void	wft_lstadd_front_arg(t_arg **lst, t_arg *new, t_env *env_lst,\
-t_cmd_tree *cmd_tree)
-void	wft_lstadd_front_lst(t_lst **lst, t_lst *new);
-
+void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst);
+void	wft_lstadd_back_lst(t_lst **lst, t_lst *new);
 
 
 

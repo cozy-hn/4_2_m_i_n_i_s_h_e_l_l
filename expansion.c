@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 22:04:35 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/14 02:58:11 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/14 19:47:01 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ char	*expand(char *word, t_env *env_lst)
 	ret = wft_calloc(1, sizeof(char));
 	while (*word)
 	{
-		if (*word == '\'')
+		if (*word == '\'' && !d_quote)
 			s_quote = !s_quote;
-		else if (*word == '\"')
+		else if (*word == '\"' && !s_quote)
 			d_quote = !d_quote;
 		else if (*word == '$' && !s_quote)
 		{
