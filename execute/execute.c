@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/19 04:43:39 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/19 05:47:53 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	run_last(t_lst *lst, t_arg *arg)
 		if (lst->fd_out != -1)
 			dup2(lst->fd_out, STDOUT_FILENO);
 		status = execute(lst, arg);
-		exit(WEXITSTATUS(status));
+		exit(status);
 	}
 	return (pid);
 }
@@ -145,6 +145,7 @@ int	executor(t_arg *arg)
 		if (handle_redirection(arg->lst) != 0)
 			return (1);
 		status = run_builtin_helper(arg->lst, arg);
+		g_exit_status = status;
 		return (status);
 	}
 	lst = arg->lst;
@@ -158,26 +159,26 @@ int	executor(t_arg *arg)
 		executor_helper(lst, arg, &status);
 		lst = lst->next;
 	}
-	g_exit_status = status;
+	g_exit_status = WEXITSTATUS(status);
 	return (status);
 }
 
 
-int main (int ac, char **av, char **env)
-{
-	ac = 0;
-	av = 0;
-	t_arg arg;
-	t_lst *lst;
+// int main (int ac, char **av, char **env)
+// {
+// 	ac = 0;
+// 	av = 0;
+// 	t_arg arg;
+// 	t_lst *lst;
 
-	arg.env = make_env_lst(env);
-	lst = mock_lst();
+// 	arg.env = make_env_lst(env);
+// 	lst = mock_lst();
 
-	arg.lst = lst;
+// 	arg.lst = lst;
 
-	executor(&arg);
+// 	executor(&arg);
 
-	printf("g_exit_status = %d\n", g_exit_status);
-	return(g_exit_status);
+// 	printf("g_exit_status = %d\n", g_exit_status);
+// 	return(g_exit_status);
 
-}
+// }

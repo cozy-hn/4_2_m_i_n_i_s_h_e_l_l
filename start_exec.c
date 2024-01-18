@@ -6,30 +6,30 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/19 04:12:17 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/19 05:33:08 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void print_lst(t_lst *lst)
-// {
-// 	int i;
-// 	printf("====print arg====\n");
-// 	while (lst)
-// 	{
-// 		i = 0;
-// 		printf("====print lst====\n");
-// 		while (lst->cmd[i])
-// 		{
-// 			printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
-// 			printf("lst->cmd[%d]: ", i);
-// 			printf("%s\n", lst->cmd[i]);
-// 			i++;
-// 		}
-// 		lst = lst->next;
-// 	}
-// }
+void print_lst(t_lst *lst)
+{
+	int i;
+	printf("====print arg====\n");
+	while (lst)
+	{
+		i = 0;
+		printf("====print lst====\n");
+		while (lst->cmd[i])
+		{
+			printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
+			printf("lst->cmd[%d]: ", i);
+			printf("%s\n", lst->cmd[i]);
+			i++;
+		}
+		lst = lst->next;
+	}
+}
 
 void	play_executor(t_lst **tmp_lst, t_env *env_lst)
 {
@@ -105,6 +105,8 @@ void	play_cmd(t_cmd_tree *cmd_tree, t_env *env_lst, t_lst **tmp_lst)
 	if (cmd_tree->bnf_type == BNF_COMMAND)
 	{
 		new = wft_calloc(1, sizeof(t_lst));
+		new->fd_in=-1;
+		new->fd_out=-1;
 		cmd = wft_calloc(1, sizeof(char *));
 		new->prev_pipe = -1;
 		stack_cmd(cmd_tree, tmp_lst, new, &cmd);
@@ -147,6 +149,7 @@ void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst)
 		}
 		if (tmp_lst)
 		{
+			print_lst(tmp_lst);
 			play_executor(&tmp_lst, env_lst);
 			free_lst(&tmp_lst);
 		}

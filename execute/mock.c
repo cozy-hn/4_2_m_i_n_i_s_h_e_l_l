@@ -3,13 +3,6 @@
 #include "execute.h"
 #include "../minishell.h"
 
-int	init_arg(t_arg *arg)
-{
-	get_path(arg);
-	return (0);
-}
-
-
 // t_arg *mock_lst(char *str, char **env1)
 // {
 // 	str = 0;

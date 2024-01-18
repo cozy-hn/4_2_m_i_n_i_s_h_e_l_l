@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/19 04:56:59 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/19 05:08:49 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,11 @@ int		expander(t_cmd_tree **cmd_tree, t_env *env_lst);
 char	*wft_strjoin(char const *s1, char const *s2);
 void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst);
 void	wft_lstadd_back_lst(t_lst **lst, t_lst *new);
+
+
+t_env		*make_env_lst(char **env);
+int			executor(t_arg *arg);
+
 
 int		test_tr_print_tree(t_cmd_tree *root);
 void	print_env(t_env *env);

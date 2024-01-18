@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/18 23:43:10 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/19 05:36:50 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,64 +84,31 @@ void	main_init(int argc, char **argv)
 // 	}
 // }
 
-char	*ft_strndup(char *s, char *end)
-{
-	int		i;
-	char	*ret;
+// int	make_env_lst(t_env *tmp, char **env)
+// {
+// 	int		i;
 
-	if (!end)
-	{
-		ret = ft_strdup(s);
-		return (ret);
-	}
-	i = -1;
-	ret = (char *)malloc(sizeof(char) * (end - s + 1));
-	while (++i < end - s)
-		ret[i] = s[i];
-	ret[i] = 0;
-	return (ret);
-}
-
-int	make_env_lst(t_env *tmp, char **env)
-{
-	int		i;
-
-	i = -1;
-	while (env[++i])
-	{
-		tmp->key = ft_strndup(env[i], ft_strchr(env[i], '='));
-		tmp->value = ft_strdup(ft_strchr(env[i], '=') + 1);
-		if (env[i + 1])
-		{
-			tmp->next = (t_env *)malloc(sizeof(t_env));
-			tmp = tmp->next;
-		}
-		else
-			tmp->next = NULL;
-	}
-	return (0);
-}
+// 	i = -1;
+// 	while (env[++i])
+// 	{
+// 		tmp->key = ft_strndup(env[i], ft_strchr(env[i], '='));
+// 		tmp->value = ft_strdup(ft_strchr(env[i], '=') + 1);
+// 		if (env[i + 1])
+// 		{
+// 			tmp->next = (t_env *)malloc(sizeof(t_env));
+// 			tmp = tmp->next;
+// 		}
+// 		else
+// 			tmp->next = NULL;
+// 	}
+// 	return (0);
+// }
 
 int	init_arg(t_env **env_lst, char **env)
 {
 	*env_lst = wft_calloc(sizeof(t_env), 1);
-	// get_path(*env_lst, env);
-	make_env_lst(*env_lst, env);
+	*env_lst = make_env_lst(env);
 	return (0);
-}
-
-char	*get_env_value(t_env *env, char *key)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0)
-			return (tmp->value);
-		tmp = tmp->next;
-	}
-	return (NULL);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -168,16 +135,16 @@ int	main(int argc, char **argv, char **env)
 		// print_token(token); //test
 		if (parser(&cmd_tree, &token))
 		{
-			test_tr_print_tree(cmd_tree); //test
+			// test_tr_print_tree(cmd_tree); //test
 			safe_free(line);
 			continue ;
 		}
-		test_tr_print_tree(cmd_tree); //test
+		// test_tr_print_tree(cmd_tree); //test
 		printf("expander\n\n");
 		expander(&cmd_tree, env_lst);
-		test_tr_print_tree(cmd_tree); //test
+		// test_tr_print_tree(cmd_tree); //test
 		start_exec(cmd_tree, env_lst);
-		printf("falut test out\n");
+		// printf("falut test out\n");
 		safe_free(line);
 		free_cmd_tree(cmd_tree);
 		free_token(token);

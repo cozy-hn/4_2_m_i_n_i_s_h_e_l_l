@@ -17,7 +17,7 @@ void	parse_commands(t_arg *arg, char **cmd);
 int		is_builtin(t_lst *lst);
 int		run_builtin(t_lst *lst, t_arg *arg);
 int		init_arg(t_arg *arg);
-t_lst	*mock_lst();
+t_lst	*mock_lst(void);
 int		execute(t_lst *lst, t_arg *arg);
 int		executor(t_arg *arg);
 void	connect_original_fd(t_lst *lst, int *fd);
