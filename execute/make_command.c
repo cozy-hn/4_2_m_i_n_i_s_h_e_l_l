@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:48:59 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/14 19:02:49 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/18 23:06:33 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	parse_commands(t_arg *arg, char **cmd)
 		free(arr);
 		i++;
 	}
+	throw_error(cmd[0], 0, "command not found");
+	exit(127);
 }
 
 char	**return_commands(t_arg	*arg, char **cmd)

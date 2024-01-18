@@ -12,6 +12,7 @@ int		ft_print_env(char **env);
 char	**ft_sort_env(char **env);
 int		has_char(char *str, char c);
 int		env_len(char *env);
+int		throw_error(char *cmd, char *str, char *msg);
 
 int ft_cd(t_arg *arg, char **cmd);
 int	ft_echo(char **cmd);

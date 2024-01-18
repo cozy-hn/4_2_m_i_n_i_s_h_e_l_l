@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 17:31:16 by josumin           #+#    #+#             */
-/*   Updated: 2024/01/18 17:31:19 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/19 04:26:55 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,15 @@
 # include <termios.h>
 # include <signal.h>
 # include <sys/wait.h>
+#include <fcntl.h>
+#include <errno.h>
 
 # define SHE 0
 # define DFL 1
 # define IGN 2
 
-extern int g_exit_status;
 int g_exit_status;
-int	g_exit_code;
+extern int g_exit_status;
 
 typedef enum type
 {
@@ -65,12 +66,14 @@ typedef struct s_cmd_tree
 }	t_cmd_tree;
 
 typedef struct s_lst{
-    int				fd_in;
-    int				fd_out;
+	char			*fd_out_name;
+	char			*fd_in_name;
+	int				fd_in;
+	int				fd_out;
 	char			**cmd;
 	int				prev_pipe;
 	struct s_lst	*next;
-} t_lst;
+}t_lst;
 
 typedef struct s_env
 {
@@ -122,11 +125,8 @@ int		ft_is_env_word(char c, int i);
 int		expander(t_cmd_tree **cmd_tree, t_env *env_lst);
 char	*wft_strjoin(char const *s1, char const *s2);
 void	wft_lstadd_front_arg(t_arg **lst, t_arg *new, t_env *env_lst,\
-t_cmd_tree *cmd_tree)
+t_cmd_tree *cmd_tree);
 void	wft_lstadd_front_lst(t_lst **lst, t_lst *new);
-
-
-
 
 int		test_tr_print_tree(t_cmd_tree *root);
 void	print_env(t_env *env);

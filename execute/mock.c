@@ -10,74 +10,74 @@ int	init_arg(t_arg *arg)
 }
 
 
-t_arg *mock_lst(char *str, char **env1)
-{
-	str = 0;
-	t_env *env = make_env_lst(env1);
+// t_arg *mock_lst(char *str, char **env1)
+// {
+// 	str = 0;
+// 	t_env *env = make_env_lst(env1);
 
-	t_arg	*arg;
-	t_arg	*tmp;
+// 	t_arg	*arg;
+// 	t_arg	*tmp;
 
-	t_lst	*lst;
-	t_lst	*tmp2;
+// 	t_lst	*lst;
+// 	t_lst	*tmp2;
 
-	arg = wft_calloc(sizeof(t_arg), 1);
-	tmp = arg;
-	tmp->env = env;
+// 	arg = wft_calloc(sizeof(t_arg), 1);
+// 	tmp = arg;
+// 	tmp->env = env;
 
 
-	lst = wft_calloc(sizeof(t_lst), 1);
-	tmp2 = lst;
-	tmp2->cmd = wft_calloc(sizeof(char *), 100);
-	tmp2->cmd[0] = ft_strdup("export");
-	tmp2->cmd[1] = ft_strdup("test=Hello World");
-	tmp2->cmd[2] = NULL;
-	tmp2->fd_in = -1;
-	tmp2->fd_out = -1;
-	tmp2->prev_pipe = -1;
-	tmp->lst = lst;
-	tmp->condition = T_AND;
+// 	lst = wft_calloc(sizeof(t_lst), 1);
+// 	tmp2 = lst;
+// 	tmp2->cmd = wft_calloc(sizeof(char *), 100);
+// 	tmp2->cmd[0] = ft_strdup("export");
+// 	tmp2->cmd[1] = ft_strdup("test=Hello World");
+// 	tmp2->cmd[2] = NULL;
+// 	tmp2->fd_in = -1;
+// 	tmp2->fd_out = -1;
+// 	tmp2->prev_pipe = -1;
+// 	tmp->lst = lst;
+// 	tmp->condition = T_AND;
 
-	tmp->next = wft_calloc(sizeof(t_arg), 1);
-	tmp = tmp->next;
-	tmp->env = env;
+// 	tmp->next = wft_calloc(sizeof(t_arg), 1);
+// 	tmp = tmp->next;
+// 	tmp->env = env;
 
-	lst = wft_calloc(sizeof(t_lst), 1);
-	tmp2 = lst;
-	tmp2->cmd = wft_calloc(sizeof(char *), 100);
-	tmp2->cmd[0] = ft_strdup("env");
-	tmp2->cmd[1] = NULL;
-	tmp2->fd_in = -1;
-	tmp2->fd_out = -1;
-	tmp2->prev_pipe = -1;
+// 	lst = wft_calloc(sizeof(t_lst), 1);
+// 	tmp2 = lst;
+// 	tmp2->cmd = wft_calloc(sizeof(char *), 100);
+// 	tmp2->cmd[0] = ft_strdup("env");
+// 	tmp2->cmd[1] = NULL;
+// 	tmp2->fd_in = -1;
+// 	tmp2->fd_out = -1;
+// 	tmp2->prev_pipe = -1;
 
-	tmp2->next = wft_calloc(sizeof(t_lst), 1);
-	tmp2 = tmp2->next;
-	tmp2->cmd = wft_calloc(sizeof(char *), 100);
-	tmp2->cmd[0] = ft_strdup("grep");
-	tmp2->cmd[1] = ft_strdup("test");
-	tmp2->cmd[2] = NULL;
-	tmp2->fd_in = -1;
-	tmp2->fd_out = -1;
-	tmp2->prev_pipe = -1;
+// 	tmp2->next = wft_calloc(sizeof(t_lst), 1);
+// 	tmp2 = tmp2->next;
+// 	tmp2->cmd = wft_calloc(sizeof(char *), 100);
+// 	tmp2->cmd[0] = ft_strdup("grep");
+// 	tmp2->cmd[1] = ft_strdup("test");
+// 	tmp2->cmd[2] = NULL;
+// 	tmp2->fd_in = -1;
+// 	tmp2->fd_out = -1;
+// 	tmp2->prev_pipe = -1;
 
-	tmp->lst = lst;
-	tmp->condition = 0;
-	tmp->next = NULL;
+// 	tmp->lst = lst;
+// 	tmp->condition = 0;
+// 	tmp->next = NULL;
 
-	// printf("arg->lst->cmd[0] = %s\n", arg->lst->cmd[0]);
-	// printf("arg->lst->cmd[1] = %s\n", arg->lst->cmd[1]);
+// 	// printf("arg->lst->cmd[0] = %s\n", arg->lst->cmd[0]);
+// 	// printf("arg->lst->cmd[1] = %s\n", arg->lst->cmd[1]);
 
-	// tmp = arg->next;
-	// tmp2 = tmp->lst;
-	// printf("arg->next->lst->cmd[0] = %s\n", tmp2->cmd[0]);
-	// printf("arg->next->lst->cmd[1] = %s\n", tmp2->cmd[1]);
-	// tmp2 = tmp2->next;
-	// printf("arg->next->lst->next->cmd[0] = %s\n", tmp2->cmd[0]);
-	// printf("arg->next->lst->next->cmd[1] = %s\n", tmp2->cmd[1]);
-	return (arg);
+// 	// tmp = arg->next;
+// 	// tmp2 = tmp->lst;
+// 	// printf("arg->next->lst->cmd[0] = %s\n", tmp2->cmd[0]);
+// 	// printf("arg->next->lst->cmd[1] = %s\n", tmp2->cmd[1]);
+// 	// tmp2 = tmp2->next;
+// 	// printf("arg->next->lst->next->cmd[0] = %s\n", tmp2->cmd[0]);
+// 	// printf("arg->next->lst->next->cmd[1] = %s\n", tmp2->cmd[1]);
+// 	return (arg);
 
-}
+// }
 
 // t_arg *mock_lst(char *str, char **env1)
 // {
@@ -173,3 +173,53 @@ t_arg *mock_lst(char *str, char **env1)
 
 // 	return (arg);
 // }
+
+
+t_lst *mock_lst()
+{
+
+	t_lst	*lst;
+	t_lst	*tmp2;
+
+	lst = (t_lst *)malloc(sizeof(t_lst));
+	tmp2 = lst;
+
+	tmp2->cmd = (char **)malloc(sizeof(char *) * 100);
+	tmp2->cmd[0] = ft_strdup("cd");
+	tmp2->cmd[1] = ft_strdup("-2");
+	tmp2->cmd[2] = NULL;
+
+	tmp2->fd_in = -1;
+	tmp2->fd_out = -1;
+	tmp2->prev_pipe = -1;
+	tmp2->fd_in_name = "abc";
+	tmp2->fd_out_name = "b";
+
+
+	// tmp2->next = (t_lst *)malloc(sizeof(t_lst));
+	// tmp2 = tmp2->next;
+	// tmp2->cmd = (char **)malloc(sizeof(char *) * 100);
+	// tmp2->cmd[0] = ft_strdup("env");
+	// tmp2->cmd[1] = NULL;
+	// tmp2->fd_in = -1;
+	// tmp2->fd_out = -1;
+	// tmp2->prev_pipe = -1;
+	// tmp2->fd_in_name = NULL;
+	// tmp2->fd_out_name = NULL;
+
+	// tmp2->next = (t_lst *)malloc(sizeof(t_lst));
+	// tmp2 = tmp2->next;
+	// tmp2->cmd = (char **)malloc(sizeof(char *) * 100);
+	// tmp2->cmd[0] = ft_strdup("grep");
+	// tmp2->cmd[1] = ft_strdup("USER");
+	// tmp2->cmd[2] = NULL;
+	// tmp2->fd_in = -1;
+	// tmp2->fd_out = -1;
+	// tmp2->prev_pipe = -1;
+	// tmp2->fd_in_name = NULL;
+	// tmp2->fd_out_name = NULL;
+
+	tmp2->next = NULL;
+
+	return (lst);
+}

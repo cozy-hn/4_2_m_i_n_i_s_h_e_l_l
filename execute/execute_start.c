@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 02:01:21 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/14 20:20:53 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/19 04:17:57 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,20 @@ void	execute_start(t_arg *arg)
 	return ;
 }
 
-int main(int ac, char **av, char **env)
-{
-	ac = 0;
-	av = 0;
-	// t_env	*env_lst;
+// int main(int ac, char **av, char **env)
+// {
+// 	ac = 0;
+// 	av = 0;
+// 	// t_env	*env_lst;
 
-	t_arg	*arg;
-	t_arg	*tmp;
-	int		i;
+// 	t_arg	*arg;
+// 	t_arg	*tmp;
+// 	int		i;
 
-	i = 1;
-	arg = wft_calloc(sizeof(t_arg), 1);	
-	tmp = arg;
+// 	i = 1;
+// 	arg = wft_calloc(sizeof(t_arg), 1);	
+// 	tmp = arg;
 
-	arg = mock_lst(0, env);
-	execute_start(arg);
-}
+// 	arg = mock_lst(0, env);
+// 	execute_start(arg);
+// }

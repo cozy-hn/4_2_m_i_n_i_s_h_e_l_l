@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/14 17:56:37 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/18 21:54:10 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	*ft_strndup(char *s, char *end)
 		return (ret);
 	}
 	i = -1;
-	// ret = (char *)malloc(sizeof(char) * (end - s + 1));
 	ret = wft_calloc(end - s + 1, 1);
 	while (++i < end - s)
 		ret[i] = s[i];
@@ -37,7 +36,7 @@ t_env	*make_env_lst(char **env)
 	t_env	*tmp;
 	int		i;
 
-	env_lst = (t_env *)malloc(sizeof(t_env));
+	env_lst = wft_calloc(1, sizeof(t_env));
 	tmp = env_lst;
 	i = -1;
 	while (env[++i])
