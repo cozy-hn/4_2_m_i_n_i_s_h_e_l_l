@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:15:56 by josumin           #+#    #+#             */
-/*   Updated: 2024/01/10 19:13:16 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/18 21:54:18 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**ft_dup_env(char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	dup_env = (char **)malloc(sizeof(char *) * (i + 1));
+	dup_env = wft_calloc(i + 1, sizeof(char *));
 	i = 0;
 	while (env[i])
 	{

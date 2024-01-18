@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_util2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 03:09:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/13 18:35:34 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/18 22:52:05 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,21 @@ int	modify_env(char **str)
 int	throw_error(char *cmd, char *str, char *msg)
 {
 	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": `", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd("':", 2);
+	if (cmd)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	if (str)
+	{
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": ", 2);
+	}
 	ft_putendl_fd(msg, 2);
 	return (1);
 }
 
-int	free_env_lst(t_env *env)
+void	free_env_lst(t_env *env)
 {
 	t_env	*tmp;
 
@@ -105,5 +111,5 @@ int	free_env_lst(t_env *env)
 		free(env);
 		env = tmp;
 	}
-	return (0);
+	return ;
 }
