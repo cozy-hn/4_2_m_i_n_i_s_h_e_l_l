@@ -6,18 +6,17 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:46:33 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/10 19:18:38 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/18 21:54:24 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	set_env(t_arg *arg, char *key, char *value)
+int	set_env(t_env *env, char *key, char *value)
 {
 	t_env	*tmp;
-	t_env	*new;
 
-	tmp = arg->env;
+	tmp = env;
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0)
@@ -32,15 +31,16 @@ int	set_env(t_arg *arg, char *key, char *value)
 		}
 		tmp = tmp->next;
 	}
-	new = (t_env *)malloc(sizeof(t_env));
-	new->key = key;
-	new->value = value;
-	new->next = arg->env;
-	arg->env = new;
+	while (env->next)
+		env = env->next;
+	env->next = wft_calloc(1, sizeof(t_env));
+	env->next->key = key;
+	env->next->value = value;
+	env->next->next = NULL;
 	return (0);
 }
 
-int	add_env(t_arg *arg, char *str)
+int	add_env(t_env *env, char *str)
 {
 	char	*key;
 	char	*value;
@@ -63,7 +63,7 @@ int	add_env(t_arg *arg, char *str)
 		key = ft_strdup(str);
 		value = 0;
 	}
-	set_env(arg, key, value);
+	set_env(env, key, value);
 	return (0);
 }
 
@@ -91,7 +91,7 @@ int	export_check_str2(char *str, int *exit_status)
 	return (1);
 }
 
-int	ft_export(t_arg *arg, char **cmd)
+int	ft_export(t_env *env, char **cmd)
 {
 	char	**env_arr;
 	int		exit_status;
@@ -101,7 +101,7 @@ int	ft_export(t_arg *arg, char **cmd)
 	i = 0;
 	if (cmd[1] == NULL)
 	{
-		env_arr = env_lst_to_arr(arg->env);
+		env_arr = env_lst_to_arr(env);
 		ft_print_env(ft_sort_env(env_arr));
 		ft_free_arr(env_arr);
 		return (exit_status);
@@ -110,7 +110,7 @@ int	ft_export(t_arg *arg, char **cmd)
 	{
 		if (!export_check_str2(cmd[i], &exit_status))
 			continue ;
-		add_env(arg, cmd[i]);
+		add_env(env, cmd[i]);
 	}
 	return (exit_status);
 }

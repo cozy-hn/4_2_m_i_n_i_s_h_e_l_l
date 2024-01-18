@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 04:25:00 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/13 16:42:08 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/14 20:16:37 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	unset_env(t_arg *arg, char *cmd)
+int	unset_env(t_env **env, char *cmd)
 {
 	t_env	*tmp;
 	t_env	*prev;
 
-	tmp = arg->env;
+	tmp = *env;
 	prev = NULL;
 	while (tmp)
 	{
@@ -26,7 +26,7 @@ int	unset_env(t_arg *arg, char *cmd)
 			if (prev)
 				prev->next = tmp->next;
 			else
-				arg->env = tmp->next;
+				*env = tmp->next;
 			free(tmp->key);
 			free(tmp->value);
 			free(tmp);
@@ -63,7 +63,7 @@ int	unset_check_str(char *str, int *exit_status)
 	return (1);
 }
 
-int	ft_unset(t_arg *arg, char **cmd)
+int	ft_unset(t_env **env, char **cmd)
 {
 	int		i;
 	int		exit_status;
@@ -76,12 +76,12 @@ int	ft_unset(t_arg *arg, char **cmd)
 	{
 		if (unset_check_str(cmd[i], &exit_status))
 		{
-			tmp = arg->env;
+			tmp = *env;
 			while (tmp)
 			{
 				if (same_env(tmp->key, cmd[i]))
 				{
-					unset_env(arg, cmd[i]);
+					unset_env(env, cmd[i]);
 					break ;
 				}
 				tmp = tmp->next;

@@ -3,14 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/13 19:01:05 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/19 04:43:39 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+int	handle_redirection(t_lst *lst)
+{
+	int	fd[2];
+
+	if (lst->fd_in_name != NULL)
+	{
+		fd[0] = open(lst->fd_in_name, O_RDONLY);
+		if (fd[0] == -1)
+		{
+			throw_error(lst->fd_in_name, 0, strerror(errno));
+			g_exit_status = 1;
+			return (1);
+		}
+		lst->fd_in = fd[0];
+	}
+	if (lst->fd_out_name != NULL)
+	{
+		fd[1] = open(lst->fd_out_name,  O_CREAT | O_TRUNC | O_WRONLY, 0644);
+		if (fd[1] == -1)
+		{
+			throw_error(lst->fd_out_name, 0, strerror(errno));
+			g_exit_status = 1;
+			return (1);
+		}
+		lst->fd_out = fd[1];
+	}
+	return (0);
+}
 
 void	run_middle(t_lst *lst, t_arg *arg, int *pipe_fd)
 {
@@ -112,35 +141,43 @@ int	executor(t_arg *arg)
 	t_lst	*lst;
 
 	if (is_builtin(arg->lst) && arg->lst->next == NULL)
-		return (run_builtin(arg->lst, arg));
+	{
+		if (handle_redirection(arg->lst) != 0)
+			return (1);
+		status = run_builtin_helper(arg->lst, arg);
+		return (status);
+	}
 	lst = arg->lst;
 	while (lst)
 	{
+		if (handle_redirection(arg->lst) != 0)
+		{
+			lst = lst->next;
+			continue ;
+		}
 		executor_helper(lst, arg, &status);
 		lst = lst->next;
 	}
+	g_exit_status = status;
 	return (status);
 }
 
-int	main(int ac, char **av, char **env)
-{
-	t_arg	*arg;
-	t_lst	*lst;
 
+int main (int ac, char **av, char **env)
+{
 	ac = 0;
 	av = 0;
+	t_arg arg;
+	t_lst *lst;
 
-	arg = malloc(sizeof(t_arg));
-	make_env_lst(arg, env);
-	while (1)
-	{
-		char *line = readline("minishell$ ");
-		add_history(line);
-		lst = mock_lst(line);
-		arg->lst = lst;
-		executor(arg);
-		free(line);
-		free(arg->lst);
-	}	
-	return (g_exit_status);
+	arg.env = make_env_lst(env);
+	lst = mock_lst();
+
+	arg.lst = lst;
+
+	executor(&arg);
+
+	printf("g_exit_status = %d\n", g_exit_status);
+	return(g_exit_status);
+
 }
