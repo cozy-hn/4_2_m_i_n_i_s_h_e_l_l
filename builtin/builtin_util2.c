@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_util2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 03:09:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/18 22:52:05 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/21 20:28:48 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ void	free_env_lst(t_env *env)
 	while (env)
 	{
 		tmp = env->next;
-		free(env->key);
-		free(env->value);
-		free(env);
+		safe_free(env->key);
+		safe_free(env->value);
+		safe_free(env);
 		env = tmp;
 	}
 	return ;
