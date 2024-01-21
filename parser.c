@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:52:55 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/21 21:47:42 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/21 22:12:34 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	cmd_pipeline(t_cmd_tree **head, t_token **now)
 		*now = (*now)->next;
 		if (cmd_list(&(*head)->left, now))
 			return (1);
-		if ((*now)->type != T_R_PAR)
+		if (!(*now) || (*now)->type != T_R_PAR)
 			return (1);
 		*now = (*now)->next;
 	}
