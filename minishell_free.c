@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:25:20 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/21 17:52:23 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/21 21:33:32 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_token(t_token *token)
 	{
 		tmp = token->next;
 		safe_free(token->word);
-		free(token);
+		safe_free(token);
 		token = tmp;
 	}
 }

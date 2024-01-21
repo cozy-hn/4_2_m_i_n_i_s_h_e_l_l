@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/21 20:22:39 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/21 21:02:07 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,12 @@ void	main_init(int argc, char **argv)
 // 	return (0);
 // }
 
-int	init_arg(t_env **env_lst, char **env)
-{
-	*env_lst = wft_calloc(sizeof(t_env), 1);
-	*env_lst = make_env_lst(env);
-	return (0);
-}
+// int	init_arg(t_env **env_lst, char **env)
+// {
+// 	*env_lst = wft_calloc(sizeof(t_env), 1);
+// 	*env_lst = make_env_lst(env);
+// 	return (0);
+// }
 
 int	main(int argc, char **argv, char **env)
 {
@@ -121,7 +121,7 @@ int	main(int argc, char **argv, char **env)
 
 	tcgetattr(STDIN_FILENO, &term);
 	main_init(argc, argv);
-	init_arg(&env_lst, env);
+	env_lst = make_env_lst(env);
 	while (1)
 	{
 		token = NULL;
@@ -142,18 +142,8 @@ int	main(int argc, char **argv, char **env)
 		// test_tr_print_tree(cmd_tree); //test
 		printf("expander\n\n");
 		expander(&cmd_tree, env_lst);
-		// {
-		// 	safe_free(line);
-		// 	free_cmd_tree(cmd_tree);
-		// 	free_token(token);
-		// 	free_env_lst(env_lst);
-		// 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-		// 	atexit(check_leak);
-		// 	return (0);
-		// }
 		// test_tr_print_tree(cmd_tree); //test
 		start_exec(cmd_tree, env_lst);
-		// printf("falut test out\n");
 		safe_free(line);
 		free_cmd_tree(cmd_tree);
 		free_token(token);

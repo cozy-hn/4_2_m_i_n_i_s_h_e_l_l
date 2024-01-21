@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/21 19:55:29 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/21 20:50:20 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	play_executor(t_lst **tmp_lst, t_env *env_lst)
 	// print_lst(*tmp_lst);
 }
 
-void free_double_char(char **str)
+void	free_double_char(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -55,9 +55,9 @@ void free_double_char(char **str)
 	safe_free(str);
 }
 
-void free_lst(t_lst **lst)
+void	free_lst(t_lst **lst)
 {
-	t_lst *tmp;
+	t_lst	*tmp;
 
 	while (*lst)
 	{
@@ -183,13 +183,10 @@ void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst)
 			start_exec(cmd_tree->left, env_lst);
 		else
 			play_cmd(cmd_tree->left, env_lst, &tmp_lst);
-		if (cmd_tree -> right)
-		{
-			if (cmd_tree -> right -> bnf_type == BNF_LIST)
-				start_exec(cmd_tree->right, env_lst);
-			else
-				play_cmd(cmd_tree->right, env_lst, &tmp_lst);
-		}
+		if (cmd_tree -> right && cmd_tree -> right -> bnf_type == BNF_LIST)
+			start_exec(cmd_tree->right, env_lst);
+		else
+			play_cmd(cmd_tree->right, env_lst, &tmp_lst);
 		if (tmp_lst)
 		{
 			print_lst(tmp_lst);

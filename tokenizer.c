@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 15:33:57 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/11 22:35:09 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/21 21:34:24 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	*set_word(char *line, int *i)
 	if (dquote || squote)
 	{
 		printf("minishell: syntax error(quote)\n");
+		safe_free(word);
 		return (NULL);
 	}
 	return (word);
@@ -118,6 +119,12 @@ int	tokenizer(char *line, t_token **token)
 			new->word = set_word(line, &i);
 		}
 		wft_lstadd_back(token, new);
+		if (!new->word)
+		{
+			safe_free(line);
+			free_token(*token);
+			return (1);
+		}
 	}
 	if (wft_lstsize(*token) == 0)
 	{
