@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/19 05:47:53 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/21 21:01:52 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ int	executor(t_arg *arg)
 		lst = lst->next;
 	}
 	g_exit_status = WEXITSTATUS(status);
+	safe_free(arg);
 	return (status);
 }
 
