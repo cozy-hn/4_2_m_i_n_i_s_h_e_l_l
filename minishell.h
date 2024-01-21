@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/21 19:09:43 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/22 05:21:28 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,6 @@ int		test_tr_print_tree(t_cmd_tree *root);
 void	print_env(t_env *env);
 void	print_token(t_token *token);
 char	*get_env_value(t_env *env, char *key);
+void	handle_heredoc(t_arg *arg);
 
 #endif

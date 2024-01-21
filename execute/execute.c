@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/21 21:01:52 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/22 05:25:46 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,8 @@ int	executor(t_arg *arg)
 	{
 		if (handle_redirection(arg->lst) != 0)
 			return (1);
-		status = run_builtin_helper(arg->lst, arg);
-		g_exit_status = status;
-		return (status);
+		g_exit_status = run_builtin_helper(arg->lst, arg);
+		return (g_exit_status);
 	}
 	lst = arg->lst;
 	while (lst)
@@ -159,6 +158,7 @@ int	executor(t_arg *arg)
 		executor_helper(lst, arg, &status);
 		lst = lst->next;
 	}
+	handle_heredoc(arg);
 	g_exit_status = WEXITSTATUS(status);
 	safe_free(arg);
 	return (status);

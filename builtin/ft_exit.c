@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:17 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/22 03:01:08 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/22 05:19:24 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	ft_exit(t_arg *arg, char **cmd)
 		exit_code = return_exit_code(cmd[1], 0);
 	printf("exit code: %d\n", exit_code);
 	g_exit_status = exit_code;
+	handle_heredoc(arg);
 	exit(exit_code);
 	return (exit_code);
 }

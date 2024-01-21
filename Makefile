@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+         #
+#    By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 16:32:40 by jiko              #+#    #+#              #
-#    Updated: 2024/01/21 19:42:44 by jiko             ###   ########.fr        #
+#    Updated: 2024/01/22 05:49:23 by sumjo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,11 +33,18 @@ BUILTIN_DIR = ./builtin/
 # BUILTIN_SRC = $(addprefix $(BUILTIN_DIR), $(addsuffix .c, $(BUILTIN_BASE)))
 # BUILTIN_OBJ = $(addprefix $(BUILTIN_DIR), $(addsuffix .o, $(BUILTIN_BASE)))
 
+# GNL_DIR = ./get_next_line/
+
 EXECUTE_SRC = $(wildcard $(EXECUTE_DIR)*.c)
 EXECUTE_OBJ = $(patsubst $(EXECUTE_DIR)%.c,$(EXECUTE_DIR)%.o,$(EXECUTE_SRC))
 
 BUILTIN_SRC = $(wildcard $(BUILTIN_DIR)*.c)
 BUILTIN_OBJ = $(patsubst $(BUILTIN_DIR)%.c,$(BUILTIN_DIR)%.o,$(BUILTIN_SRC))
+
+# GNL_SRC = $(wildcard $(GNL_DIR)*.c)
+# GNL_OBJ = $(patsubst $(GNL_DIR)%.c,$(GNL_DIR)%.o,$(GNL_SRC))
+
+
 
 NAME		= minishell
 
