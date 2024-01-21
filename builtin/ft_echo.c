@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:15:16 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/13 18:47:41 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/22 03:13:10 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,10 @@ void	run_echo(char **cmd, int idx)
 		j = 0;
 		while (cmd[i][j])
 		{
-			if (cmd[i][j] == '$')
+			if (cmd[i][j] == '$' && cmd[i][j + 1] == '?')
 			{
-				if (cmd[i][j + 1] == '?')
-				{
-					ft_putnbr_fd(g_exit_status, 1);
-					j++;
-				}
+				ft_putnbr_fd(g_exit_status, 1);
+				j++;
 			}
 			else
 				write(1, &cmd[i][j], 1);

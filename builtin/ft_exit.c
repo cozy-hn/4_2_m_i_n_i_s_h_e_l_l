@@ -6,13 +6,13 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:17 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/19 04:17:43 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/22 03:01:08 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int return_exit_code(char *str, int i)
+int	return_exit_code(char *str, int i)
 {
 	int	result;
 	int	sign;
@@ -38,24 +38,25 @@ int return_exit_code(char *str, int i)
 	return (result);
 }
 
-int is_all_digits(const char *str) {
-
-    if (str == NULL || *str == '\0') {
-        return 0;  // false
-    }
-
-    if (*str == '-' || *str == '+') {
-        str++;  // 부호가 있으면 건너뜁니다.
-    }
-
-    while (*str != '\0') {
-        if (!ft_isdigit(*str)) {
-            return 0;  // false
-        }
-        str++;
-    }
-
-    return 1; 
+int	is_all_digits(const char *str)
+{
+	if (str == NULL || *str == '\0')
+	{
+		return (0);
+	}
+	if (*str == '-' || *str == '+')
+	{
+		str++;
+	}
+	while (*str != '\0')
+	{
+		if (!ft_isdigit(*str))
+		{
+			return (0);
+		}
+		str++;
+	}
+	return (1);
 }
 
 int	ft_exit(t_arg *arg, char **cmd)
@@ -63,7 +64,7 @@ int	ft_exit(t_arg *arg, char **cmd)
 	int	exit_code;
 
 	exit_code = 0;
-	if (ft_strncmp(arg->lst->cmd[1], "exit", 4) && arg->lst->next == NULL)
+	if (ft_strncmp(arg->lst->cmd[0], "exit", 4) && arg->lst->next == NULL)
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (!cmd[1])
 		exit(exit_code);
@@ -79,6 +80,7 @@ int	ft_exit(t_arg *arg, char **cmd)
 	}
 	else
 		exit_code = return_exit_code(cmd[1], 0);
+	printf("exit code: %d\n", exit_code);
 	g_exit_status = exit_code;
 	exit(exit_code);
 	return (exit_code);

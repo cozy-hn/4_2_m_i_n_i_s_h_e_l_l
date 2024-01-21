@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <dirent.h>
 
 # define SHE 0
 # define DFL 1
