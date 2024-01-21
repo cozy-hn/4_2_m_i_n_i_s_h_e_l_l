@@ -12,20 +12,6 @@
 
 // #include "./execute.h"
 
-// // void free_env_lst (t_env *env)
-// // {
-// // 	t_env	*tmp;
-
-// // 	while (env)
-// // 	{
-// // 		tmp = env->next;
-// // 		safe_free(env->key);
-// // 		safe_free(env->value);
-// // 		safe_free(env);
-// // 		env = tmp;
-// // 	}
-// // }
-
 // void	free_lst(t_lst *lst)
 // {
 // 	t_lst	*tmp;

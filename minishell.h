@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/19 05:08:49 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/21 19:09:43 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_lst{
 	int				fd_out;
 	char			**cmd;
 	int				prev_pipe;
+	int				error_flag;
 	struct s_lst	*next;
 }	t_lst;
 
@@ -127,7 +128,7 @@ int		expander(t_cmd_tree **cmd_tree, t_env *env_lst);
 char	*wft_strjoin(char const *s1, char const *s2);
 void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst);
 void	wft_lstadd_back_lst(t_lst **lst, t_lst *new);
-
+void	free_env_lst (t_env *env_lst);
 
 t_env		*make_env_lst(char **env);
 int			executor(t_arg *arg);

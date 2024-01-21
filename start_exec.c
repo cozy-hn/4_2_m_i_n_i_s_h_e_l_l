@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/19 05:33:08 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/21 19:55:29 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,66 @@ void free_lst(t_lst **lst)
 	}
 }
 
+void	add_redir(t_cmd_tree *cmd_tree, t_lst **tmp_lst, t_lst *new)
+{
+	if (cmd_tree->token->type == T_L_REDIR || cmd_tree->token->type == T_L_D_REDIR)
+	{
+		if (cmd_tree->token->type == T_L_REDIR)
+			new->fd_in = open(cmd_tree->token->word, O_RDONLY);
+		else
+			new->fd_in = open(cmd_tree->token->word, O_RDONLY | O_CREAT | O_APPEND, 0644);
+		if (new->fd_in != -1)
+			close(new->fd_in);
+		else
+		{
+			new->error_flag = 1;
+			(*tmp_lst)->error_flag = 1;
+		}
+		if (new->fd_in_name)
+			safe_free(new->fd_in_name);
+		new->fd_in_name = ft_strdup(cmd_tree->token->word);
+	}
+	else
+	{
+		if (cmd_tree->token->type == T_R_REDIR)
+			new->fd_out = open(cmd_tree->token->word, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else
+			new->fd_out = open(cmd_tree->token->word, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (new->fd_out != -1)
+			close(new->fd_out);
+		else
+		{
+			new->error_flag = 1;
+			(*tmp_lst)->error_flag = 1;
+		}
+		if (new->fd_out_name)
+			safe_free(new->fd_out_name);
+		new->fd_out_name = ft_strdup(cmd_tree->token->word);
+	}
+}
+
 void	stack_cmd(t_cmd_tree *cmd_tree, t_lst **tmp_lst, t_lst *new, char ***cmd)
 {
 	char	**tmp;
 	int		cmd_len;
 
-	if (cmd_tree == NULL)
+	if (cmd_tree == NULL || (*tmp_lst)->error_flag)
 		return ;
 	if (cmd_tree->bnf_type == BNF_COMMAND_PART)
 	{
-		cmd_len = 0;
-		while ((*cmd)[cmd_len])
-			cmd_len++;
-		tmp = wft_calloc(cmd_len + 2, sizeof(char *));
-		ft_memcpy(tmp, *cmd, cmd_len * sizeof(char *));
-		tmp[cmd_len] = ft_strdup(cmd_tree->token->word);
-		safe_free(*cmd);
-		*cmd = tmp;
+		if (6 <= cmd_tree->token->type && cmd_tree->token->type <= 9)
+			add_redir(cmd_tree, tmp_lst, new);
+		else
+		{
+			cmd_len = 0;
+			while ((*cmd)[cmd_len])
+				cmd_len++;
+			tmp = wft_calloc(cmd_len + 2, sizeof(char *));
+			ft_memcpy(tmp, *cmd, cmd_len * sizeof(char *));
+			tmp[cmd_len] = ft_strdup(cmd_tree->token->word);
+			safe_free(*cmd);
+			*cmd = tmp;
+		}
 		return ;
 	}
 	else
@@ -105,13 +148,13 @@ void	play_cmd(t_cmd_tree *cmd_tree, t_env *env_lst, t_lst **tmp_lst)
 	if (cmd_tree->bnf_type == BNF_COMMAND)
 	{
 		new = wft_calloc(1, sizeof(t_lst));
-		new->fd_in=-1;
-		new->fd_out=-1;
+		wft_lstadd_back_lst(tmp_lst, new);
 		cmd = wft_calloc(1, sizeof(char *));
+		new->fd_in = -1;
+		new->fd_out = -1;
 		new->prev_pipe = -1;
 		stack_cmd(cmd_tree, tmp_lst, new, &cmd);
 		new->cmd = cmd;
-		wft_lstadd_back_lst(tmp_lst, new);
 	}
 	else if (cmd_tree->bnf_type == BNF_PIPELINE)
 	{

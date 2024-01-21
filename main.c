@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/19 05:36:50 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/21 20:22:39 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,15 @@ int	main(int argc, char **argv, char **env)
 		// test_tr_print_tree(cmd_tree); //test
 		printf("expander\n\n");
 		expander(&cmd_tree, env_lst);
+		// {
+		// 	safe_free(line);
+		// 	free_cmd_tree(cmd_tree);
+		// 	free_token(token);
+		// 	free_env_lst(env_lst);
+		// 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+		// 	atexit(check_leak);
+		// 	return (0);
+		// }
 		// test_tr_print_tree(cmd_tree); //test
 		start_exec(cmd_tree, env_lst);
 		// printf("falut test out\n");
@@ -149,6 +158,7 @@ int	main(int argc, char **argv, char **env)
 		free_cmd_tree(cmd_tree);
 		free_token(token);
 	}
+	free_env_lst(env_lst);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	atexit(check_leak);
 	return (0);

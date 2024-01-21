@@ -6,7 +6,7 @@
 #    By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 16:32:40 by jiko              #+#    #+#              #
-#    Updated: 2024/01/19 05:22:24 by jiko             ###   ########.fr        #
+#    Updated: 2024/01/21 19:42:44 by jiko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,5 +67,8 @@ fclean : clean
 	$(RMF) $(NAME)
 
 re : fclean all
+
+t : all clean
+	./$(NAME)
 
 .PHONY : all clean fclean re
