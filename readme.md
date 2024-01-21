@@ -1,6 +1,5 @@
 - [x] echo '$PWD' $PWD로 잘 보내는데 echo builtin문제로 예상 - 종료 코드($?) 관련 조건문 수정 후 해결
-- [x] exit시 segfault -> 인덱스에 잘못된 상수가 하드코딩 돼있었음 수정 후 해결
-executor 넘어가고 falut가 나는데, 확인바람, 너쪽에서 문제 없으면 나가기직전에 터미널 설정 되돌려야 하는데
+- [x] exit시 segfault executor 넘어가고 falut가 나는데, 확인바람, 너쪽에서 문제 없으면 나가기직전에 터미널 설정 되돌려야 하는데 -> 인덱스에 잘못된 상수가 하드코딩 돼있었음 수정 후 해결
 ```
 tcsetattr(STDIN_FILENO, TCSANOW, &term);
 ```
