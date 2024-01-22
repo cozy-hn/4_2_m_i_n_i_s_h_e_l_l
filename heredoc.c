@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/22 05:45:41 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/22 18:40:15 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void handle_heredoc(t_arg *arg)
-{
-	t_lst *lst;
+// void handle_heredoc(t_arg *arg)
+// {
+// 	t_lst *lst;
 
-	lst = arg->lst;
-	while (lst)
-	{
-		// if (heredoc)
-        {
-            if (access(lst->fd_in_name, F_OK) == 0)
-                unlink(lst->fd_in_name);
-        }
-        lst = lst->next;
-	}
-}
+// 	lst = arg->lst;
+// 	while (lst)
+// 	{
+// 		// if (heredoc)
+//         {
+//             if (access(lst->fd_in_name, F_OK) == 0)
+//                 unlink(lst->fd_in_name);
+//         }
+//         lst = lst->next;
+// 	}
+// }
 
 void	heredoc(t_lst *lst)
 {
@@ -60,23 +60,23 @@ void	heredoc(t_lst *lst)
     close(fd);
 }
 
-int main ()
-{
-    t_lst *lst;
-    lst = (t_lst *)malloc(sizeof(t_lst));
-    lst->cmd = (char **)malloc(sizeof(char *) * 2);
-    lst->cmd[0] = ft_strdup("limiter");
-    lst->cmd[1] = NULL;
-    heredoc(lst);
-    printf("%s\n", lst->fd_in_name);
-    int fd = open(lst->fd_in_name, O_RDONLY);
-    char *line;
+// int main ()
+// {
+//     t_lst *lst;
+//     lst = (t_lst *)malloc(sizeof(t_lst));
+//     lst->cmd = (char **)malloc(sizeof(char *) * 2);
+//     lst->cmd[0] = ft_strdup("limiter");
+//     lst->cmd[1] = NULL;
+//     heredoc(lst);
+//     printf("%s\n", lst->fd_in_name);
+//     int fd = open(lst->fd_in_name, O_RDONLY);
+//     char *line;
 
-        line = malloc(100);
-        read(fd, line, 100);
-        printf("%s\n", line);
-        free(line);
+//         line = malloc(100);
+//         read(fd, line, 100);
+//         printf("%s\n", line);
+//         free(line);
 
-    unlink(lst->fd_in_name);
-    return (0);
-}
+//     unlink(lst->fd_in_name);
+//     return (0);
+// }

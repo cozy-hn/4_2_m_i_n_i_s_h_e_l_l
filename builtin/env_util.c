@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/18 21:54:10 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/22 19:41:22 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,13 @@ char	*get_env_value(t_env *env, char *key)
 {
 	t_env	*tmp;
 
-	if (ft_strncmp(key, "?", 1) == 0)
+	if (ft_strncmp(key, "?", 2) == 0)
 		return (ft_itoa(g_exit_status));
 	tmp = env;
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, key, ft_strlen(key) + 1) == 0)
-			return (tmp->value);
+			return (ft_strdup(tmp->value));
 		tmp = tmp->next;
 	}
 	return (NULL);

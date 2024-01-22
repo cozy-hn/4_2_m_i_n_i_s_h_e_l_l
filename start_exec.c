@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/21 20:50:20 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/22 19:03:36 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	play_executor(t_lst **tmp_lst, t_env *env_lst)
 	arg->env = env_lst;
 	arg->lst = *tmp_lst;
 	executor(arg);
+	safe_free(arg);
 	// print_lst(*tmp_lst);
 }
 
@@ -136,7 +137,6 @@ void	stack_cmd(t_cmd_tree *cmd_tree, t_lst **tmp_lst, t_lst *new, char ***cmd)
 		stack_cmd(cmd_tree->right, tmp_lst, new, cmd);
 	}
 }
-
 
 void	play_cmd(t_cmd_tree *cmd_tree, t_env *env_lst, t_lst **tmp_lst)
 {

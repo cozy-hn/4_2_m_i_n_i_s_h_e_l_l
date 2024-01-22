@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 22:04:35 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/22 03:09:47 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/22 19:29:44 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,13 @@ char	*expand_env(char **word, t_env *env_lst)
 	i = 0;
 	(*word)++;
 	ret = wft_calloc(1, sizeof(char));
-	if (**word == '?')
-	{
-		env = ft_itoa(g_exit_status);
-		ret = wft_strjoin(ret, env);
-	}
-	else
-	{
-		while (*(*word + i) && ft_is_env_word(*(*word + i), i))
-			i++;
-		env = ft_substr(*word, 0, i);
-		ret = wft_strjoin(ret, get_env_value(env_lst, env));
-		if (i > 0)
-			(*word) += i - 1;
-	}
+	while (*(*word + i) && ft_is_env_word(*(*word + i), i))
+		i++;
+	env = ft_substr(*word, 0, i);
+	ret = wft_strjoin(ret, get_env_value(env_lst, env));
+	if (i > 0)
+		(*word) += i - 1;
 	safe_free(env);
-	printf("ret: %s\n", ret);
 	return (ret);
 }
 

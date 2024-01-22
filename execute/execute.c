@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/22 05:25:46 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/22 19:03:43 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,9 +158,8 @@ int	executor(t_arg *arg)
 		executor_helper(lst, arg, &status);
 		lst = lst->next;
 	}
-	handle_heredoc(arg);
+	// handle_heredoc(arg);
 	g_exit_status = WEXITSTATUS(status);
-	safe_free(arg);
 	return (status);
 }
 
