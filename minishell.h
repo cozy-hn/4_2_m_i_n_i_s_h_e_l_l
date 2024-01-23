@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/22 18:55:39 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/23 23:05:12 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	free_env_lst (t_env *env_lst);
 
 t_env		*make_env_lst(char **env);
 int			executor(t_arg *arg);
-
+void		heredoc(char	**end);
 
 int		test_tr_print_tree(t_cmd_tree *root);
 void	print_env(t_env *env);

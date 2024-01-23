@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/22 19:03:36 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/23 23:06:09 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void print_lst(t_lst *lst)
 		printf("====print lst====\n");
 		while (lst->cmd[i])
 		{
-			printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
+			// printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
 			printf("lst->cmd[%d]: ", i);
 			printf("%s\n", lst->cmd[i]);
 			i++;
