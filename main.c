@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/21 21:55:03 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/23 21:31:01 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	set_signal(int sig_int, int sig_quit)
 		signal(SIGQUIT, signal_handler);
 }
 
-void	main_init(int argc, char **argv)
+t_env	*main_init(int argc, char **argv, char **env)
 {
 	struct termios	term;
 
@@ -59,6 +59,7 @@ void	main_init(int argc, char **argv)
 	set_signal(SHE, SHE);
 	(void)argc;
 	(void)argv;
+	return (make_env_lst(env));
 }
 
 // void	wait_child(void)
@@ -84,33 +85,6 @@ void	main_init(int argc, char **argv)
 // 	}
 // }
 
-// int	make_env_lst(t_env *tmp, char **env)
-// {
-// 	int		i;
-
-// 	i = -1;
-// 	while (env[++i])
-// 	{
-// 		tmp->key = ft_strndup(env[i], ft_strchr(env[i], '='));
-// 		tmp->value = ft_strdup(ft_strchr(env[i], '=') + 1);
-// 		if (env[i + 1])
-// 		{
-// 			tmp->next = (t_env *)malloc(sizeof(t_env));
-// 			tmp = tmp->next;
-// 		}
-// 		else
-// 			tmp->next = NULL;
-// 	}
-// 	return (0);
-// }
-
-// int	init_arg(t_env **env_lst, char **env)
-// {
-// 	*env_lst = wft_calloc(sizeof(t_env), 1);
-// 	*env_lst = make_env_lst(env);
-// 	return (0);
-// }
-
 int	main(int argc, char **argv, char **env)
 {
 	char			*line;
@@ -120,8 +94,7 @@ int	main(int argc, char **argv, char **env)
 	struct termios	term;
 
 	tcgetattr(STDIN_FILENO, &term);
-	main_init(argc, argv);
-	env_lst = make_env_lst(env);
+	env_lst = main_init(argc, argv, env);
 	while (1)
 	{
 		token = NULL;
@@ -130,21 +103,13 @@ int	main(int argc, char **argv, char **env)
 		if (!line)
 			break ;
 		add_history(line);
-		if (tokenizer(line, &token))
+		if (tokenizer(line, &token) || parser(&cmd_tree, &token))
 			continue ;
 		// print_token(token); //test
-		if (parser(&cmd_tree, &token))
-		{
-			// test_tr_print_tree(cmd_tree); //test
-			safe_free(line);
-			continue ;
-		}
 		// test_tr_print_tree(cmd_tree); //test
-		printf("expander\n\n");
 		expander(&cmd_tree, env_lst);
 		// test_tr_print_tree(cmd_tree); //test
 		start_exec(cmd_tree, env_lst);
-		safe_free(line);
 		free_cmd_tree(cmd_tree);
 		free_token(token);
 	}
