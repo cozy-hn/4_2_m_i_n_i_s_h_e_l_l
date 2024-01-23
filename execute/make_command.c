@@ -6,13 +6,13 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:48:59 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 04:52:26 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 07:46:09 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-void	parse_commands(t_arg *arg, char **cmd)
+char	**parse_commands(t_arg *arg, char **cmd)
 {
 	int		i;
 	char	*arr;
@@ -25,18 +25,19 @@ void	parse_commands(t_arg *arg, char **cmd)
 	}
 	while (arg->path[i])
 	{
-		arr = ft_strdup(arg->path[i]);
-		arr = ft_strjoin(arr, cmd[0]);
+		arr = wft_strdup(arg->path[i]);
+		arr = wft_strjoin(arr, wft_strdup(cmd[0]));
 		if (access(arr, F_OK) == 0)
 		{
 			cmd[0] = arr;
-			return ;
+			return (cmd);
 		}
 		free(arr);
 		i++;
 	}
 	throw_error(cmd[0], "command not found", 0);
 	exit(127);
+	return (0);
 }
 
 char	**return_commands(t_arg	*arg, char **cmd)
@@ -47,16 +48,13 @@ char	**return_commands(t_arg	*arg, char **cmd)
 		exit(127);
 	}
 	if (cmd[0][0] != '/' && cmd[0][0] != '.')
-	{
-		parse_commands(arg, cmd);
-		return (cmd);
-	}
+		return (parse_commands(arg, cmd));
 	if (access(cmd[0], F_OK) == -1)
 	{
 		throw_error(cmd[0], 0, "No Such file or directory");
 		exit(127);
 	}
-	if (opendir(cmd[0]) != NULL)
+	if (is_directory(cmd[0]))
 	{
 		throw_error(cmd[0], 0, "is a directory");
 		exit(126);

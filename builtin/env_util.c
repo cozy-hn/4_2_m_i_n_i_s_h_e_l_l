@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 05:16:15 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 07:34:34 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,8 @@ char	**env_lst_to_arr(t_env *env)
 			ret[++i] = wft_strdup(tmp->key);
 		else
 		{
-			str = ft_strjoin(tmp->key, "=");
-			ret[++i] = ft_strjoin(str, tmp->value);
-			safe_free(str);
+			str = wft_strjoin(wft_strdup(tmp->key), wft_strdup("="));
+			ret[++i] = wft_strjoin(str, wft_strdup(tmp->value));
 		}
 		tmp = tmp->next;
 	}

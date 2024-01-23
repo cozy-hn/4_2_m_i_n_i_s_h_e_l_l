@@ -6,27 +6,27 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 05:20:04 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 07:14:59 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void handle_heredoc(t_arg *arg)
-// {
-// 	t_lst *lst;
+void handle_heredoc(t_arg *arg)
+{
+	t_lst *lst;
 
-// 	lst = arg->lst;
-// 	while (lst)
-// 	{
-// 		// if (heredoc)
-//         {
-//             if (access(lst->fd_in_name, F_OK) == 0)
-//                 unlink(lst->fd_in_name);
-//         }
-//         lst = lst->next;
-// 	}
-// }
+	lst = arg->lst;
+	while (lst)
+	{
+		if (lst->in_type == T_L_D_REDIR)
+		{
+			if (access(lst->fd_in_name, F_OK) == 0)
+				unlink(lst->fd_in_name);
+		}
+        lst = lst->next;
+	}
+}
 
 // void	heredoc(t_lst *lst)
 // {
@@ -57,21 +57,19 @@
 // 	close(fd);
 // }
 
-char *avoid_duplicate_name(void)
+char	*avoid_duplicate_name(void)
 {
 	char *name;
 	char *tmp;
 	int i;
 
 	i = 0;
-	tmp = ft_strdup("/tmp/heredoc");
+	tmp = wft_strdup("/tmp/heredoc");
 	name = tmp;
-	while (access(tmp, F_OK) == 0)
+	while (access(name, F_OK) == 0)
 	{
-		if (name)
-			safe_free(name);
-		safe_free(tmp);
-		tmp = ft_strdup("/tmp/heredoc");
+		safe_free(name);
+		tmp = wft_strdup("/tmp/heredoc");
 		name = wft_strjoin(tmp, ft_itoa(++i));
 	}
 	return (name);
@@ -85,7 +83,34 @@ int	is_directory(const char *path)
 		return (0);
 	else
 		return (((info.st_mode) & S_IFMT) == S_IFDIR);
+}
 
+int make_directory(const char *path)
+{
+	char	**cmd;
+	int		pid;
+	int		status;
+
+	cmd = wft_calloc(3, sizeof(char *));
+	cmd[0] = wft_strdup("mkdir");
+	cmd[1] = wft_strdup(path);
+	pid = fork();
+	if (pid == 0)
+	{
+		if (execve(cmd[0], cmd, NULL) != 0)
+		{
+			throw_error("mkdir", 0, strerror(errno));
+			exit(1);
+		}
+		exit(0);
+	}
+	safe_free(cmd[0]);
+	safe_free(cmd[1]);
+	safe_free(cmd);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (0);
 }
 
 void	heredoc(char **end)
@@ -95,10 +120,13 @@ void	heredoc(char **end)
 	char	*name;
 	int		i;
 
-	if (!is_directory("/tmp"))
+	if (!is_directory("./tmp"))
 	{
-		// ft_putendl_fd("minishell: /tmp: Is a directory", 2);
-		// return ;
+		if (make_directory("./tmp") == 1)
+		{
+			*end = NULL;
+			return ;
+		}
 	}
 	i = 0;
 	name = avoid_duplicate_name();
@@ -119,8 +147,7 @@ void	heredoc(char **end)
 	*end = name;
 }
 
-int main ()
-{
-	char *str = avoid_duplicate_name();
-	printf("%s\n", str);
-}
+// int main ()
+// {
+// 	printf("%d",is_directory("./tmp"));
+// }

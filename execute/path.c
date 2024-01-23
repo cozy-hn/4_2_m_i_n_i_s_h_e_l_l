@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:39:21 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 04:51:52 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 07:47:05 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*return_path(t_env *env)
 {
 	char	*arr;
-	t_env 	*tmp;
+	t_env	*tmp;
 
 	tmp = env;
 	while (tmp)
@@ -45,7 +45,7 @@ void	get_path(t_arg *arg)
 	arg->path = ft_split(arr, ':');
 	while (arg->path[i])
 	{
-		arg->path[i] = ft_strjoin(arg->path[i], "/");
+		arg->path[i] = wft_strjoin(arg->path[i], wft_strdup("/"));
 		i++;
 	}
 }

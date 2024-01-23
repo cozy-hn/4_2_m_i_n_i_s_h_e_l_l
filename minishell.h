@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/24 05:18:37 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 07:14:50 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ typedef struct s_cmd_tree
 }	t_cmd_tree;
 
 typedef struct s_lst{
-	char			*fd_out_name;
+	t_type			in_type;
+	t_type			out_type;
 	char			*fd_in_name;
+	char			*fd_out_name;
 	int				fd_in;
 	int				fd_out;
 	char			**cmd;
@@ -134,7 +136,7 @@ char	*avoid_duplicate_name(void);
 
 int		is_directory(const char *path);
 t_env	*make_env_lst(char **env);
-int		executor(t_arg *arg);
+void	executor(t_arg *arg);
 void	heredoc(char **end);
 
 int		test_tr_print_tree(t_cmd_tree *root);
@@ -142,5 +144,6 @@ void	print_env(t_env *env);
 void	print_token(t_token *token);
 char	*get_env_value(t_env *env, char *key);
 void	handle_heredoc(t_arg *arg);
+int		throw_error(char *cmd, char *str, char *msg);
 
 #endif

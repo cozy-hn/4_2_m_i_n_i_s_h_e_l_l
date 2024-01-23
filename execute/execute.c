@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/22 19:03:43 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 07:47:42 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
-
-int	handle_redirection(t_lst *lst)
-{
-	int	fd[2];
-
-	if (lst->fd_in_name != NULL)
-	{
-		fd[0] = open(lst->fd_in_name, O_RDONLY);
-		if (fd[0] == -1)
-		{
-			throw_error(lst->fd_in_name, 0, strerror(errno));
-			g_exit_status = 1;
-			return (1);
-		}
-		lst->fd_in = fd[0];
-	}
-	if (lst->fd_out_name != NULL)
-	{
-		fd[1] = open(lst->fd_out_name,  O_CREAT | O_TRUNC | O_WRONLY, 0644);
-		if (fd[1] == -1)
-		{
-			throw_error(lst->fd_out_name, 0, strerror(errno));
-			g_exit_status = 1;
-			return (1);
-		}
-		lst->fd_out = fd[1];
-	}
-	return (0);
-}
 
 void	run_middle(t_lst *lst, t_arg *arg, int *pipe_fd)
 {
@@ -66,7 +37,6 @@ void	run_middle(t_lst *lst, t_arg *arg, int *pipe_fd)
 		close(lst->prev_pipe);
 		lst->next->prev_pipe = pipe_fd[0];
 		close(pipe_fd[1]);
-		wait(NULL);
 	}
 }
 
@@ -91,7 +61,6 @@ void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
 	{
 		close(pipe_fd[1]);
 		lst->next->prev_pipe = pipe_fd[0];
-		wait(NULL);
 	}
 }
 
@@ -115,7 +84,7 @@ int	run_last(t_lst *lst, t_arg *arg)
 	return (pid);
 }
 
-void	executor_helper(t_lst *lst, t_arg *arg, int *status)
+int	executor_helper(t_lst *lst, t_arg *arg)
 {
 	int	pipe_fd[2];
 	int	pid;
@@ -123,7 +92,7 @@ void	executor_helper(t_lst *lst, t_arg *arg, int *status)
 	if (!lst->next)
 	{
 		pid = run_last(lst, arg);
-		waitpid(pid, status, 0);
+		return (pid);
 	}
 	else
 	{
@@ -133,19 +102,21 @@ void	executor_helper(t_lst *lst, t_arg *arg, int *status)
 		else
 			run_middle(lst, arg, pipe_fd);
 	}
+	return (1);
 }
 
-int	executor(t_arg *arg)
+void	executor(t_arg *arg)
 {
-	int		status;
+	int		pid;
 	t_lst	*lst;
+	int		status;
 
 	if (is_builtin(arg->lst) && arg->lst->next == NULL)
 	{
 		if (handle_redirection(arg->lst) != 0)
-			return (1);
+			return ;
 		g_exit_status = run_builtin_helper(arg->lst, arg);
-		return (g_exit_status);
+		return ;
 	}
 	lst = arg->lst;
 	while (lst)
@@ -155,14 +126,13 @@ int	executor(t_arg *arg)
 			lst = lst->next;
 			continue ;
 		}
-		executor_helper(lst, arg, &status);
+		pid = executor_helper(lst, arg);
 		lst = lst->next;
 	}
-	// handle_heredoc(arg);
+	ft_wait(pid, arg, &status);
 	g_exit_status = WEXITSTATUS(status);
-	return (status);
+	// handle_heredoc(arg);
 }
-
 
 // int main (int ac, char **av, char **env)
 // {

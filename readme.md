@@ -14,16 +14,16 @@
 - [x] heredoc이면 임시파일 지워야하는데 코드 확인필요 -> tmp에 써지는건 확인 -> handle_heredoc에서 지워줌
 - [x] $PWD, $OLDPWD : cd .. 시  수정 요망 
         -> 발견 굿
+- [x] 오류나고 $? 확인하면 exit code가 0으로 나옴
+- [x] heredoc -> heredoc1 -> heredoc12 -> heredoc123이렇게 생기는데 의도에 맞는지 확인
+        -> 수정함 (heredoc1 -> heredoc2 -> heredoc3)
+- [x] 폴더 현재폴더로 ./.tmp에 넣고 싶은데 폴더 있나 확인하고 없으면 만드는 코드 추가 요망
+        -> 하긴 했는데 잘 될지 모르겠음
 
 - [ ] cat만 치고 ctrl + c 누르면 minishell$ 두번 뜸
         -> 이건 모르겠네요..
-
-- [x] heredoc -> heredoc1 -> heredoc12 -> heredoc123이렇게 생기는데 의도에 맞는지 확인
-        -> 수정함 (heredoc1 -> heredoc2 -> heredoc3)
-- [ ] 폴더 현재폴더로 ./.tmp에 넣고 싶은데 폴더 있나 확인하고 없으면 만드는 코드 추가 요망
-
-- [ ] 오류나고 $? 확인하면 exit code가 0으로 나옴
 - [ ] export a=b && echo $a : 수정필요
+        -> expansion 시점 변경
 
 ## heredoc.c
 ```
