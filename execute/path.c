@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josumin <josumin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:39:21 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/13 17:30:32 by josumin          ###   ########.fr       */
+/*   Updated: 2024/01/24 04:51:52 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*return_path(t_env *env)
 	tmp = env;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->key, "PATH", 4) == 0)
+		if (ft_strncmp(tmp->key, "PATH", 5) == 0)
 		{
 			arr = tmp->value;
 			return (arr);

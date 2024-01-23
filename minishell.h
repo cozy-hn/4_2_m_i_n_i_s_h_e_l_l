@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/23 23:05:12 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 05:18:37 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <dirent.h>
+#include <sys/stat.h>
 
 # define SHE 0
 # define DFL 1
@@ -129,10 +130,12 @@ char	*wft_strjoin(char const *s1, char const *s2);
 void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst);
 void	wft_lstadd_back_lst(t_lst **lst, t_lst *new);
 void	free_env_lst (t_env *env_lst);
+char	*avoid_duplicate_name(void);
 
-t_env		*make_env_lst(char **env);
-int			executor(t_arg *arg);
-void		heredoc(char	**end);
+int		is_directory(const char *path);
+t_env	*make_env_lst(char **env);
+int		executor(t_arg *arg);
+void	heredoc(char **end);
 
 int		test_tr_print_tree(t_cmd_tree *root);
 void	print_env(t_env *env);

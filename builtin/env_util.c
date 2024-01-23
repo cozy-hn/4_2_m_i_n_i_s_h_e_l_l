@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/22 19:41:22 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 05:16:15 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strndup(char *s, char *end)
 
 	if (!end)
 	{
-		ret = ft_strdup(s);
+		ret = wft_strdup(s);
 		return (ret);
 	}
 	i = -1;
@@ -42,7 +42,7 @@ t_env	*make_env_lst(char **env)
 	while (env[++i])
 	{
 		tmp->key = ft_strndup(env[i], ft_strchr(env[i], '='));
-		tmp->value = ft_strdup(ft_strchr(env[i], '=') + 1);
+		tmp->value = wft_strdup(ft_strchr(env[i], '=') + 1);
 		if (env[i + 1])
 		{
 			tmp->next = (t_env *)malloc(sizeof(t_env));
@@ -72,6 +72,7 @@ int	env_lst_count(t_env *env)
 char	**env_lst_to_arr(t_env *env)
 {
 	t_env	*tmp;
+	char	*str;
 	char	**ret;
 	int		i;
 
@@ -82,11 +83,12 @@ char	**env_lst_to_arr(t_env *env)
 	while (tmp)
 	{
 		if (tmp->value == NULL)
-			ret[++i] = ft_strdup(tmp->key);
+			ret[++i] = wft_strdup(tmp->key);
 		else
 		{
-			ret[++i] = ft_strjoin(tmp->key, "=");
-			ret[i] = ft_strjoin(ret[i], tmp->value);
+			str = ft_strjoin(tmp->key, "=");
+			ret[++i] = ft_strjoin(str, tmp->value);
+			safe_free(str);
 		}
 		tmp = tmp->next;
 	}
@@ -104,7 +106,7 @@ char	*get_env_value(t_env *env, char *key)
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, key, ft_strlen(key) + 1) == 0)
-			return (ft_strdup(tmp->value));
+			return (wft_strdup(tmp->value));
 		tmp = tmp->next;
 	}
 	return (NULL);

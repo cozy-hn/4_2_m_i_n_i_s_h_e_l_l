@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:15:56 by josumin           #+#    #+#             */
-/*   Updated: 2024/01/18 21:54:18 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 05:12:18 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	env_len(char *env)
 int	same_env(char *env, char *str)
 {
 	if ((int)ft_strlen(str) == env_len(env)
-		&& ft_strncmp(env, str, env_len(env)) == 0)
+		&& ft_strncmp(env, str, env_len(env) + 1) == 0)
 		return (1);
 	return (0);
 }
@@ -69,7 +69,10 @@ int	ft_free_arr(char **arr)
 
 	i = 0;
 	while (arr[i])
-		free(arr[i++]);
-	free(arr);
+	{
+		safe_free(arr[i]);
+		i++;
+	}
+	safe_free(arr);
 	return (0);
 }

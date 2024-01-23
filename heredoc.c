@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/23 23:22:22 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 05:20:04 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,51 @@
 // 	close(fd);
 // }
 
-void	heredoc(char	**end)
+char *avoid_duplicate_name(void)
+{
+	char *name;
+	char *tmp;
+	int i;
+
+	i = 0;
+	tmp = ft_strdup("/tmp/heredoc");
+	name = tmp;
+	while (access(tmp, F_OK) == 0)
+	{
+		if (name)
+			safe_free(name);
+		safe_free(tmp);
+		tmp = ft_strdup("/tmp/heredoc");
+		name = wft_strjoin(tmp, ft_itoa(++i));
+	}
+	return (name);
+}
+
+int	is_directory(const char *path)
+{
+	struct stat	info;
+
+	if (stat(path, &info) != 0)
+		return (0);
+	else
+		return (((info.st_mode) & S_IFMT) == S_IFDIR);
+
+}
+
+void	heredoc(char **end)
 {
 	int		fd;
 	char	*line;
 	char	*name;
 	int		i;
 
+	if (!is_directory("/tmp"))
+	{
+		// ft_putendl_fd("minishell: /tmp: Is a directory", 2);
+		// return ;
+	}
 	i = 0;
-	name = ft_strdup("/tmp/heredoc");
-	while (access(name, F_OK) == 0)
-		name = wft_strjoin(name, ft_itoa(++i));
+	name = avoid_duplicate_name();
 	fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	while (1)
 	{
@@ -85,23 +119,8 @@ void	heredoc(char	**end)
 	*end = name;
 }
 
-// int main ()
-// {
-//     t_lst *lst;
-//     lst = (t_lst *)malloc(sizeof(t_lst));
-//     lst->cmd = (char **)malloc(sizeof(char *) * 2);
-//     lst->cmd[0] = ft_strdup("limiter");
-//     lst->cmd[1] = NULL;
-//     heredoc(lst);
-//     printf("%s\n", lst->fd_in_name);
-//     int fd = open(lst->fd_in_name, O_RDONLY);
-//     char *line;
-
-//         line = malloc(100);
-//         read(fd, line, 100);
-//         printf("%s\n", line);
-//         free(line);
-
-//     unlink(lst->fd_in_name);
-//     return (0);
-// }
+int main ()
+{
+	char *str = avoid_duplicate_name();
+	printf("%s\n", str);
+}

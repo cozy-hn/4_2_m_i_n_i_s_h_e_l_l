@@ -2,21 +2,29 @@
 - [x] exit시 segfault executor 넘어가고 falut가 나는데, 확인바람, 너쪽에서 문제 없으면 나가기직전에 터미널 설정 되돌려야 하는데 -> 인덱스에 잘못된 상수가 하드코딩 돼있었음 수정 후 해결
 이부분에서 segfault가 나는듯함. 확인바람
 - [x] executor에서 leak남 -> arg free 해결
-- [ ] "" '' minishell: /usr/local/bin/: Permission denied 뜨는데 찾았다 치고 /usr/local/bin/실행시키는 듯함 수정 요망 
+- [x] "" '' minishell: /usr/local/bin/: Permission denied 뜨는데 찾았다 치고 /usr/local/bin/실행시키는 듯함 수정 요망 
         -> 먼말인지 모르겠는데 암튼 한번 해보셈 해결 됐을듯
         -ㄴㄴ 안됨 그냥 미니쉘에 "" 치면 무슨말인지 알듯
+        - 이해했음 해결 완
 - [x] echo에서 leak나는것 같은데 확인 부탁 -> echo에서는 할당이 없어서 적어도 leak은 없을 것으로 예상
 - [x] 없는 환경 변수 (ex -> $test, $qwer) 에서 segfault =>수정 완
-- [x] gnl 가져와야함 -> readline으로 대체 가능
-- [ ] minishell$ misdaf => minishell: misdaf$?: command not found: minishell$  줄바꿈 추가좀
+- [x] gnl 가져와야함 -> readline으로 대체 가능 -> readline은 leak날수도
+- [x] minishell$ misdaf => minishell: misdaf$?: command not found: minishell$  줄바꿈 추가좀
+- [x] strncmp 길이 비교 문자열 +1 까지해야하는데 전체 변경좀 내가 바꾸다 바꿀게 넘 많아서 포기 ex) echoooooooooo hi 도 나욤
+- [x] heredoc이면 임시파일 지워야하는데 코드 확인필요 -> tmp에 써지는건 확인 -> handle_heredoc에서 지워줌
+- [x] $PWD, $OLDPWD : cd .. 시  수정 요망 
+        -> 발견 굿
+
 - [ ] cat만 치고 ctrl + c 누르면 minishell$ 두번 뜸
-- [ ] 오류나고 $? 확인하면 exit code가 0으로 나옴
-- [ ] strncmp 길이 비교 문자열 +1 까지해야하는데 전체 변경좀 내가 바꾸다 바꿀게 넘 많아서 포기 ex) echoooooooooo hi 도 나욤
-- [ ] $PWD, $OLDPWD : cd .. 시  수정 요망
-- [ ] export a=b && echo $a : 수정필요
-- [ ] heredoc -> heredoc1 -> heredoc12 -> heredoc123이렇게 생기는데 의도에 맞는지 확인
-- [ ] heredoc이면 임시파일 지워야하는데 코드 확인필요 -> tmp에 써지는건 확인
+        -> 이건 모르겠네요..
+
+- [x] heredoc -> heredoc1 -> heredoc12 -> heredoc123이렇게 생기는데 의도에 맞는지 확인
+        -> 수정함 (heredoc1 -> heredoc2 -> heredoc3)
 - [ ] 폴더 현재폴더로 ./.tmp에 넣고 싶은데 폴더 있나 확인하고 없으면 만드는 코드 추가 요망
+
+- [ ] 오류나고 $? 확인하면 exit code가 0으로 나옴
+- [ ] export a=b && echo $a : 수정필요
+
 ## heredoc.c
 ```
 void	heredoc(t_lst *lst);

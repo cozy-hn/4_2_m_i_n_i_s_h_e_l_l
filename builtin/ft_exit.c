@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:17 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/22 18:44:08 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 03:31:18 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_exit(t_arg *arg, char **cmd)
 	int	exit_code;
 
 	exit_code = 0;
-	if (ft_strncmp(arg->lst->cmd[0], "exit", 4) && arg->lst->next == NULL)
+	if (ft_strncmp(arg->lst->cmd[0], "exit", 5) && arg->lst->next == NULL)
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (!cmd[1])
 		exit(exit_code);

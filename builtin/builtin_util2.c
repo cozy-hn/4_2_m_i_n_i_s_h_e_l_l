@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_util2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 03:09:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/21 20:28:48 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 04:51:34 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**ft_sort_env(char **env)
 		j = 0;
 		while (env[j])
 		{
-			if (ft_strncmp(env[i], env[j], ft_strlen(env[j])) < 0)
+			if (ft_strncmp(env[i], env[j], ft_strlen(env[j]) + 1) < 0)
 			{
 				tmp = env[i];
 				env[i] = env[j];
@@ -88,14 +88,18 @@ int	throw_error(char *cmd, char *str, char *msg)
 	if (cmd)
 	{
 		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": ", 2);
 	}
 	if (str)
 	{
-		ft_putstr_fd(str, 2);
 		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(str, 2);
 	}
-	ft_putendl_fd(msg, 2);
+	if (msg)
+	{
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(msg, 2);
+	}
+	ft_putstr_fd("\n", 2);
 	return (1);
 }
 

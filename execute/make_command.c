@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:48:59 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/22 03:30:34 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 04:52:26 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ void	parse_commands(t_arg *arg, char **cmd)
 
 char	**return_commands(t_arg	*arg, char **cmd)
 {
+	if (!cmd[0] || ft_strncmp(cmd[0], "", 2) == 0)
+	{
+		throw_error(cmd[0], "command not found", 0);
+		exit(127);
+	}
 	if (cmd[0][0] != '/' && cmd[0][0] != '.')
 	{
 		parse_commands(arg, cmd);

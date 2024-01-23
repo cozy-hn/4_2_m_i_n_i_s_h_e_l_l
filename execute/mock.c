@@ -178,8 +178,8 @@ t_lst *mock_lst()
 	tmp2 = lst;
 
 	tmp2->cmd = (char **)malloc(sizeof(char *) * 100);
-	tmp2->cmd[0] = ft_strdup("cd");
-	tmp2->cmd[1] = ft_strdup("-2");
+	tmp2->cmd[0] = wft_strdup("cd");
+	tmp2->cmd[1] = wft_strdup("-2");
 	tmp2->cmd[2] = NULL;
 
 	tmp2->fd_in = -1;

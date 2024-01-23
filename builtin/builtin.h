@@ -14,16 +14,17 @@ int		has_char(char *str, char c);
 int		env_len(char *env);
 int		throw_error(char *cmd, char *str, char *msg);
 
-int ft_cd(t_arg *arg, char **cmd);
-int	ft_echo(char **cmd);
-int	ft_export(t_env *env, char **cmd);
-int	ft_unset(t_env **env, char **cmd);
-int	ft_env(t_env *env);
-int	ft_pwd(void);
-int	ft_exit(t_arg *arg, char **cmd);
-void free_env_lst(t_env *env);
-char *ft_strndup(char *s, char *end);
-char *get_env_value(t_env *env, char *key);
+int		ft_cd(t_arg *arg, char **cmd);
+int		ft_echo(char **cmd);
+int		ft_export(t_env *env, char **cmd);
+int		ft_unset(t_env **env, char **cmd);
+int		ft_env(t_env *env);
+int		ft_pwd(void);
+int		ft_exit(t_arg *arg, char **cmd);
+void	free_env_lst(t_env *env);
+char	*ft_strndup(char *s, char *end);
+char	*get_env_value(t_env *env, char *key);
+int		add_env(t_env *env, char *str);
 
 
 

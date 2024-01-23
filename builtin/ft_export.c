@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:46:33 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/18 21:54:24 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 05:13:25 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	set_env(t_env *env, char *key, char *value)
 	tmp = env;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0)
+		if (ft_strncmp(tmp->key, key, ft_strlen(key) + 1) == 0)
 		{
 			if (value != NULL)
 			{
@@ -50,17 +50,17 @@ int	add_env(t_env *env, char *str)
 		if (str[ft_strlen(str) - 1] == '=')
 		{
 			key = ft_strndup(str, ft_strchr(str, '='));
-			value = ft_strdup("");
+			value = wft_strdup("");
 		}
 		else
 		{
 			key = ft_strndup(str, ft_strchr(str, '='));
-			value = ft_strdup(ft_strchr(str, '=') + 1);
+			value = wft_strdup(ft_strchr(str, '=') + 1);
 		}
 	}
 	else
 	{
-		key = ft_strdup(str);
+		key = wft_strdup(str);
 		value = 0;
 	}
 	set_env(env, key, value);
