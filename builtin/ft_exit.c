@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:17 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 08:04:10 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 08:49:05 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_exit(t_arg *arg, char **cmd)
 	int	exit_code;
 
 	exit_code = 0;
-	if (ft_strncmp(arg->lst->cmd[0], "exit", 5) && arg->lst->next == NULL)
+	if (ft_strncmp(arg->lst->cmd[0], "exit", 5) == 0 && arg->lst->next == NULL)
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (!cmd[1])
 		exit(exit_code);
@@ -80,7 +80,6 @@ int	ft_exit(t_arg *arg, char **cmd)
 	}
 	else
 		exit_code = return_exit_code(cmd[1], 0);
-	printf("exit code: %d\n", exit_code);
 	g_exit_status = exit_code;
 	// handle_heredoc(arg);
 	system("leaks minishell");
