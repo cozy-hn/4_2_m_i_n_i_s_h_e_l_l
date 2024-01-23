@@ -17,13 +17,40 @@
 - [x] 오류나고 $? 확인하면 exit code가 0으로 나옴
 - [x] heredoc -> heredoc1 -> heredoc12 -> heredoc123이렇게 생기는데 의도에 맞는지 확인
         -> 수정함 (heredoc1 -> heredoc2 -> heredoc3)
-- [x] 폴더 현재폴더로 ./.tmp에 넣고 싶은데 폴더 있나 확인하고 없으면 만드는 코드 추가 요망
-        -> 하긴 했는데 잘 될지 모르겠음
+
+- [ ] 폴더 현재폴더로 ./.tmp에 넣고 싶은데 폴더 있나 확인하고 없으면 만드는 코드 추가 요망
 
 - [ ] cat만 치고 ctrl + c 누르면 minishell$ 두번 뜸
         -> 이건 모르겠네요..
 - [ ] export a=b && echo $a : 수정필요
         -> expansion 시점 변경
+
+## handle_heredoc (heredoc.c)
+```
+heredoc 닫아주는 함수
+인자로 arg 받음 일단은 arg->next 순회 안하고 인자로 들어온 arg만 해줌
+
+void	handle_heredoc(t_arg *arg)
+{
+	t_lst	*lst;
+
+	lst = arg->lst;
+	while (lst)
+	{
+                //lst->in_type 초기화 해줘야함
+                //lst 순회하면서 heredoc이면 in_name을 삭제(unlink) 해줌
+		if (lst->in_type == T_L_D_REDIR)
+		{
+			if (access(lst->fd_in_name, F_OK) == 0)
+				unlink(lst->fd_in_name);
+		}
+		lst = lst->next;
+	}
+}
+```
+
+
+
 
 ## heredoc.c
 ```

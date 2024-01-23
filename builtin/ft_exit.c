@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:17 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 07:49:53 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 08:04:10 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,3 @@ int	ft_exit(t_arg *arg, char **cmd)
 	exit(exit_code);
 	return (exit_code);
 }
-
-// int main() {
-// 	char *args = "-2dsf";
-// 	printf("%d\n", return_exit_code(args, 0));
-// }

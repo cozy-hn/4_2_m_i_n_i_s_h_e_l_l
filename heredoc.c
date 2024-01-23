@@ -6,15 +6,15 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 07:14:59 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 08:25:57 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void handle_heredoc(t_arg *arg)
+void	handle_heredoc(t_arg *arg)
 {
-	t_lst *lst;
+	t_lst	*lst;
 
 	lst = arg->lst;
 	while (lst)
@@ -24,7 +24,7 @@ void handle_heredoc(t_arg *arg)
 			if (access(lst->fd_in_name, F_OK) == 0)
 				unlink(lst->fd_in_name);
 		}
-        lst = lst->next;
+		lst = lst->next;
 	}
 }
 
@@ -59,9 +59,9 @@ void handle_heredoc(t_arg *arg)
 
 char	*avoid_duplicate_name(void)
 {
-	char *name;
-	char *tmp;
-	int i;
+	char	*name;
+	char	*tmp;
+	int		i;
 
 	i = 0;
 	tmp = wft_strdup("/tmp/heredoc");
@@ -85,7 +85,7 @@ int	is_directory(const char *path)
 		return (((info.st_mode) & S_IFMT) == S_IFDIR);
 }
 
-int make_directory(const char *path)
+int	make_directory(const char *path)
 {
 	char	**cmd;
 	int		pid;
@@ -120,14 +120,14 @@ void	heredoc(char **end)
 	char	*name;
 	int		i;
 
-	if (!is_directory("./tmp"))
-	{
-		if (make_directory("./tmp") == 1)
-		{
-			*end = NULL;
-			return ;
-		}
-	}
+	// if (!is_directory("~/tmp"))
+	// {
+	// 	if (make_directory("~/tmp") == 1)
+	// 	{
+	// 		*end = NULL;
+	// 		return ;
+	// 	}
+	// }
 	i = 0;
 	name = avoid_duplicate_name();
 	fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
@@ -147,7 +147,5 @@ void	heredoc(char **end)
 	*end = name;
 }
 
-// int main ()
-// {
-// 	printf("%d",is_directory("./tmp"));
-// }
+
+
