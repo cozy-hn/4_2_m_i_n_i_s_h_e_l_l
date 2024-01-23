@@ -14,7 +14,9 @@
 - [ ] strncmp 길이 비교 문자열 +1 까지해야하는데 전체 변경좀 내가 바꾸다 바꿀게 넘 많아서 포기 ex) echoooooooooo hi 도 나욤
 - [ ] $PWD, $OLDPWD : cd .. 시  수정 요망
 - [ ] export a=b && echo $a : 수정필요
-
+- [ ] heredoc -> heredoc1 -> heredoc12 -> heredoc123이렇게 생기는데 의도에 맞는지 확인
+- [ ] heredoc이면 임시파일 지워야하는데 코드 확인필요 -> tmp에 써지는건 확인
+- [ ] 폴더 현재폴더로 ./.tmp에 넣고 싶은데 폴더 있나 확인하고 없으면 만드는 코드 추가 요망
 ## heredoc.c
 ```
 void	heredoc(t_lst *lst);
