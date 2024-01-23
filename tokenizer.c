@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 15:33:57 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/21 21:34:24 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/23 21:25:55 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,8 @@ int	tokenizer(char *line, t_token **token)
 			return (1);
 		}
 	}
+	safe_free(line);
 	if (wft_lstsize(*token) == 0)
-	{
-		safe_free(line);
 		return (1);
-	}
 	return (0);
 }

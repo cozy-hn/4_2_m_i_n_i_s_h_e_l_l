@@ -12,6 +12,7 @@
 - [ ] cat만 치고 ctrl + c 누르면 minishell$ 두번 뜸
 - [ ] 오류나고 $? 확인하면 exit code가 0으로 나옴
 - [ ] strncmp 길이 비교 문자열 +1 까지해야하는데 전체 변경좀 내가 바꾸다 바꿀게 넘 많아서 포기 ex) echoooooooooo hi 도 나욤
+- [ ] $PWD, $OLDPWD : cd .. 시  수정 요망
 
 ## heredoc.c
 ```
