@@ -7,7 +7,7 @@
         -ㄴㄴ 안됨 그냥 미니쉘에 "" 치면 무슨말인지 알듯
 - [x] echo에서 leak나는것 같은데 확인 부탁 -> echo에서는 할당이 없어서 적어도 leak은 없을 것으로 예상
 - [x] 없는 환경 변수 (ex -> $test, $qwer) 에서 segfault =>수정 완
-- [ ] gnl 가져와야함
+- [x] gnl 가져와야함 -> readline으로 대체 가능
 - [ ] minishell$ misdaf => minishell: misdaf$?: command not found: minishell$  줄바꿈 추가좀
 - [ ] cat만 치고 ctrl + c 누르면 minishell$ 두번 뜸
 - [ ] 오류나고 $? 확인하면 exit code가 0으로 나옴
