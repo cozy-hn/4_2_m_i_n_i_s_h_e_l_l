@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:57:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 06:06:48 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 08:32:37 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	ft_wait(int pid, t_arg *arg, int *status)
 		i++;
 		tmp = tmp->next;
 	}
+	waitpid(pid, status, 0);
 	i -= 1;
 	while (i > 0)
 	{
 		wait(NULL);
 		i--;
 	}
-	waitpid(pid, status, 0);
 }
 
 int	run_execve(t_lst *lst, t_arg *arg)

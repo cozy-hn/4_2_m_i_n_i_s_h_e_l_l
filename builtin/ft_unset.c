@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 04:25:00 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/14 20:16:37 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 08:40:28 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	unset_check_str(char *str, int *exit_status)
 	i = 0;
 	if (ft_isdigit(str[0]))
 	{
-		throw_error("unset", str, "not a valid identifier");
+		throw_export_error("unset", str, "not a valid identifier");
 		*exit_status = 1;
 		return (0);
 	}
@@ -53,7 +53,7 @@ int	unset_check_str(char *str, int *exit_status)
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 		{
-			throw_error("unset", str, "not a valid identifier");
+			throw_export_error("unset", str, "not a valid identifier");
 			*exit_status = 1;
 			return (0);
 		}

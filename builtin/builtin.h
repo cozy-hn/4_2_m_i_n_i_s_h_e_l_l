@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 07:40:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 07:48:14 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 08:40:13 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free_env_lst(t_env *env);
 char	*ft_strndup(char *s, char *end);
 char	*get_env_value(t_env *env, char *key);
 int		add_env(t_env *env, char *str);
-
+void	throw_export_error(char *cmd, char *str, char *msg);
 int		same_env(char *env, char *str);
 int		throw_error(char *cmd, char *str, char *msg);
 int		modify_env(char **str);

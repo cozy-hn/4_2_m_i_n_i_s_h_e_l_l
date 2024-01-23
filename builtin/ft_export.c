@@ -6,11 +6,18 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:46:33 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 07:42:19 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 08:39:33 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
+void	throw_export_error(char *cmd, char *str, char *msg)
+{
+	ft_putstr_fd("export: `", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+}
 
 int	set_env(t_env *env, char *key, char *value)
 {
@@ -74,7 +81,7 @@ int	export_check_str2(char *str, int *exit_status)
 	i = 0;
 	if (!ft_isalpha(str[i]) && str[i] != '_')
 	{
-		throw_error("export", str, "not a valid identifier");
+		throw_export_error("export", str, "not a valid identifier");
 		*exit_status = 1;
 		return (0);
 	}
@@ -82,7 +89,7 @@ int	export_check_str2(char *str, int *exit_status)
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 		{
-			throw_error("export", str, "not a valid identifier");
+			throw_export_error("export", str, "not a valid identifier");
 			*exit_status = 1;
 			return (0);
 		}
