@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/24 23:02:39 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/25 06:26:11 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst)
 			play_cmd(cmd_tree->right, env_lst, &tmp_lst);
 		if (tmp_lst)
 		{
-			print_lst(tmp_lst);
+			// print_lst(tmp_lst);
 			play_executor(&tmp_lst, env_lst);
 			free_lst(&tmp_lst);
 		}

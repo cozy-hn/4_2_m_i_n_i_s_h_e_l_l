@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/24 21:40:00 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/25 07:08:25 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ char	*avoid_duplicate_name(void);
 t_lst	*wft_lstlast_lst(t_lst *lst);
 char	*expand(char *word, t_env *env_lst);
 char	*expand_env(char **word, t_env *env_lst);
+void	signal_handler(int signo);
+void	set_signal(int sig_int, int sig_quit);
 
 int		is_directory(const char *path);
 t_env	*make_env_lst(char **env);

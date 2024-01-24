@@ -6,30 +6,43 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:57:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/25 01:49:42 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 07:13:20 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-void	ft_wait(int pid, t_arg *arg, int *status)
+void	ft_wait(int pid, t_arg *arg)
 {
+	int		last_status;
+	int		status;
+	int		signo;
 	int		i;
-	t_lst	*tmp;
 
 	i = 0;
-	tmp = arg->lst;
-	while (tmp)
+	waitpid(pid, &last_status, 0);
+	g_exit_status = WEXITSTATUS(last_status);
+	if (WIFSIGNALED(last_status))
 	{
-		i++;
-		tmp = tmp->next;
+		signo = WTERMSIG(last_status);
+		if (signo == SIGINT && i++ == 0)
+		{
+			ft_putstr_fd("^C\n", STDERR_FILENO);
+			g_exit_status = 128 + signo;
+		}
+		else if (signo == SIGQUIT && i++ == 0)
+			ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
 	}
-	waitpid(pid, status, 0);
-	i -= 1;
-	while (i > 0)
+	while (wait(&status) != -1)
 	{
-		wait(NULL);
-		i--;
+		if (WIFSIGNALED(status))
+		{
+			signo = WTERMSIG(status);
+			if (signo == SIGINT && i++ == 0)
+				ft_putstr_fd("^C\n", STDERR_FILENO);
+			else if (signo == SIGQUIT && i++ == 0)
+				ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
+		}
 	}
 }
 

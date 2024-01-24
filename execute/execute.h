@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 07:45:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 09:10:22 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 06:44:10 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ int		handle_redirection(t_lst *lst);
 void	connect_redir(t_lst *lst);
 void	duplicate_original_fd(int *fd);
 int		run_builtin_helper(t_lst *lst, t_arg *arg);
-void	ft_wait(int pid, t_arg *arg, int *status);
+void	ft_wait(int pid, t_arg *arg);
 
 #endif

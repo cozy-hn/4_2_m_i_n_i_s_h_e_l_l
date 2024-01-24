@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/25 04:05:41 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 07:09:29 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	run_middle(t_lst *lst, t_arg *arg, int *pipe_fd)
 {
 	int			pid;
 
+	set_signal(DFL, DFL);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -31,6 +32,7 @@ void	run_middle(t_lst *lst, t_arg *arg, int *pipe_fd)
 		execute(lst, arg);
 		exit(0);
 	}
+	set_signal(IGN, IGN);
 	close(lst->prev_pipe);
 	lst->next->prev_pipe = pipe_fd[0];
 	close(pipe_fd[1]);
@@ -41,6 +43,7 @@ void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
 {
 	int			pid;
 
+	set_signal(DFL, DFL);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -53,6 +56,7 @@ void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
 		execute(lst, arg);
 		exit(0);
 	}
+	set_signal(IGN, IGN);
 	close(pipe_fd[1]);
 	lst->next->prev_pipe = pipe_fd[0];
 	close_in_out_fds(lst);
@@ -60,10 +64,10 @@ void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
 
 int	run_last(t_lst *lst, t_arg *arg)
 {
+	int		pid;
+	int		status;
 
-	int			pid;
-	int			status;
-
+	set_signal(DFL, DFL);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -75,6 +79,7 @@ int	run_last(t_lst *lst, t_arg *arg)
 		status = execute(lst, arg);
 		exit(status);
 	}
+	set_signal(IGN, IGN);
 	close(lst->prev_pipe);
 	close_in_out_fds(lst);
 	return (pid);
@@ -105,7 +110,6 @@ void	executor(t_arg *arg)
 {
 	int		pid;
 	t_lst	*lst;
-	int		status;
 
 	if (is_builtin(arg->lst) && arg->lst->next == NULL)
 	{
@@ -125,8 +129,7 @@ void	executor(t_arg *arg)
 		pid = executor_helper(lst, arg);
 		lst = lst->next;
 	}
-	ft_wait(pid, arg, &status);
-	g_exit_status = WEXITSTATUS(status);
+	ft_wait(pid, arg);
 	handle_heredoc(arg);
 }
 
@@ -147,4 +150,4 @@ void	executor(t_arg *arg)
 // 	printf("g_exit_status = %d\n", g_exit_status);
 // 	return(g_exit_status);
 
-// }
+// }tcgetattr(STDIN_FILENO, &term);
