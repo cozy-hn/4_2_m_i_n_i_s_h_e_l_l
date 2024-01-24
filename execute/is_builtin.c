@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:55:14 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 03:32:12 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 22:59:23 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	is_builtin(t_lst *lst)
 {
+	if (lst->cmd == NULL || lst->cmd[0] == NULL)
+		return (0);
 	if (ft_strncmp(lst->cmd[0], "echo", 5) == 0)
 		return (1);
 	else if (ft_strncmp(lst->cmd[0], "cd", 3) == 0)

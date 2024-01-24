@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 21:40:18 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 22:53:39 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 void	handle_heredoc(t_arg *arg)
 {
-	t_lst	*lst;
+	// t_lst	*lst;
 
-	lst = arg->lst;
-	while (lst)
-	{
-		if (lst->in_type == T_L_D_REDIR)
-		{
-			if (access(lst->fd_in_name, F_OK) == 0)
-				unlink(lst->fd_in_name);
-		}
-		lst = lst->next;
-	}
+	// lst = arg->lst;
+	// while (lst)
+	// {
+	// 	if (lst->in_type == T_L_D_REDIR)
+	// 	{
+	// 		if (access(lst->fd_in_name, F_OK) == 0)
+	// 			unlink(lst->fd_in_name);
+	// 	}
+	// 	lst = lst->next;
+	// }
 }
 
 // void	heredoc(t_lst *lst)
