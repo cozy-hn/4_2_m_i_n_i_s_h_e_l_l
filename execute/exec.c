@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:57:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 08:32:37 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 01:49:42 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_wait(int pid, t_arg *arg, int *status)
 int	run_execve(t_lst *lst, t_arg *arg)
 {
 	char	**cmd;
+	char	**env;
 
 	get_path(arg);
 	cmd = return_commands(arg, lst->cmd);

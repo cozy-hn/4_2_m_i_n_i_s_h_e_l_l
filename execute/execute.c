@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 23:01:48 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 04:05:41 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
 
 int	run_last(t_lst *lst, t_arg *arg)
 {
+
 	int			pid;
 	int			status;
 
@@ -70,8 +71,7 @@ int	run_last(t_lst *lst, t_arg *arg)
 			dup2(lst->fd_in, STDIN_FILENO);
 		else
 			dup2(lst->prev_pipe, STDIN_FILENO);
-		if (lst->fd_out != -1)
-			dup2(lst->fd_out, STDOUT_FILENO);
+		dup2(lst->fd_out, STDOUT_FILENO);
 		status = execute(lst, arg);
 		exit(status);
 	}
@@ -98,7 +98,7 @@ int	executor_helper(t_lst *lst, t_arg *arg)
 		else
 			run_middle(lst, arg, pipe_fd);
 	}
-	return (1);
+	return (0);
 }
 
 void	executor(t_arg *arg)
@@ -117,7 +117,7 @@ void	executor(t_arg *arg)
 	lst = arg->lst;
 	while (lst)
 	{
-		if (handle_redirection(arg->lst) != 0)
+		if (handle_redirection(lst) != 0)
 		{
 			lst = lst->next;
 			continue ;
@@ -127,7 +127,7 @@ void	executor(t_arg *arg)
 	}
 	ft_wait(pid, arg, &status);
 	g_exit_status = WEXITSTATUS(status);
-	// handle_heredoc(arg);
+	handle_heredoc(arg);
 }
 
 // int main (int ac, char **av, char **env)

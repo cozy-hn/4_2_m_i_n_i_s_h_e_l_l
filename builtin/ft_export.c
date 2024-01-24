@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:46:33 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 08:39:33 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 02:16:44 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int	set_env(t_env *env, char *key, char *value)
 		{
 			if (value != NULL)
 			{
-				free(key);
-				free(tmp->value);
+				safe_free(tmp->value);
 				tmp->value = value;
 			}
+			safe_free(key);
 			return (0);
 		}
 		tmp = tmp->next;

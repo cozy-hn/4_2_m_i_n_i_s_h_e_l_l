@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 03:09:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 07:09:39 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 01:45:07 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ char	**ft_sort_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-		j = 0;
+		j = i + 1;
 		while (env[j])
 		{
-			if (ft_strncmp(env[i], env[j], ft_strlen(env[j]) + 1) < 0)
+			if (ft_strncmp(env[i], env[j], ft_strlen(env[i]) + 1) > 0)
 			{
 				tmp = env[i];
 				env[i] = env[j];

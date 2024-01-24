@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 23:10:18 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 02:46:27 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 void	handle_heredoc(t_arg *arg)
 {
-	// t_lst	*lst;
+	t_lst	*lst;
 
-	// lst = arg->lst;
-	// while (lst)
-	// {
-	// 	if (lst->in_type == T_L_D_REDIR)
-	// 	{
-	// 		if (access(lst->fd_in_name, F_OK) == 0)
-	// 			unlink(lst->fd_in_name);
-	// 	}
-	// 	lst = lst->next;
-	// }
+	lst = arg->lst;
+	while (lst)
+	{
+		if (lst->in_type == T_L_D_REDIR)
+		{
+			if (access(lst->fd_in_name, F_OK) == 0)
+				unlink(lst->fd_in_name);
+		}
+		lst = lst->next;
+	}
 }
 
 // void	heredoc(t_lst *lst)
@@ -64,12 +64,12 @@ char	*avoid_duplicate_name(void)
 	int		i;
 
 	i = 0;
-	tmp = wft_strdup("./.tmp");
+	tmp = wft_strdup("./tmp");
 	name = tmp;
 	while (access(name, F_OK) == 0)
 	{
 		safe_free(name);
-		tmp = wft_strdup("./.tmp");
+		tmp = wft_strdup("./tmp");
 		name = wft_strjoin(tmp, ft_itoa(++i));
 	}
 	return (name);

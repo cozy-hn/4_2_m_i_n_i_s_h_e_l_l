@@ -26,9 +26,33 @@
         -> expansion 시점 변경
 
 - [x] first middle last에서 fd_in fd_out 존재 시 부모 프로세스에서 fd 닫아주기 (수민)
-- [ ] redirection 에서 파일명 leak (ex, >> a 하면 "a" leak) -> execute 안에서 falut나서 파악 불가
+- [ ] redirection 에서 파일명 leak (ex. ls >> a 하면 "a" leak)
 - [x] while true; do leaks 7624; sleep 1; done;
 - [x] syntax error => 트리전에 exit code 258 처리
+
+- [x] not a directory 하기
+
+- [x] 현재 경로 삭제했을 때 pwd 에러
+
+- [x] export a=100 a leak
+
+- [x] echo - hi -nn
+
+- [x] echo "fuck you donalds" | cat > no | cat << out
+"echo" "-n-n-n-n-n-n-n-n" "hello" Bad file descriptor
+
+- [ ] '<>' syntax error near unexpected token `newline'
+
+- [ ] << eof | nocmd | nocmd | nocmd segfault
+
+- [ ] heredoc quote 처리
+
+- [ ] export 순서
+
+
+
+
+
 ## handle_heredoc (heredoc.c)
 ```
 heredoc 닫아주는 함수
