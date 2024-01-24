@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 08:25:57 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 21:40:18 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ char	*avoid_duplicate_name(void)
 	int		i;
 
 	i = 0;
-	tmp = wft_strdup("/tmp/heredoc");
+	tmp = wft_strdup("./.tmp");
 	name = tmp;
 	while (access(name, F_OK) == 0)
 	{
 		safe_free(name);
-		tmp = wft_strdup("/tmp/heredoc");
+		tmp = wft_strdup("./.tmp");
 		name = wft_strjoin(tmp, ft_itoa(++i));
 	}
 	return (name);
@@ -85,33 +85,33 @@ int	is_directory(const char *path)
 		return (((info.st_mode) & S_IFMT) == S_IFDIR);
 }
 
-int	make_directory(const char *path)
-{
-	char	**cmd;
-	int		pid;
-	int		status;
+// int	make_directory(const char *path)
+// {
+// 	char	**cmd;
+// 	int		pid;
+// 	int		status;
 
-	cmd = wft_calloc(3, sizeof(char *));
-	cmd[0] = wft_strdup("mkdir");
-	cmd[1] = wft_strdup(path);
-	pid = fork();
-	if (pid == 0)
-	{
-		if (execve(cmd[0], cmd, NULL) != 0)
-		{
-			throw_error("mkdir", 0, strerror(errno));
-			exit(1);
-		}
-		exit(0);
-	}
-	safe_free(cmd[0]);
-	safe_free(cmd[1]);
-	safe_free(cmd);
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (0);
-}
+// 	cmd = wft_calloc(3, sizeof(char *));
+// 	cmd[0] = wft_strdup("mkdir");
+// 	cmd[1] = wft_strdup(path);
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		if (execve(cmd[0], cmd, NULL) != 0)
+// 		{
+// 			throw_error("mkdir", 0, strerror(errno));
+// 			exit(1);
+// 		}
+// 		exit(0);
+// 	}
+// 	safe_free(cmd[0]);
+// 	safe_free(cmd[1]);
+// 	safe_free(cmd);
+// 	waitpid(pid, &status, 0);
+// 	if (WIFEXITED(status))
+// 		return (WEXITSTATUS(status));
+// 	return (0);
+// }
 
 void	heredoc(char **end)
 {
@@ -120,14 +120,6 @@ void	heredoc(char **end)
 	char	*name;
 	int		i;
 
-	// if (!is_directory("~/tmp"))
-	// {
-	// 	if (make_directory("~/tmp") == 1)
-	// 	{
-	// 		*end = NULL;
-	// 		return ;
-	// 	}
-	// }
 	i = 0;
 	name = avoid_duplicate_name();
 	fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
@@ -146,6 +138,3 @@ void	heredoc(char **end)
 	safe_free(*end);
 	*end = name;
 }
-
-
-

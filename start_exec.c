@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/24 21:07:17 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 21:51:41 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,19 @@ void print_lst(t_lst *lst)
 	{
 		i = 0;
 		printf("====print lst====\n");
-		while (lst->cmd[i])
-		{
-			// printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
-			printf("lst->cmd[%d]: ", i);
-			printf("%s\n", lst->cmd[i]);
-			i++;
-		}
+		if (lst->cmd)			
+			while (lst->cmd[i])
+			{
+				// printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
+				printf("lst->cmd[%d]: ", i);
+				if (lst->cmd[i])
+					printf("%s\n", lst->cmd[i]);
+				else
+					printf("NULL\n");
+				i++;
+			}
+		else
+			printf("lst->cmd: NULL\n");
 		lst = lst->next;
 	}
 }
@@ -73,37 +79,25 @@ void	add_redir(t_cmd_tree *cmd_tree, t_lst **tmp_lst, t_lst *new)
 {
 	if (cmd_tree->token->type == T_L_REDIR || cmd_tree->token->type == T_L_D_REDIR)
 	{
-		if (cmd_tree->token->type == T_L_REDIR)
-			new->fd_in = open(cmd_tree->token->word, O_RDONLY);
-		else
-			new->fd_in = open(cmd_tree->token->word, O_RDONLY | O_CREAT | O_APPEND, 0644);
+		new->fd_in = open(cmd_tree->token->word, O_RDONLY);
 		if (new->fd_in != -1)
 			close(new->fd_in);
 		else
-		{
-			new->error_flag = 1;
 			(*tmp_lst)->error_flag = 1;
-		}
-		if (new->fd_in_name)
-			safe_free(new->fd_in_name);
+		safe_free(new->fd_in_name);
 		new->fd_in_name = ft_strdup(cmd_tree->token->word);
+		new->in_type = cmd_tree->token->type;
 	}
 	else
 	{
-		if (cmd_tree->token->type == T_R_REDIR)
-			new->fd_out = open(cmd_tree->token->word, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else
-			new->fd_out = open(cmd_tree->token->word, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		new->fd_out = open(cmd_tree->token->word, O_WRONLY | O_CREAT, 0644);
 		if (new->fd_out != -1)
 			close(new->fd_out);
 		else
-		{
-			new->error_flag = 1;
 			(*tmp_lst)->error_flag = 1;
-		}
-		if (new->fd_out_name)
-			safe_free(new->fd_out_name);
+		safe_free(new->fd_out_name);
 		new->fd_out_name = ft_strdup(cmd_tree->token->word);
+		new->out_type = cmd_tree->token->type;
 	}
 }
 

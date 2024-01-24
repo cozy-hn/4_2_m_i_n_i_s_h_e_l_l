@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:52:55 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/23 23:07:44 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 21:17:08 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int	parser(t_cmd_tree **head, t_token **token)
 	type = wft_lstlast(*token)->type;
 	if (cmd_list(head, &now) || now)
 	{
+		g_exit_status = 258;
 		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 		if (now)
 			ft_putstr_fd(now->word, 2);

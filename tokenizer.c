@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 15:33:57 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/23 21:25:55 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 21:17:15 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*set_word(char *line, int *i)
 	}
 	if (dquote || squote)
 	{
+		g_exit_status = 258;
 		printf("minishell: syntax error(quote)\n");
 		safe_free(word);
 		return (NULL);
