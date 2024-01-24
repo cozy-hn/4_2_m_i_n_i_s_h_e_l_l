@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/24 21:51:41 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 23:02:39 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void print_lst(t_lst *lst)
 	{
 		i = 0;
 		printf("====print lst====\n");
-		if (lst->cmd)			
+		if (lst->cmd)
+		{
+			printf("fd_in_name: %s\n", lst->fd_in_name);
+			printf("fd_out_name: %s\n", lst->fd_out_name);
 			while (lst->cmd[i])
 			{
 				// printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
@@ -31,6 +34,7 @@ void print_lst(t_lst *lst)
 					printf("NULL\n");
 				i++;
 			}
+		}
 		else
 			printf("lst->cmd: NULL\n");
 		lst = lst->next;
@@ -71,6 +75,8 @@ void	free_lst(t_lst **lst)
 		tmp = *lst;
 		*lst = (*lst)->next;
 		free_double_char(tmp->cmd);
+		safe_free(tmp->fd_in_name);
+		safe_free(tmp->fd_out_name);
 		safe_free(tmp);
 	}
 }
