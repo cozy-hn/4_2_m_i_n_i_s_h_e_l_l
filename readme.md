@@ -25,6 +25,9 @@
 - [ ] export a=b && echo $a : 수정필요
         -> expansion 시점 변경
 
+- [ ] first middle last에서 fd_in fd_out 존재 시 부모 프로세스에서 fd 닫아주기 (수민)
+- [ ] redirection 에서 파일명 leak (ex, >> a 하면 "a" leak)
+
 ## handle_heredoc (heredoc.c)
 ```
 heredoc 닫아주는 함수

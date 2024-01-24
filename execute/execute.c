@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 07:47:42 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 09:16:38 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,13 @@ void	run_middle(t_lst *lst, t_arg *arg, int *pipe_fd)
 			dup2(lst->fd_out, STDOUT_FILENO);
 		else
 			dup2(pipe_fd[1], STDOUT_FILENO);
-		close(pipe_fd[1]);
 		execute(lst, arg);
 		exit(0);
 	}
-	else
-	{
-		close(lst->prev_pipe);
-		lst->next->prev_pipe = pipe_fd[0];
-		close(pipe_fd[1]);
-	}
+	close(lst->prev_pipe);
+	lst->next->prev_pipe = pipe_fd[0];
+	close(pipe_fd[1]);
+	close_in_out_fds(lst);
 }
 
 void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
@@ -47,21 +44,18 @@ void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (lst->fd_in != -1)
-			dup2(lst->fd_in, STDIN_FILENO);
+		close(pipe_fd[0]);
+		dup2(lst->fd_in, STDIN_FILENO);
 		if (lst->fd_out != -1)
 			dup2(lst->fd_out, STDOUT_FILENO);
 		else
 			dup2(pipe_fd[1], STDOUT_FILENO);
-		close(pipe_fd[1]);
 		execute(lst, arg);
 		exit(0);
 	}
-	else
-	{
-		close(pipe_fd[1]);
-		lst->next->prev_pipe = pipe_fd[0];
-	}
+	close(pipe_fd[1]);
+	lst->next->prev_pipe = pipe_fd[0];
+	close_in_out_fds(lst);
 }
 
 int	run_last(t_lst *lst, t_arg *arg)
@@ -81,6 +75,8 @@ int	run_last(t_lst *lst, t_arg *arg)
 		status = execute(lst, arg);
 		exit(status);
 	}
+	close(lst->prev_pipe);
+	close_in_out_fds(lst);
 	return (pid);
 }
 

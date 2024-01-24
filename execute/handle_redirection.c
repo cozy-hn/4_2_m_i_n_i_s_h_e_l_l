@@ -6,11 +6,19 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 06:26:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 06:47:22 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 09:10:46 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+void	close_in_out_fds(t_lst *lst)
+{
+	if (lst->fd_in != -1)
+		close(lst->fd_in);
+	if (lst->fd_out != -1)
+		close(lst->fd_out);
+}
 
 int	handle_fd_input(t_lst *lst)
 {
