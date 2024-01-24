@@ -22,12 +22,13 @@
 
 - [ ] cat만 치고 ctrl + c 누르면 minishell$ 두번 뜸
         -> 이건 모르겠네요..
-- [ ] export a=b && echo $a : 수정필요
+- [x] export a=b && echo $a : 수정필요
         -> expansion 시점 변경
 
 - [x] first middle last에서 fd_in fd_out 존재 시 부모 프로세스에서 fd 닫아주기 (수민)
 - [ ] redirection 에서 파일명 leak (ex, >> a 하면 "a" leak)
-
+- [x] while true; do leaks 7624; sleep 1; done;
+- [ ] syntax error => 트리전에 exit code 258 처리
 ## handle_heredoc (heredoc.c)
 ```
 heredoc 닫아주는 함수
