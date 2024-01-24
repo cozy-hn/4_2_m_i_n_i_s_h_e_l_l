@@ -6,12 +6,12 @@
 #    By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 16:32:40 by jiko              #+#    #+#              #
-#    Updated: 2024/01/22 18:40:46 by jiko             ###   ########.fr        #
+#    Updated: 2024/01/24 22:48:54 by jiko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= cc
-# CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror
 CFLAGS		= 
 LIBFTFLAG	= -Llibft -lft
 LFLAGS		= -lreadline
