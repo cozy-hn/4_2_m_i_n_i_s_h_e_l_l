@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 06:26:11 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 07:21:50 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	play_executor(t_lst **tmp_lst, t_env *env_lst)
 	arg->lst = *tmp_lst;
 	executor(arg);
 	safe_free(arg);
+	set_signal(SHE, SHE);
 	// print_lst(*tmp_lst);
 }
 
