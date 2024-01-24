@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/24 07:14:50 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 20:52:36 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,9 @@ void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst);
 void	wft_lstadd_back_lst(t_lst **lst, t_lst *new);
 void	free_env_lst (t_env *env_lst);
 char	*avoid_duplicate_name(void);
+t_lst	*wft_lstlast_lst(t_lst *lst);
+char	*expand(char *word, t_env *env_lst);
+char	*expand_env(char **word, t_env *env_lst);
 
 int		is_directory(const char *path);
 t_env	*make_env_lst(char **env);

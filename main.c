@@ -6,16 +6,16 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/23 21:31:01 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 21:08:12 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_leak(void)
-{
-	system("leaks --list -- minishell");
-}
+// void	check_leak(void)
+// {
+// 	system("leaks --list -- minishell");
+// }
 
 void	signal_handler(int signo)
 {
@@ -107,7 +107,6 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		// print_token(token); //test
 		// test_tr_print_tree(cmd_tree); //test
-		expander(&cmd_tree, env_lst);
 		// test_tr_print_tree(cmd_tree); //test
 		start_exec(cmd_tree, env_lst);
 		free_cmd_tree(cmd_tree);
@@ -115,6 +114,6 @@ int	main(int argc, char **argv, char **env)
 	}
 	free_env_lst(env_lst);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	atexit(check_leak);
+	// atexit(check_leak);
 	return (0);
 }

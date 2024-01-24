@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 22:04:35 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/22 19:29:44 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 21:08:05 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,4 @@ char	*expand(char *word, t_env *env_lst)
 	}
 	safe_free(tmp);
 	return (ret);
-}
-
-int	expander(t_cmd_tree **cmd_tree, t_env *env_lst)
-
-{
-	if (!*cmd_tree)
-		return (0);
-	if ((*cmd_tree)->bnf_type == BNF_COMMAND_PART)
-		(*cmd_tree)->token->word = expand((*cmd_tree)->token->word, env_lst);
-	expander(&(*cmd_tree)->left, env_lst);
-	expander(&(*cmd_tree)->right, env_lst);
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 20:38:09 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/22 19:41:57 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 20:49:31 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,13 @@ char	*wft_strjoin(char const *s1, char const *s2)
 	safe_free((char *)s1);
 	safe_free((char *)s2);
 	return (tmp);
+}
+
+t_lst	*wft_lstlast_lst(t_lst *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }

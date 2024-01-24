@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/23 23:06:09 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/24 21:07:17 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	add_redir(t_cmd_tree *cmd_tree, t_lst **tmp_lst, t_lst *new)
 	}
 }
 
-void	stack_cmd(t_cmd_tree *cmd_tree, t_lst **tmp_lst, t_lst *new, char ***cmd)
+void	stack_cmd(t_cmd_tree *cmd_tree, t_lst **tmp_lst, char ***cmd, t_env *env_lst)
 {
 	char	**tmp;
 	int		cmd_len;
@@ -116,8 +116,9 @@ void	stack_cmd(t_cmd_tree *cmd_tree, t_lst **tmp_lst, t_lst *new, char ***cmd)
 		return ;
 	if (cmd_tree->bnf_type == BNF_COMMAND_PART)
 	{
+		cmd_tree->token->word = expand(cmd_tree->token->word, env_lst);
 		if (6 <= cmd_tree->token->type && cmd_tree->token->type <= 9)
-			add_redir(cmd_tree, tmp_lst, new);
+			add_redir(cmd_tree, tmp_lst, wft_lstlast_lst(*tmp_lst));
 		else
 		{
 			cmd_len = 0;
@@ -133,8 +134,8 @@ void	stack_cmd(t_cmd_tree *cmd_tree, t_lst **tmp_lst, t_lst *new, char ***cmd)
 	}
 	else
 	{
-		stack_cmd(cmd_tree->left, tmp_lst, new, cmd);
-		stack_cmd(cmd_tree->right, tmp_lst, new, cmd);
+		stack_cmd(cmd_tree->left, tmp_lst, cmd, env_lst);
+		stack_cmd(cmd_tree->right, tmp_lst, cmd, env_lst);
 	}
 }
 
@@ -153,7 +154,7 @@ void	play_cmd(t_cmd_tree *cmd_tree, t_env *env_lst, t_lst **tmp_lst)
 		new->fd_in = -1;
 		new->fd_out = -1;
 		new->prev_pipe = -1;
-		stack_cmd(cmd_tree, tmp_lst, new, &cmd);
+		stack_cmd(cmd_tree, tmp_lst, &cmd, env_lst);
 		new->cmd = cmd;
 	}
 	else if (cmd_tree->bnf_type == BNF_PIPELINE)

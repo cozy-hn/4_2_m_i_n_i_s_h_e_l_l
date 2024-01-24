@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:17 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 08:49:05 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/24 20:38:18 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	ft_exit(t_arg *arg, char **cmd)
 		exit_code = return_exit_code(cmd[1], 0);
 	g_exit_status = exit_code;
 	// handle_heredoc(arg);
-	system("leaks minishell");
 	exit(exit_code);
 	return (exit_code);
 }
