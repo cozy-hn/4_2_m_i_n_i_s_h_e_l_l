@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 05:07:57 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 05:24:59 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ void	set_signal(int sig_int, int sig_quit);
 void	tokenizer_if_is_meta(char *line, int *i, t_token *new);
 char	*set_meta_word(int type);
 void	heredoc_free(t_heredoc *hed_lst);
+void	remove_quotes(char **word);
 
 int		is_directory(const char *path);
 t_env	*make_env_lst(char **env);
