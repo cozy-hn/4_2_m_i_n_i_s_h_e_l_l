@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:52:55 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 01:24:32 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 02:18:51 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ int	cmd_command_part(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst)
 		}
 		safe_free((*head)->token->word);
 		(*head)->token->word = wft_strdup((*now)->next->word);
-		if ((*now)->type == T_L_D_REDIR)
-			heredoc(&(*head)->token->word, hed_lst);
+		if ((*now)->type == 8 && heredoc(&(*head)->token->word, hed_lst))
+			return (1);
 		*now = (*now)->next->next;
 	}
 	else if (*now && (*now)->type == T_WORD)
@@ -115,6 +115,7 @@ int	parser(t_cmd_tree **head, t_token **token, t_heredoc **hed_lst)
 	type = wft_lstlast(*token)->type;
 	if (cmd_list(head, &now, hed_lst) || now)
 	{
+<<<<<<< HEAD
 		g_exit = 258;
 		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 		if (now)
@@ -122,6 +123,18 @@ int	parser(t_cmd_tree **head, t_token **token, t_heredoc **hed_lst)
 		else
 			ft_putstr_fd("newline", 2);
 		ft_putstr_fd("'\n", 2);
+=======
+		if ((*hed_lst)->hed_flag)
+		{
+			g_exit_status = 258;
+			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+			if (now)
+				ft_putstr_fd(now->word, 2);
+			else
+				ft_putstr_fd("newline", 2);
+			ft_putstr_fd("'\n", 2);
+		}
+>>>>>>> c4bd690c20bb13c4a0083050c49b96724f1c342a
 		free_cmd_tree(*head);
 		free_token(*token);
 		return (1);

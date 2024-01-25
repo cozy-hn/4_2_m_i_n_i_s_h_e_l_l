@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 02:13:40 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 02:18:40 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ t_token	*wft_lstlast(t_token *lst);
 int		ft_is_env_word(char c, int i);
 int		expander(t_cmd_tree **cmd_tree, t_env *env_lst);
 char	*wft_strjoin(char const *s1, char const *s2);
-void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst);
+void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst, t_heredoc *hed_lst);
 void	wft_lstadd_back_lst(t_lst **lst, t_lst *new);
 void	free_env_lst(t_env *env_lst);
 char	*avoid_duplicate_name(void);

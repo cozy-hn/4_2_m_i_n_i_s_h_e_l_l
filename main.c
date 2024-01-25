@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 02:16:55 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 02:18:34 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		token = NULL;
 		cmd_tree = NULL;
+		hed_lst = NULL;
 		line = readline("minishell$ ");
 		if (!line)
 		{
@@ -111,7 +112,7 @@ int	main(int argc, char **argv, char **env)
 		add_history(line);
 		if (tokenizer(line, &token) || parser(&cmd_tree, &token, &hed_lst))
 			continue ;
-		start_exec(cmd_tree, env_lst);
+		start_exec(cmd_tree, env_lst, hed_lst);
 		free_cmd_tree(cmd_tree);
 		free_token(token);
 	}
