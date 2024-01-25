@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 03:22:58 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 05:08:39 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	heredoc(char **end, t_heredoc **hed_lst)
 	new = wft_calloc(1, sizeof(t_heredoc));
 	new->name = name;
 	new->next = NULL;
-
 	wft_lstadd_back_hed(hed_lst, new);
 	set_signal(HED, HED);
 	pid = fork();
