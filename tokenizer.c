@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 15:33:57 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/24 21:17:15 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/25 18:47:27 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,7 @@ int	tokenizer(char *line, t_token **token)
 		if (remove_space(line, &i))
 			continue ;
 		new = wft_calloc(1, sizeof(t_token));
-		if (is_meta(&line[i]))
-		{
-			new->type = set_type(line, &i);
-			new->word = set_meta_word(new->type);
-		}
-		else
-		{
-			new->type = T_WORD;
-			new->word = set_word(line, &i);
-		}
+		tokenizer_if_is_meta(line, &i, new);
 		wft_lstadd_back(token, new);
 		if (!new->word)
 		{

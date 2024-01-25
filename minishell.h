@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 18:21:17 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/25 18:49:57 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,13 +129,15 @@ int		expander(t_cmd_tree **cmd_tree, t_env *env_lst);
 char	*wft_strjoin(char const *s1, char const *s2);
 void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst);
 void	wft_lstadd_back_lst(t_lst **lst, t_lst *new);
-void	free_env_lst (t_env *env_lst);
+void	free_env_lst(t_env *env_lst);
 char	*avoid_duplicate_name(void);
 t_lst	*wft_lstlast_lst(t_lst *lst);
 char	*expand(char *word, t_env *env_lst);
 char	*expand_env(char **word, t_env *env_lst);
 void	signal_handler(int signo);
 void	set_signal(int sig_int, int sig_quit);
+void	tokenizer_if_is_meta(char *line, int *i, t_token *new);
+char	*set_meta_word(int type);
 
 int		is_directory(const char *path);
 t_env	*make_env_lst(char **env);
