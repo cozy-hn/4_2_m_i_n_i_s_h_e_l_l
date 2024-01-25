@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 07:40:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 08:40:13 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 23:29:22 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 char	**ft_dup_env(char **env);
 int		ft_free_arr(char **arr);
 int		ft_print_env(char **env);
-char	**ft_sort_env(char **env);
+char	**ft_sort_env(char **env_arr, t_env *env_lst);
 int		has_char(char *str, char c);
 int		env_len(char *env);
 int		throw_error(char *cmd, char *str, char *msg);
