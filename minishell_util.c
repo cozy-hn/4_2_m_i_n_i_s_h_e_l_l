@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 22:27:20 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 05:24:17 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 05:29:51 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	remove_space(char *line, int *i)
 	return (flag);
 }
 
-void	remove_quotes(char **word)
+char	*remove_quotes(char *word)
 {
 	int		s_quote;
 	int		d_quote;

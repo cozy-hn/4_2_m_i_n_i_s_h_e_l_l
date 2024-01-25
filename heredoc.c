@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 05:20:56 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 05:29:34 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	run_heredoc(char **end, char *name)
 	int		fd;
 	char	*line;
 
-	// remove_quotes(end);
+	*end = remove_quotes(*end);
 	fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	while (1)
 	{

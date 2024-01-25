@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 05:12:50 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 05:26:33 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	main(int argc, char **argv, char **env)
 		if (tokenizer(main.line, &main.token)
 			|| parser(&main.cmd_tree, &main.token, &main.hed_lst))
 			continue ;
-		// test_tr_print_tree(cmd_tree);
 		main_second(&main);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
