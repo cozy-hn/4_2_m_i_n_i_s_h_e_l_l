@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 02:19:38 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 02:21:50 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,10 +173,10 @@ void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst, t_heredoc *hed_lst)
 		return ;
 	if (cmd_tree -> bnf_type == BNF_LIST)
 	{
-		start_exec(cmd_tree->left, env_lst);
+		start_exec(cmd_tree->left, env_lst, hed_lst);
 		if (cmd_tree->left->token && ((cmd_tree->left->token->type == T_AND && !g_exit) || \
 			(cmd_tree->left->token->type == T_OR && g_exit)))
-			start_exec(cmd_tree->right, env_lst);
+			start_exec(cmd_tree->left, env_lst, hed_lst);
 	}
 	else if (cmd_tree -> bnf_type == BNF_PIPELINE)
 	{

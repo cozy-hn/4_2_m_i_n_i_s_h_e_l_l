@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 02:18:34 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 03:11:02 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,11 @@ void	signal_handler(int signo)
 	}
 }
 
-int	heredoc_handler(t_heredoc *hed_lst)
+void	heredoc_free(t_heredoc *hed_lst)
 {
 	t_heredoc	*tmp;
 	t_heredoc	*tmp2;
 
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	if (hed_lst)
-	(hed_lst)->hed_flag = 1;
 	tmp = hed_lst;
 	while (tmp)
 	{
@@ -49,6 +43,15 @@ int	heredoc_handler(t_heredoc *hed_lst)
 		tmp = tmp->next;
 		safe_free(tmp2);
 	}
+}
+
+int	heredoc_handler(t_heredoc *hed_lst)
+{
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	heredoc_free(hed_lst);
 	return (1);
 }
 
@@ -113,6 +116,7 @@ int	main(int argc, char **argv, char **env)
 		if (tokenizer(line, &token) || parser(&cmd_tree, &token, &hed_lst))
 			continue ;
 		start_exec(cmd_tree, env_lst, hed_lst);
+		heredoc_free(hed_lst);
 		free_cmd_tree(cmd_tree);
 		free_token(token);
 	}
