@@ -6,20 +6,20 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:52:55 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 00:47:30 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 01:17:18 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //<list> ::= <pipeline> {("&&" | "||") <pipeline>}
-int	cmd_list(t_cmd_tree **head, t_token **now)
+int	cmd_list(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst)
 {
 	t_cmd_tree	*next;
 
 	*head = wft_calloc(1, sizeof(t_cmd_tree));
 	(*head)->bnf_type = BNF_LIST;
-	if (cmd_pipeline(&(*head)->left, now))
+	if (cmd_pipeline(&(*head)->left, now, hed_lst))
 		return (1);
 	while (*now && ((*now)->type == T_OR || (*now)->type == T_AND))
 	{
@@ -29,7 +29,7 @@ int	cmd_list(t_cmd_tree **head, t_token **now)
 		next->bnf_type = BNF_LIST;
 		next->left = *head;
 		*head = next;
-		if (cmd_pipeline(&next->right, now))
+		if (cmd_pipeline(&next->right, now, hed_lst))
 			return (1);
 	}
 	return (0);
@@ -38,7 +38,7 @@ int	cmd_list(t_cmd_tree **head, t_token **now)
 
 
 //<pipeline> ::= "(" <list> ")" | <command> {"|" <command>}
-int	cmd_pipeline(t_cmd_tree **head, t_token **now)
+int	cmd_pipeline(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst)
 {
 	t_cmd_tree	*next;
 
@@ -47,26 +47,26 @@ int	cmd_pipeline(t_cmd_tree **head, t_token **now)
 	if (*now && (*now)->type == T_L_PAR)
 	{
 		*now = (*now)->next;
-		if (cmd_list(&(*head)->left, now))
+		if (cmd_list(&(*head)->left, now, hed_lst))
 			return (1);
 		if (!(*now) || (*now)->type != T_R_PAR)
 			return (1);
 		*now = (*now)->next;
 	}
 	else
-		if (cmd_command_else(head, now))
+		if (cmd_command_else(head, now, hed_lst))
 			return (1);
 	return (0);
 }
 
 // <command> ::= <command_part> {<command_part>}
-int	cmd_command(t_cmd_tree **head, t_token **now)
+int	cmd_command(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst)
 {
 	t_cmd_tree	*next;
 
 	*head = wft_calloc(1, sizeof(t_cmd_tree));
 	(*head)->bnf_type = BNF_COMMAND;
-	if (cmd_command_part(&(*head)->left, now))
+	if (cmd_command_part(&(*head)->left, now, hed_lst))
 		return (1);
 	while (*now && (T_L_REDIR <= (*now)->type && (*now)->type <= T_WORD))
 	{
@@ -74,14 +74,14 @@ int	cmd_command(t_cmd_tree **head, t_token **now)
 		next->bnf_type = BNF_COMMAND;
 		next->left = *head;
 		*head = next;
-		if (cmd_command_part(&next->right, now))
+		if (cmd_command_part(&next->right, now, hed_lst))
 			return (1);
 	}
 	return (0);
 }
 
 //	<command_part>	::= (">" | ">>" | "<" | "<<") <word> | <word>
-int	cmd_command_part(t_cmd_tree **head, t_token **now)
+int	cmd_command_part(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst)
 {
 	*head = wft_calloc(1, sizeof(t_cmd_tree));
 	(*head)->bnf_type = BNF_COMMAND_PART;
@@ -97,6 +97,7 @@ int	cmd_command_part(t_cmd_tree **head, t_token **now)
 		(*head)->token->word = wft_strdup((*now)->next->word);
 		if ((*now)->type == T_L_D_REDIR)
 			heredoc(&(*head)->token->word);
+			// heredoc(&(*head)->token->word, hed_lst);
 		*now = (*now)->next->next;
 	}
 	else if (*now && (*now)->type == T_WORD)
@@ -106,14 +107,14 @@ int	cmd_command_part(t_cmd_tree **head, t_token **now)
 	return (0);
 }
 
-int	parser(t_cmd_tree **head, t_token **token)
+int	parser(t_cmd_tree **head, t_token **token, t_heredoc **hed_lst)
 {
 	t_token	*now;
 	int		type;
 
 	now = *token;
 	type = wft_lstlast(*token)->type;
-	if (cmd_list(head, &now) || now)
+	if (cmd_list(head, &now, hed_lst) || now)
 	{
 		g_exit = 258;
 		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
