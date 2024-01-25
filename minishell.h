@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 02:18:40 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 02:19:53 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_env
 typedef struct s_arg
 {
 	t_env			*env;
+	t_heredoc		*hed_lst;
 	char			**path;
 	t_lst			*lst;
 }	t_arg;

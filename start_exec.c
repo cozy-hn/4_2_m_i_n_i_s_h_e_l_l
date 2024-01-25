@@ -6,11 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/01/26 01:15:02 by sumjo            ###   ########.fr       */
-=======
-/*   Updated: 2024/01/26 02:13:30 by jiko             ###   ########.fr       */
->>>>>>> c4bd690c20bb13c4a0083050c49b96724f1c342a
+/*   Updated: 2024/01/26 02:19:38 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +48,8 @@ void	play_executor(t_lst **tmp_lst, t_env *env_lst, t_heredoc *hed_lst)
 	arg = wft_calloc(1, sizeof(t_arg));
 	arg->env = env_lst;
 	arg->lst = *tmp_lst;
-	executor(arg, hed_lst);
+	arg->hed_lst = hed_lst;
+	executor(arg);
 	safe_free(arg);
 	set_signal(SHE, SHE);
 }
