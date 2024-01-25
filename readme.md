@@ -45,15 +45,17 @@
 
 - [x] << eof | nocmd | nocmd | nocmd segfault
 
-- [ ] heredoc quote 처리
+- [x] heredoc quote 처리
 
 - [x] export 순서
 
-- [ ] Make file flag 걸고 컴파일 하기 
+- [x] Make file flag 걸고 컴파일 하기 
 
 - [x] exit시 exit 안나옴
 
-- [ ] >
+- [x] >
+
+- [ ] print_tree삭제
 
 
 

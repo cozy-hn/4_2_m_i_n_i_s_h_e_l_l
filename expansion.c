@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 22:04:35 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 04:57:21 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 05:37:07 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ char	*expand_env(char **word, t_env *env_lst)
 	return (ret);
 }
 
+void	expand_elif(char **word, char **ret, t_env *env_lst)
+{
+	if (ft_is_env_word(*(*word + 1), 0) == 0)
+		*ret = ft_strjoin_char(*ret, '$');
+	else
+		*ret = wft_strjoin(*ret, expand_env(word, env_lst));
+}
+
 char	*expand(char *word, t_env *env_lst)
 {
 	int		s_quote;
@@ -49,12 +57,7 @@ char	*expand(char *word, t_env *env_lst)
 		else if (*word == '\"' && !s_quote)
 			d_quote = !d_quote;
 		else if (*word == '$' && !s_quote)
-		{
-			if (ft_is_env_word(*(word + 1), 0) == 0)
-				ret = ft_strjoin_char(ret, '$');
-			else
-				ret = wft_strjoin(ret, expand_env(&word, env_lst));
-		}
+			expand_elif(&word, &ret, env_lst);
 		else
 			ret = ft_strjoin_char(ret, *word);
 		if (*word)

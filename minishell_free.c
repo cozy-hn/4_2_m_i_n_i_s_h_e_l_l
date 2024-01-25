@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:25:20 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 19:18:02 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 05:51:48 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,32 @@ void	free_cmd_tree(t_cmd_tree *cmd_tree)
 	if (cmd_tree->right)
 		free_cmd_tree(cmd_tree->right);
 	safe_free(cmd_tree);
+}
+
+void	free_double_char(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		safe_free(str[i]);
+		i++;
+	}
+	safe_free(str);
+}
+
+void	free_lst(t_lst **lst)
+{
+	t_lst	*tmp;
+
+	while (*lst)
+	{
+		tmp = *lst;
+		*lst = (*lst)->next;
+		free_double_char(tmp->cmd);
+		safe_free(tmp->fd_in_name);
+		safe_free(tmp->fd_out_name);
+		safe_free(tmp);
+	}
 }
