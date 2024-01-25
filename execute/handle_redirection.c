@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 06:26:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 04:56:58 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 06:02:27 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	handle_fd_output(t_lst *lst)
 	if (lst->out_type != T_NONE)
 	{
 		if (lst->out_type == T_R_REDIR)
-			fd = open(lst->fd_out_name, O_CREAT | O_WRONLY, 0644);
+			fd = open(lst->fd_out_name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		else if (lst->out_type == T_R_D_REDIR)
 			fd = open(lst->fd_out_name, O_CREAT | O_APPEND | O_WRONLY, 0644);
 		if (fd == -1)

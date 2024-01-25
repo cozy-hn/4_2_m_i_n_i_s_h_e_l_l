@@ -6,11 +6,32 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:48:59 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 05:00:54 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 05:58:40 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+void	throw_error_exit(char *cmd, char *str, char *msg)
+{
+	ft_putstr_fd("minishell: ", 2);
+	if (cmd)
+	{
+		ft_putstr_fd(cmd, 2);
+	}
+	if (str)
+	{
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(str, 2);
+	}
+	if (msg)
+	{
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(msg, 2);
+	}
+	ft_putstr_fd("\n", 2);
+	exit(127);
+}
 
 int	is_directory(const char *path)
 {
@@ -29,10 +50,7 @@ char	**parse_commands(t_arg *arg, char **cmd)
 
 	i = 0;
 	if (arg->path == NULL)
-	{
-		throw_error(cmd[0], "No Such file or directory", 0);
-		exit(127);
-	}
+		throw_error_exit(cmd[0], "No Such file or directory", 0);
 	while (arg->path[i])
 	{
 		arr = wft_strdup(arg->path[i]);
@@ -45,8 +63,9 @@ char	**parse_commands(t_arg *arg, char **cmd)
 		free(arr);
 		i++;
 	}
-	throw_error(cmd[0], "command not found", 0);
-	exit(127);
+	if (has_char(cmd[0], '/'))
+		throw_error_exit(cmd[0], "No Such file or directory", 0);
+	throw_error_exit(cmd[0], "command not found", 0);
 	return (0);
 }
 
