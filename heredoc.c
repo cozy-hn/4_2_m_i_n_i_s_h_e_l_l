@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 05:00:47 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 05:16:03 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,19 @@ int	heredoc(char **end, t_heredoc **hed_lst)
 	int			pid;
 	int			status;
 	int			signo;
+<<<<<<< HEAD
 	char		*name;
 
 	name = init_new_heredoc(hed_lst);
+=======
+	t_heredoc	*new;
+
+	name = avoid_duplicate_name();
+	new = wft_calloc(1, sizeof(t_heredoc));
+	new->name = name;
+	new->next = NULL;
+	wft_lstadd_back_hed(hed_lst, new);
+>>>>>>> 45d7ba14ff4887d0fcb575d5fbfc4b88e2634486
 	set_signal(HED, HED);
 	pid = fork();
 	if (pid == 0)
