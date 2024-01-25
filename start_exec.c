@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 23:58:59 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 01:15:02 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,8 +173,8 @@ void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst)
 	if (cmd_tree -> bnf_type == BNF_LIST)
 	{
 		start_exec(cmd_tree->left, env_lst);
-		if (cmd_tree->left->token && ((cmd_tree->left->token->type == T_AND && !g_exit_status) || \
-			(cmd_tree->left->token->type == T_OR && g_exit_status)))
+		if (cmd_tree->left->token && ((cmd_tree->left->token->type == T_AND && !g_exit) || \
+			(cmd_tree->left->token->type == T_OR && g_exit)))
 			start_exec(cmd_tree->right, env_lst);
 	}
 	else if (cmd_tree -> bnf_type == BNF_PIPELINE)
@@ -190,7 +190,7 @@ void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst)
 			play_cmd(cmd_tree->right, env_lst, &tmp_lst);
 		if (tmp_lst)
 		{
-			print_lst(tmp_lst);
+			// print_lst(tmp_lst);
 			play_executor(&tmp_lst, env_lst);
 			free_lst(&tmp_lst);
 		}

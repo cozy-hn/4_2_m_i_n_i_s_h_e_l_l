@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/25 23:31:30 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 00:47:30 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*get_env_value(t_env *env, char *key)
 	t_env	*tmp;
 
 	if (ft_strncmp(key, "?", 2) == 0)
-		return (ft_itoa(g_exit_status));
+		return (ft_itoa(g_exit));
 	tmp = env;
 	while (tmp)
 	{

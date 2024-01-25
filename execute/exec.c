@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:57:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/25 07:13:20 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 00:47:30 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	ft_wait(int pid, t_arg *arg)
 
 	i = 0;
 	waitpid(pid, &last_status, 0);
-	g_exit_status = WEXITSTATUS(last_status);
+	g_exit = WEXITSTATUS(last_status);
 	if (WIFSIGNALED(last_status))
 	{
 		signo = WTERMSIG(last_status);
 		if (signo == SIGINT && i++ == 0)
 		{
 			ft_putstr_fd("^C\n", STDERR_FILENO);
-			g_exit_status = 128 + signo;
+			g_exit = 128 + signo;
 		}
 		else if (signo == SIGQUIT && i++ == 0)
 			ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);

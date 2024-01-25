@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/25 07:09:29 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 00:47:30 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	executor(t_arg *arg)
 	{
 		if (handle_redirection(arg->lst) != 0)
 			return ;
-		g_exit_status = run_builtin_helper(arg->lst, arg);
+		g_exit = run_builtin_helper(arg->lst, arg);
 		return ;
 	}
 	lst = arg->lst;
@@ -147,7 +147,7 @@ void	executor(t_arg *arg)
 
 // 	executor(&arg);
 
-// 	printf("g_exit_status = %d\n", g_exit_status);
-// 	return(g_exit_status);
+// 	printf("g_exit = %d\n", g_exit);
+// 	return(g_exit);
 
 // }tcgetattr(STDIN_FILENO, &term);

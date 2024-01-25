@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:15:16 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/25 04:06:58 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 00:47:30 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	run_echo(char **cmd, int idx)
 		{
 			if (cmd[i][j] == '$' && cmd[i][j + 1] == '?')
 			{
-				ft_putnbr_fd(g_exit_status, 1);
+				ft_putnbr_fd(g_exit, 1);
 				j++;
 			}
 			else

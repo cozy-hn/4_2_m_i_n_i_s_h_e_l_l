@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:52:55 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 19:15:21 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 00:47:30 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	parser(t_cmd_tree **head, t_token **token)
 	type = wft_lstlast(*token)->type;
 	if (cmd_list(head, &now) || now)
 	{
-		g_exit_status = 258;
+		g_exit = 258;
 		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 		if (now)
 			ft_putstr_fd(now->word, 2);

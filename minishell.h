@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 21:10:19 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 01:10:57 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define IGN 2
 # define HED 3
 
-int g_exit_status;
-extern int g_exit_status;
+int g_exit;
+extern int g_exit;
 
 typedef enum type
 {
@@ -145,7 +145,7 @@ int		cmd_command_else(t_cmd_tree **head, t_token **now);
 int		is_directory(const char *path);
 t_env	*make_env_lst(char **env);
 void	executor(t_arg *arg);
-void	heredoc(char **end);
+int		heredoc(char **end);
 
 int		test_tr_print_tree(t_cmd_tree *root);
 void	print_env(t_env *env);
@@ -153,5 +153,6 @@ void	print_token(t_token *token);
 char	*get_env_value(t_env *env, char *key);
 void	handle_heredoc(t_arg *arg);
 int		throw_error(char *cmd, char *str, char *msg);
+void	heredoc_handler(int signo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 00:23:59 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 01:15:24 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	handle_heredoc(t_arg *arg)
 	{
 		if (lst->in_type == T_L_D_REDIR)
 		{
-			printf("lst->fd_in_name: %s\n", lst->fd_in_name);
-			printf("%d", access(lst->fd_in_name, F_OK));
 			if (access(lst->fd_in_name, F_OK) == 0)
 				unlink(lst->fd_in_name);
 		}
@@ -58,15 +56,11 @@ int	is_directory(const char *path)
 		return (((info.st_mode) & S_IFMT) == S_IFDIR);
 }
 
-void	heredoc(char **end)
+void	run_heredoc(char *name, char **end)
 {
 	int		fd;
 	char	*line;
-	char	*name;
-	int		i;
 
-	i = 0;
-	name = avoid_duplicate_name();
 	fd = open(name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	while (1)
 	{
@@ -86,8 +80,34 @@ void	heredoc(char **end)
 		safe_free(line);
 	}
 	close(fd);
+	exit(0);
+}
+
+int	heredoc(char **end)
+{
+	int		pid;
+	int		status;
+	char	*name;
+	int		signo;
+
+	name = avoid_duplicate_name();
+	set_signal(HED, HED);
+	pid = fork();
+	if (pid == 0)
+		run_heredoc(name, end);
+	set_signal(IGN, IGN);
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status))
+	{
+		signo = WTERMSIG(status);
+		if (signo == SIGINT)
+		{
+			heredoc_handler(signo);
+		}
+	}
 	safe_free(*end);
 	*end = name;
+	return (0);
 }
 
 // void	heredoc(char **end)

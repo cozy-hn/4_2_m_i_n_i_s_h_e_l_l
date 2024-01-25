@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:17 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 00:21:05 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 00:47:30 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ft_exit(t_arg *arg, char **cmd)
 	}
 	else
 		exit_code = return_exit_code(cmd[1], 0);
-	g_exit_status = exit_code;
+	g_exit = exit_code;
 	exit(exit_code);
 	return (exit_code);
 }

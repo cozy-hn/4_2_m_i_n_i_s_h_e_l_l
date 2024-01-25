@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 21:11:32 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 01:10:00 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ void	heredoc_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		// write(1, "\n", 1);
-		// rl_on_new_line();
-		// rl_replace_line("", 0);
-		// rl_redisplay();
-		;
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 
@@ -55,7 +54,7 @@ void	set_signal(int sig_int, int sig_quit)
 	if (sig_quit == SHE)
 		signal(SIGQUIT, signal_handler);
 	if (sig_int == HED)
-		signal(SIGINT, heredoc_handler);
+		signal(SIGINT, SIG_DFL);
 	if (sig_quit == HED)
 		signal(SIGQUIT, SIG_IGN);
 }
@@ -89,7 +88,11 @@ int	main(int argc, char **argv, char **env)
 		cmd_tree = NULL;
 		line = readline("minishell$ ");
 		if (!line)
-			break ;
+		{
+			ft_putstr_fd("exit\n", STDERR_FILENO);
+			exit(g_exit);
+		}
+			// break ;
 		add_history(line);
 		if (tokenizer(line, &token) || parser(&cmd_tree, &token))
 			continue ;
@@ -102,5 +105,5 @@ int	main(int argc, char **argv, char **env)
 	}
 	free_env_lst(env_lst);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	return (0);
+	return (g_exit);
 }
