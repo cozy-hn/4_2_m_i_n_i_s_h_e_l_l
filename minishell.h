@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 21:10:19 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 01:07:21 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ typedef struct s_lst{
 	struct s_lst	*next;
 }	t_lst;
 
+typedef struct s_heredoc
+{
+	char				*name;
+	struct s_heredoc	*next;
+}	t_heredoc;
+
 typedef struct s_env
 {
 	char			*key;
@@ -115,11 +121,12 @@ int		set_type(char *line, int *i);
 int		word_checker(char *line, int dquote, int squote);
 char	*set_word(char *line, int *i);
 int		tokenizer(char *line, t_token **token);
-int		parser(t_cmd_tree **head, t_token **token);
-int		cmd_list(t_cmd_tree **head, t_token **now);
-int		cmd_pipeline(t_cmd_tree **head, t_token **now);
-int		cmd_command(t_cmd_tree **head, t_token **now);
-int		cmd_command_part(t_cmd_tree **head, t_token **now);
+int		parser(t_cmd_tree **head, t_token **token, t_heredoc **hed_lst);
+int		cmd_list(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst);
+int		cmd_pipeline(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst);
+int		cmd_command(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst);
+int		cmd_command_part(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst);
+int		cmd_command_else(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst);
 void	free_cmd_tree(t_cmd_tree *cmd_tree);
 void	safe_free(void *str);
 char	*wft_strdup(const char *src);
@@ -139,8 +146,6 @@ void	signal_handler(int signo);
 void	set_signal(int sig_int, int sig_quit);
 void	tokenizer_if_is_meta(char *line, int *i, t_token *new);
 char	*set_meta_word(int type);
-int		cmd_command(t_cmd_tree **head, t_token **now);
-int		cmd_command_else(t_cmd_tree **head, t_token **now);
 
 int		is_directory(const char *path);
 t_env	*make_env_lst(char **env);

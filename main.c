@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 21:11:32 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 01:02:02 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	main(int argc, char **argv, char **env)
 	t_token			*token;
 	t_cmd_tree		*cmd_tree;
 	t_env			*env_lst;
+	t_heredoc		*hed_lst;
 	struct termios	term;
 
 	tcgetattr(STDIN_FILENO, &term);
@@ -91,11 +92,8 @@ int	main(int argc, char **argv, char **env)
 		if (!line)
 			break ;
 		add_history(line);
-		if (tokenizer(line, &token) || parser(&cmd_tree, &token))
+		if (tokenizer(line, &token) || parser(&cmd_tree, &token, &hed_lst))
 			continue ;
-		// print_token(token); //test
-		// test_tr_print_tree(cmd_tree); //test
-		// test_tr_print_tree(cmd_tree); //test
 		start_exec(cmd_tree, env_lst);
 		free_cmd_tree(cmd_tree);
 		free_token(token);
