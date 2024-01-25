@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 03:02:16 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 03:22:58 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ int	heredoc(char **end, t_heredoc **hed_lst)
 	new->next = NULL;
 
 	wft_lstadd_back_hed(hed_lst, new);
-	t_heredoc *tmp = *hed_lst;
 	set_signal(HED, HED);
 	pid = fork();
 	if (pid == 0)
@@ -118,16 +117,3 @@ int	heredoc(char **end, t_heredoc **hed_lst)
 	*end = ft_strdup(name);
 	return (0);
 }
-
-// void	heredoc(char **end)
-// {
-// 	int	pid;
-
-// 	set_signal(DFL, DFL);
-// 	pid = fork();
-// 	if (pid == 0)
-// 		run_heredoc(end);
-// 	else if (pid > 0)
-// 		waitpid(pid, NULL, 0);
-
-// }

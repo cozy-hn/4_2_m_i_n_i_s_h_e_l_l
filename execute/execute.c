@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 00:47:30 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 03:23:48 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	executor(t_arg *arg)
 		pid = executor_helper(lst, arg);
 		lst = lst->next;
 	}
-	ft_wait(pid, arg);
+	ft_wait(pid);
 	handle_heredoc(arg);
 }
 

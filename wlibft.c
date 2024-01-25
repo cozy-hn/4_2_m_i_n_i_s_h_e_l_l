@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 20:38:09 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 18:38:37 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 03:47:31 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*wft_calloc(size_t count, size_t size)
 
 	rtm = malloc(count * size);
 	if (!rtm)
-		exit(1);
+		exit(g_exit);
 	ft_memset(rtm, 0, count * size);
 	return (rtm);
 }

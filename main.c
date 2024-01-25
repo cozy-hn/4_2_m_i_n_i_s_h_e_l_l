@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 03:11:02 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 03:37:32 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,19 +108,20 @@ int	main(int argc, char **argv, char **env)
 		line = readline("minishell$ ");
 		if (!line)
 		{
-			ft_putstr_fd("exit\n", STDERR_FILENO);
+			ft_putstr_fd("\033[A", 1);
+			ft_putstr_fd("minishell$ exit\n", STDERR_FILENO);
 			exit(g_exit);
 		}
-			// break ;
 		add_history(line);
 		if (tokenizer(line, &token) || parser(&cmd_tree, &token, &hed_lst))
 			continue ;
+		// test_tr_print_tree(cmd_tree);
 		start_exec(cmd_tree, env_lst, hed_lst);
 		heredoc_free(hed_lst);
 		free_cmd_tree(cmd_tree);
 		free_token(token);
 	}
-	free_env_lst(env_lst);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	exit(g_exit);
 	return (g_exit);
 }

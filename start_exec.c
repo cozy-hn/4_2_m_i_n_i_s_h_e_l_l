@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 02:21:50 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 03:44:26 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void print_lst(t_lst *lst)
 		printf("====print lst====\n");
 		if (lst->cmd)
 		{
-			printf("fd_in_name: %s\n", lst->fd_in_name);
-			printf("fd_out_name: %s\n", lst->fd_out_name);
+			// printf("fd_in_name: %s\n", lst->fd_in_name);
+			// printf("fd_out_name: %s\n", lst->fd_out_name);
 			while (lst->cmd[i])
 			{
-				printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
+				// printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
 				printf("lst->cmd[%d]: ", i);
 				if (lst->cmd[i])
 					printf("%s\n", lst->cmd[i]);
@@ -176,7 +176,7 @@ void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst, t_heredoc *hed_lst)
 		start_exec(cmd_tree->left, env_lst, hed_lst);
 		if (cmd_tree->left->token && ((cmd_tree->left->token->type == T_AND && !g_exit) || \
 			(cmd_tree->left->token->type == T_OR && g_exit)))
-			start_exec(cmd_tree->left, env_lst, hed_lst);
+			start_exec(cmd_tree->right, env_lst, hed_lst);
 	}
 	else if (cmd_tree -> bnf_type == BNF_PIPELINE)
 	{

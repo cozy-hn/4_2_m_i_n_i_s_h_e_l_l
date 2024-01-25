@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:52:55 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 02:58:23 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 03:22:29 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int	cmd_list(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst)
 //<pipeline> ::= "(" <list> ")" | <command> {"|" <command>}
 int	cmd_pipeline(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst)
 {
-	t_cmd_tree	*next;
-
 	*head = wft_calloc(1, sizeof(t_cmd_tree));
 	(*head)->bnf_type = BNF_PIPELINE;
 	if (*now && (*now)->type == T_L_PAR)

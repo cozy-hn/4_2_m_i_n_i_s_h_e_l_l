@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 06:26:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 00:47:30 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 03:24:55 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	handle_fd_input(t_lst *lst)
 int	handle_fd_output(t_lst *lst)
 {
 	int	fd;
+
+	fd = 0;
 
 	if (lst->out_type != T_NONE)
 	{

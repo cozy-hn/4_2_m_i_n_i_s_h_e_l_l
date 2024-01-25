@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 07:45:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/25 06:44:10 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 03:23:35 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ int		handle_redirection(t_lst *lst);
 void	connect_redir(t_lst *lst);
 void	duplicate_original_fd(int *fd);
 int		run_builtin_helper(t_lst *lst, t_arg *arg);
-void	ft_wait(int pid, t_arg *arg);
+void	ft_wait(int pid);
 
 #endif

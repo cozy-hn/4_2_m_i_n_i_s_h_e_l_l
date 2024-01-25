@@ -20,13 +20,13 @@
 
 - [x] 폴더 현재폴더로 ./.tmp에 넣고 싶은데 폴더 있나 확인하고 없으면 만드는 코드 추가 요망 걍 ./.tmp1..2..3.으로 가자
 
-- [ ] cat만 치고 ctrl + c 누르면 minishell$ 두번 뜸
+- [x] cat만 치고 ctrl + c 누르면 minishell$ 두번 뜸
         -> 이건 모르겠네요..
 - [x] export a=b && echo $a : 수정필요
         -> expansion 시점 변경
 
 - [x] first middle last에서 fd_in fd_out 존재 시 부모 프로세스에서 fd 닫아주기 (수민)
-- [ ] redirection 에서 파일명 leak (ex. ls >> a 하면 "a" leak)
+- [x] redirection 에서 파일명 leak (ex. ls >> a 하면 "a" leak)
 - [x] while true; do leaks 7624; sleep 1; done;
 - [x] syntax error => 트리전에 exit code 258 처리
 
@@ -41,18 +41,19 @@
 - [x] echo "fuck you donalds" | cat > no | cat << out
 "echo" "-n-n-n-n-n-n-n-n" "hello" Bad file descriptor
 
-- [ ] '<>' syntax error near unexpected token `newline'
+- [x] '<>' syntax error near unexpected token `newline'
 
-- [ ] << eof | nocmd | nocmd | nocmd segfault
+- [x] << eof | nocmd | nocmd | nocmd segfault
 
 - [ ] heredoc quote 처리
 
-- [ ] export 순서
+- [x] export 순서
 
 - [ ] Make file flag 걸고 컴파일 하기 
 
-- [ ] exit시 exit 안나옴
+- [x] exit시 exit 안나옴
 
+- [ ] >
 
 
 

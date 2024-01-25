@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:57:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 00:47:30 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 03:46:15 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-void	ft_wait(int pid, t_arg *arg)
+void	ft_wait(int pid)
 {
 	int		last_status;
 	int		status;
@@ -31,7 +31,10 @@ void	ft_wait(int pid, t_arg *arg)
 			g_exit = 128 + signo;
 		}
 		else if (signo == SIGQUIT && i++ == 0)
+		{
 			ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
+			g_exit = 128 + signo;
+		}
 	}
 	while (wait(&status) != -1)
 	{
@@ -49,7 +52,6 @@ void	ft_wait(int pid, t_arg *arg)
 int	run_execve(t_lst *lst, t_arg *arg)
 {
 	char	**cmd;
-	char	**env;
 
 	get_path(arg);
 	cmd = return_commands(arg, lst->cmd);
