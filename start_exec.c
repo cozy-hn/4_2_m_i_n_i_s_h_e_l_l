@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 19:09:32 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 02:13:30 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@
 // 	}
 // }
 
-void	play_executor(t_lst **tmp_lst, t_env *env_lst)
+void	play_executor(t_lst **tmp_lst, t_env *env_lst, t_heredoc *hed_lst)
 {
 	t_arg	*arg;
 
 	arg = wft_calloc(1, sizeof(t_arg));
 	arg->env = env_lst;
 	arg->lst = *tmp_lst;
-	executor(arg);
+	executor(arg, hed_lst);
 	safe_free(arg);
 	set_signal(SHE, SHE);
 }
@@ -164,7 +164,7 @@ void	play_cmd(t_cmd_tree *cmd_tree, t_env *env_lst, t_lst **tmp_lst)
 	}
 }
 
-void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst)
+void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst, t_heredoc *hed_lst)
 {
 	t_lst	*tmp_lst;
 
@@ -172,26 +172,26 @@ void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst)
 		return ;
 	if (cmd_tree -> bnf_type == BNF_LIST)
 	{
-		start_exec(cmd_tree->left, env_lst);
+		start_exec(cmd_tree->left, env_lst, hed_lst);
 		if (cmd_tree->left->token && ((cmd_tree->left->token->type == T_AND && !g_exit_status) || \
 			(cmd_tree->left->token->type == T_OR && g_exit_status)))
-			start_exec(cmd_tree->right, env_lst);
+			start_exec(cmd_tree->right, env_lst, hed_lst);
 	}
 	else if (cmd_tree -> bnf_type == BNF_PIPELINE)
 	{
 		tmp_lst = NULL;
 		if (cmd_tree -> left -> bnf_type == BNF_LIST)
-			start_exec(cmd_tree->left, env_lst);
+			start_exec(cmd_tree->left, env_lst, hed_lst);
 		else
 			play_cmd(cmd_tree->left, env_lst, &tmp_lst);
 		if (cmd_tree -> right && cmd_tree -> right -> bnf_type == BNF_LIST)
-			start_exec(cmd_tree->right, env_lst);
+			start_exec(cmd_tree->right, env_lst, hed_lst);
 		else
 			play_cmd(cmd_tree->right, env_lst, &tmp_lst);
 		if (tmp_lst)
 		{
 			// print_lst(tmp_lst);
-			play_executor(&tmp_lst, env_lst);
+			play_executor(&tmp_lst, env_lst, hed_lst);
 			free_lst(&tmp_lst);
 		}
 	}

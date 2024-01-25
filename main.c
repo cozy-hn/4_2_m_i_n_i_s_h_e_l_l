@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 01:02:02 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 02:00:15 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,14 @@ int	main(int argc, char **argv, char **env)
 	{
 		token = NULL;
 		cmd_tree = NULL;
+		hed_lst = NULL;
 		line = readline("minishell$ ");
 		if (!line)
 			break ;
 		add_history(line);
 		if (tokenizer(line, &token) || parser(&cmd_tree, &token, &hed_lst))
 			continue ;
-		start_exec(cmd_tree, env_lst);
+		start_exec(cmd_tree, env_lst, hed_lst);
 		free_cmd_tree(cmd_tree);
 		free_token(token);
 	}

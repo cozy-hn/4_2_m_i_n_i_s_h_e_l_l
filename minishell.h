@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 01:07:21 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 02:11:34 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_heredoc
 {
 	char				*name;
 	struct s_heredoc	*next;
+	int					hed_flag;
 }	t_heredoc;
 
 typedef struct s_env
@@ -135,7 +136,7 @@ t_token	*wft_lstlast(t_token *lst);
 int		ft_is_env_word(char c, int i);
 int		expander(t_cmd_tree **cmd_tree, t_env *env_lst);
 char	*wft_strjoin(char const *s1, char const *s2);
-void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst);
+void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst, t_heredoc *hed_lst);
 void	wft_lstadd_back_lst(t_lst **lst, t_lst *new);
 void	free_env_lst(t_env *env_lst);
 char	*avoid_duplicate_name(void);
@@ -150,7 +151,7 @@ char	*set_meta_word(int type);
 int		is_directory(const char *path);
 t_env	*make_env_lst(char **env);
 void	executor(t_arg *arg);
-void	heredoc(char **end);
+int		heredoc(char **end, t_heredoc **hed_lst);
 
 int		test_tr_print_tree(t_cmd_tree *root);
 void	print_env(t_env *env);
