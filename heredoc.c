@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 01:15:24 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 02:12:13 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	is_directory(const char *path)
 		return (((info.st_mode) & S_IFMT) == S_IFDIR);
 }
 
-void	run_heredoc(char *name, char **end)
+void	run_heredoc(char **end, char *name)
 {
 	int		fd;
 	char	*line;
@@ -67,8 +67,8 @@ void	run_heredoc(char *name, char **end)
 		line = readline("> ");
 		if (!line)
 		{
-			printf("\033[A");
-			printf("> ");
+			ft_putstr_fd("\033[A", 1);
+			ft_putstr_fd("> ", 1);
 			break ;
 		}
 		if (ft_strncmp(line, *end, ft_strlen(*end) + 1) == 0)
@@ -83,27 +83,29 @@ void	run_heredoc(char *name, char **end)
 	exit(0);
 }
 
-int	heredoc(char **end)
+int	heredoc(char **end, t_heredoc **hed_lst)
 {
-	int		pid;
-	int		status;
-	char	*name;
-	int		signo;
+	int			pid;
+	int			status;
+	char		*name;
+	int			signo;
+	t_heredoc	*new;
 
 	name = avoid_duplicate_name();
+	new = wft_calloc(1, sizeof(t_heredoc));
+	new->name = name;
+	wft_lstadd_back_hed(hed_lst, new);
 	set_signal(HED, HED);
 	pid = fork();
 	if (pid == 0)
-		run_heredoc(name, end);
+		run_heredoc(end, name);
 	set_signal(IGN, IGN);
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
 	{
 		signo = WTERMSIG(status);
 		if (signo == SIGINT)
-		{
-			heredoc_handler(signo);
-		}
+			return (heredoc_handler(*hed_lst));
 	}
 	safe_free(*end);
 	*end = name;

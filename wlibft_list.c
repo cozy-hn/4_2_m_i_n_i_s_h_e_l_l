@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wlibft_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:37:19 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 01:09:45 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 01:48:04 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 void	wft_lstadd_back(t_token **lst, t_token *new)
 {
 	t_token	*tmp;
+
+	if (!new)
+		return ;
+	if (!*lst)
+		*lst = new;
+	else
+	{
+		tmp = *lst;
+		while (tmp->next)
+			tmp = tmp->next;
+		(tmp)->next = new;
+	}
+}
+
+void wft_lstadd_back_hed(t_heredoc **lst, t_heredoc *new)
+{
+	t_heredoc	*tmp;
 
 	if (!new)
 		return ;

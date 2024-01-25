@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 01:17:15 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 02:13:40 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_heredoc
 {
 	char				*name;
 	struct s_heredoc	*next;
+	int					hed_flag;
 }	t_heredoc;
 
 typedef struct s_env
@@ -150,7 +151,7 @@ char	*set_meta_word(int type);
 int		is_directory(const char *path);
 t_env	*make_env_lst(char **env);
 void	executor(t_arg *arg);
-int		heredoc(char **end);
+int		heredoc(char **end, t_heredoc **hed_lst);
 
 int		test_tr_print_tree(t_cmd_tree *root);
 void	print_env(t_env *env);
@@ -158,6 +159,7 @@ void	print_token(t_token *token);
 char	*get_env_value(t_env *env, char *key);
 void	handle_heredoc(t_arg *arg);
 int		throw_error(char *cmd, char *str, char *msg);
-void	heredoc_handler(int signo);
+int		heredoc_handler(t_heredoc *hed_lst);
+void	wft_lstadd_back_hed(t_heredoc **lst, t_heredoc *new);
 
 #endif

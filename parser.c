@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:52:55 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 01:17:18 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 01:24:32 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,7 @@ int	cmd_command_part(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst)
 		safe_free((*head)->token->word);
 		(*head)->token->word = wft_strdup((*now)->next->word);
 		if ((*now)->type == T_L_D_REDIR)
-			heredoc(&(*head)->token->word);
-			// heredoc(&(*head)->token->word, hed_lst);
+			heredoc(&(*head)->token->word, hed_lst);
 		*now = (*now)->next->next;
 	}
 	else if (*now && (*now)->type == T_WORD)
