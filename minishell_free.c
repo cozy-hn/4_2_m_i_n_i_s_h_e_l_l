@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 14:25:20 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/21 21:33:32 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/25 19:18:02 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,3 @@ void	free_cmd_tree(t_cmd_tree *cmd_tree)
 		free_cmd_tree(cmd_tree->right);
 	safe_free(cmd_tree);
 }
-
-// void	free_env_lst (t_env *env_lst)
-// {
-// 	t_env	*tmp;
-
-// 	while (env_lst)
-// 	{
-// 		tmp = env_lst->next;
-// 		safe_free(env_lst->key);
-// 		safe_free(env_lst->value);
-// 		safe_free(env_lst);
-// 		env_lst = tmp;
-// 	}
-// }
