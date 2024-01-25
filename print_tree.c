@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 19:20:53 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/11 22:23:05 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/25 18:34:45 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,25 @@ int	test_tr_print_tree(t_cmd_tree *root)
 	test_displayTree(root, indent, 1); // 트리 출력
     printf("\n");
 	return (0);
+}
+void	print_token(t_token *token)
+{
+	while (token)
+	{
+		printf("type: %d\n", token->type);
+		printf("word: %s\n", token->word);
+		printf("==========\n");
+		token = token->next;
+	}
+}
+
+void	print_env(t_env *env)
+{
+	while (env)
+	{
+		printf("key: %s\n", env->key);
+		printf("value: %s\n", env->value);
+		printf("==========\n");
+		env = env->next;
+	}
 }

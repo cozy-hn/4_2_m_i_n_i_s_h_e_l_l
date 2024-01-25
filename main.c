@@ -6,16 +6,11 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/24 21:08:12 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/25 18:21:44 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	check_leak(void)
-// {
-// 	system("leaks --list -- minishell");
-// }
 
 void	signal_handler(int signo)
 {
@@ -62,29 +57,6 @@ t_env	*main_init(int argc, char **argv, char **env)
 	return (make_env_lst(env));
 }
 
-// void	wait_child(void)
-// {
-// 	int		status;
-// 	int		signo;
-// 	int		i;
-
-// 	i = 0;
-// 	while (wait(&status) != -1)
-// 	{
-// 		if (WIFSIGNALED(status))
-// 		{
-// 			signo = WTERMSIG(status);
-// 			if (signo == SIGINT && i++ == 0)
-// 				ft_putstr_fd("^C\n", STDERR_FILENO);
-// 			else if (signo == SIGQUIT && i++ == 0)
-// 				ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
-// 			g_exit_code = 128 + signo;
-// 		}
-// 		else
-// 			g_exit_code = WEXITSTATUS(status);
-// 	}
-// }
-
 int	main(int argc, char **argv, char **env)
 {
 	char			*line;
@@ -114,6 +86,5 @@ int	main(int argc, char **argv, char **env)
 	}
 	free_env_lst(env_lst);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	// atexit(check_leak);
 	return (0);
 }
