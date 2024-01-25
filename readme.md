@@ -49,6 +49,8 @@
 
 - [ ] export 순서
 
+- [ ] Make file flag 걸고 컴파일 하기 
+
 
 
 
