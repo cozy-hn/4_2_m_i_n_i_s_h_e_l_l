@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:46:33 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/25 02:16:44 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 23:29:15 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	ft_export(t_env *env, char **cmd)
 	if (cmd[1] == NULL)
 	{
 		env_arr = env_lst_to_arr(env);
-		ft_print_env(ft_sort_env(env_arr));
+		ft_print_env(ft_sort_env(env_arr, env));
 		ft_free_arr(env_arr);
 		return (exit_status);
 	}

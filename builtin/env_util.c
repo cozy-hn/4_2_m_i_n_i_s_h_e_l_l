@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 07:34:34 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 23:31:30 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	env_lst_count(t_env *env)
 
 char	**env_lst_to_arr(t_env *env)
 {
-	t_env	*tmp;
 	char	*str;
 	char	**ret;
 	int		i;
@@ -79,17 +78,16 @@ char	**env_lst_to_arr(t_env *env)
 	i = env_lst_count(env);
 	ret = (char **)malloc(sizeof(char *) * (i + 1));
 	i = -1;
-	tmp = env;
-	while (tmp)
+	while (env)
 	{
-		if (tmp->value == NULL)
-			ret[++i] = wft_strdup(tmp->key);
+		if (env->value == NULL)
+			ret[++i] = wft_strdup(env->key);
 		else
 		{
-			str = wft_strjoin(wft_strdup(tmp->key), wft_strdup("="));
-			ret[++i] = wft_strjoin(str, wft_strdup(tmp->value));
+			str = wft_strjoin(wft_strdup(env->key), wft_strdup("="));
+			ret[++i] = wft_strjoin(str, wft_strdup(env->value));
 		}
-		tmp = tmp->next;
+		env = env->next;
 	}
 	ret[i + 1] = NULL;
 	return (ret);

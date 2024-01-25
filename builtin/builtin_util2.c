@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 03:09:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/25 01:45:07 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 23:31:22 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_print_env(char **env)
 	i = 0;
 	while (env[i])
 	{
+		ft_putstr_fd("declare -x ", 1);
 		j = -1;
 		while (env[i][++j])
 		{
@@ -35,29 +36,29 @@ int	ft_print_env(char **env)
 	return (0);
 }
 
-char	**ft_sort_env(char **env)
+char	**ft_sort_env(char **env_arr, t_env *env_lst)
 {
+	char	*tmp;
+	t_env	*tmp_lst;
 	int		i;
 	int		j;
-	char	*tmp;
 
 	i = 0;
-	while (env[i])
+	while (env_arr[i])
 	{
 		j = i + 1;
-		while (env[j])
+		tmp_lst = env_lst->next;
+		if (tmp_lst && ft_strncmp(env_lst->key, tmp_lst->key,
+				ft_strlen(env_lst->key) + 1) > 0)
 		{
-			if (ft_strncmp(env[i], env[j], ft_strlen(env[i]) + 1) > 0)
-			{
-				tmp = env[i];
-				env[i] = env[j];
-				env[j] = tmp;
-			}
-			j++;
+			tmp = env_arr[i];
+			env_arr[i] = env_arr[j];
+			env_arr[j] = tmp;
 		}
 		i++;
+		env_lst = env_lst->next;
 	}
-	return (env);
+	return (env_arr);
 }
 
 int	throw_error(char *cmd, char *str, char *msg)
