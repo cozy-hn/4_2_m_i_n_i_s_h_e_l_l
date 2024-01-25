@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:17 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 03:08:31 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 06:11:41 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	ft_exit(t_arg *arg, char **cmd)
 	else if (!is_all_digits(cmd[1]))
 	{
 		throw_error("exit", NULL, "numeric argument required");
-		exit_code = 255;
+		exit(255);
 	}
 	else if (cmd[2])
 	{

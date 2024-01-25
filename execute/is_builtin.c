@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:55:14 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 04:56:48 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 06:25:35 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	run_builtin(t_lst *lst, t_arg *arg)
 	else if (ft_strncmp(lst->cmd[0], "cd", 3) == 0)
 		return (ft_cd(arg, lst->cmd));
 	else if (ft_strncmp(lst->cmd[0], "pwd", 4) == 0)
-		return (ft_pwd());
+		return (ft_pwd(arg->env));
 	else if (ft_strncmp(lst->cmd[0], "export", 7) == 0)
 		return (ft_export(arg->env, lst->cmd));
 	else if (ft_strncmp(lst->cmd[0], "unset", 6) == 0)

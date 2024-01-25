@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 07:40:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 03:09:36 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 06:25:48 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_echo(char **cmd);
 int		ft_export(t_env *env, char **cmd);
 int		ft_unset(t_env **env, char **cmd);
 int		ft_env(t_env *env);
-int		ft_pwd(void);
+int		ft_pwd(t_env *env);
 int		ft_exit(t_arg *arg, char **cmd);
 void	free_env_lst(t_env *env);
 char	*ft_strndup(char *s, char *end);
