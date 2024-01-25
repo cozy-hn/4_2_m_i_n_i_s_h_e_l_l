@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 06:05:58 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 07:12:27 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ char	*avoid_duplicate_name(void);
 t_lst	*wft_lstlast_lst(t_lst *lst);
 char	*expand(char *word, t_env *env_lst);
 char	*expand_env(char **word, t_env *env_lst);
-void	signal_handler(int signo);
 void	set_signal(int sig_int, int sig_quit);
 void	tokenizer_if_is_meta(char *line, int *i, t_token *new);
 char	*set_meta_word(int type);
@@ -167,17 +166,11 @@ t_env	*make_env_lst(char **env);
 void	executor(t_arg *arg);
 int		heredoc(char **end, t_heredoc **hed_lst);
 
-int		test_tr_print_tree(t_cmd_tree *root);
-void	print_env(t_env *env);
-void	print_token(t_token *token);
 char	*get_env_value(t_env *env, char *key);
 void	handle_heredoc(t_arg *arg);
 int		throw_error(char *cmd, char *str, char *msg);
-int		heredoc_handler(t_heredoc *hed_lst);
 void	wft_lstadd_back_hed(t_heredoc **lst, t_heredoc *new);
-void	set_signal(int sig_int, int sig_quit);
 void	signal_handler(int signo);
-void	heredoc_free(t_heredoc *hed_lst);
 int		heredoc_handler(t_heredoc *hed_lst);
 
 #endif

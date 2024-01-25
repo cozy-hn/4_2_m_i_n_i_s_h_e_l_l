@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 07:40:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 06:25:48 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 07:16:27 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define BUILTIN_H
 
 # include "../minishell.h"
-# define OPTION 1
-# define NO_OPTION 0
 
 char	**ft_dup_env(char **env);
 int		ft_free_arr(char **arr);
@@ -38,9 +36,7 @@ char	*get_env_value(t_env *env, char *key);
 int		add_env(t_env *env, char *str);
 void	throw_export_error(char *cmd, char *str, char *msg);
 int		same_env(char *env, char *str);
-int		throw_error(char *cmd, char *str, char *msg);
 int		modify_env(char **str);
-char	*ft_strndup(char *s, char *end);
 t_env	*make_env_lst(char **env);
 char	**env_lst_to_arr(t_env *env);
 int		ft_free_env_lst(t_env *env);

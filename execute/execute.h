@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 07:45:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 05:22:55 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 07:14:26 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int		run_builtin(t_lst *lst, t_arg *arg);
 int		executor_helper(t_lst *lst, t_arg *arg);
 t_lst	*mock_lst(void);
 int		execute(t_lst *lst, t_arg *arg);
-void	executor(t_arg *arg);
 void	connect_original_fd(t_lst *lst, int *fd);
 int		handle_redirection(t_lst *lst);
 void	connect_redir(t_lst *lst);

@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 05:07:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 05:19:30 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 08:04:50 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,9 @@ void	heredoc_free(t_heredoc *hed_lst)
 
 int	heredoc_handler(t_heredoc *hed_lst)
 {
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	ft_putstr_fd("\n", 1);
 	heredoc_free(hed_lst);
+	g_exit = 1;
 	return (1);
 }
 

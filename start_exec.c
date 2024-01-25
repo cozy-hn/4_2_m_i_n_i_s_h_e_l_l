@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 06:06:44 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 07:28:03 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	play_cmd(t_cmd_tree *ct, t_env *env_lst, t_lst **tmp_lst)
 	{
 		new = wft_calloc(1, sizeof(t_lst));
 		wft_lstadd_back_lst(tmp_lst, new);
+		(*tmp_lst)->error_flag = 0;
 		cmd = wft_calloc(1, sizeof(char *));
 		new->fd_in = -1;
 		new->fd_out = -1;
