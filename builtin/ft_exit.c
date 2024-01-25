@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:17 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/25 07:23:39 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 00:21:05 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	ft_exit(t_arg *arg, char **cmd)
 	exit_code = 0;
 	if (ft_strncmp(arg->lst->cmd[0], "exit", 5) == 0 && arg->lst->next == NULL)
 		ft_putstr_fd("exit\n", STDERR_FILENO);
+	handle_heredoc(arg);
 	if (!cmd[1])
 		exit(exit_code);
 	else if (!is_all_digits(cmd[1]))
@@ -81,8 +82,6 @@ int	ft_exit(t_arg *arg, char **cmd)
 	else
 		exit_code = return_exit_code(cmd[1], 0);
 	g_exit_status = exit_code;
-	handle_heredoc(arg);
-	system("leaks minishell");
 	exit(exit_code);
 	return (exit_code);
 }
