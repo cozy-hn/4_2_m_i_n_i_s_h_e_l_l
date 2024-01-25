@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 05:30:00 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 06:05:58 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,11 @@ void	tokenizer_if_is_meta(char *line, int *i, t_token *new);
 char	*set_meta_word(int type);
 void	heredoc_free(t_heredoc *hed_lst);
 char	*remove_quotes(char *word);
+void	free_double_char(char **str);
+void	free_lst(t_lst **lst);
+void	start_play_executor(t_lst **t_lst, t_env *e_lst, t_heredoc *hed_lst);
+void	stack_cmd_else(t_cmd_tree *ct, char ***cmd);
+void	play_executor(t_lst **tmp_lst, t_env *env_lst, t_heredoc *hed_lst);
 
 int		is_directory(const char *path);
 t_env	*make_env_lst(char **env);

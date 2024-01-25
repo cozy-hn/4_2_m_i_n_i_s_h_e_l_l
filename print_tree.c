@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 19:20:53 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 05:02:06 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 05:47:04 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,34 @@
 // 		printf("value: %s\n", env->value);
 // 		printf("==========\n");
 // 		env = env->next;
+// 	}
+// }
+
+// void print_lst(t_lst *lst)
+// {
+// 	int i;
+// 	printf("====print arg====\n");
+// 	while (lst)
+// 	{
+// 		i = 0;
+// 		printf("====print lst====\n");
+// 		if (lst->cmd)
+// 		{
+// 			// printf("fd_in_name: %s\n", lst->fd_in_name);
+// 			// printf("fd_out_name: %s\n", lst->fd_out_name);
+// 			while (lst->cmd[i])
+// 			{
+// 				// printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
+// 				printf("lst->cmd[%d]: ", i);
+// 				if (lst->cmd[i])
+// 					printf("%s\n", lst->cmd[i]);
+// 				else
+// 					printf("NULL\n");
+// 				i++;
+// 			}
+// 		}
+// 		else
+// 			printf("lst->cmd: NULL\n");
+// 		lst = lst->next;
 // 	}
 // }
