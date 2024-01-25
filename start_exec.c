@@ -3,43 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   start_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 07:21:50 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/25 19:09:32 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_lst(t_lst *lst)
-{
-	int i;
-	printf("====print arg====\n");
-	while (lst)
-	{
-		i = 0;
-		printf("====print lst====\n");
-		if (lst->cmd)
-		{
-			printf("fd_in_name: %s\n", lst->fd_in_name);
-			printf("fd_out_name: %s\n", lst->fd_out_name);
-			while (lst->cmd[i])
-			{
-				// printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
-				printf("lst->cmd[%d]: ", i);
-				if (lst->cmd[i])
-					printf("%s\n", lst->cmd[i]);
-				else
-					printf("NULL\n");
-				i++;
-			}
-		}
-		else
-			printf("lst->cmd: NULL\n");
-		lst = lst->next;
-	}
-}
+// void print_lst(t_lst *lst)
+// {
+// 	int i;
+// 	printf("====print arg====\n");
+// 	while (lst)
+// 	{
+// 		i = 0;
+// 		printf("====print lst====\n");
+// 		if (lst->cmd)
+// 		{
+// 			printf("fd_in_name: %s\n", lst->fd_in_name);
+// 			printf("fd_out_name: %s\n", lst->fd_out_name);
+// 			while (lst->cmd[i])
+// 			{
+// 				// printf("lst->cmd[%d] addr %p\n", i, &(lst->cmd[i]));
+// 				printf("lst->cmd[%d]: ", i);
+// 				if (lst->cmd[i])
+// 					printf("%s\n", lst->cmd[i]);
+// 				else
+// 					printf("NULL\n");
+// 				i++;
+// 			}
+// 		}
+// 		else
+// 			printf("lst->cmd: NULL\n");
+// 		lst = lst->next;
+// 	}
+// }
 
 void	play_executor(t_lst **tmp_lst, t_env *env_lst)
 {
@@ -51,7 +51,6 @@ void	play_executor(t_lst **tmp_lst, t_env *env_lst)
 	executor(arg);
 	safe_free(arg);
 	set_signal(SHE, SHE);
-	// print_lst(*tmp_lst);
 }
 
 void	free_double_char(char **str)

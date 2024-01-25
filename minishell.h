@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 18:49:57 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/25 19:16:32 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ void	signal_handler(int signo);
 void	set_signal(int sig_int, int sig_quit);
 void	tokenizer_if_is_meta(char *line, int *i, t_token *new);
 char	*set_meta_word(int type);
+int		cmd_command(t_cmd_tree **head, t_token **now);
+int		cmd_command_else(t_cmd_tree **head, t_token **now);
 
 int		is_directory(const char *path);
 t_env	*make_env_lst(char **env);

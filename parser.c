@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:52:55 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/24 21:17:08 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/25 19:15:21 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	cmd_list(t_cmd_tree **head, t_token **now)
 	return (0);
 }
 
+
+
 //<pipeline> ::= "(" <list> ")" | <command> {"|" <command>}
 int	cmd_pipeline(t_cmd_tree **head, t_token **now)
 {
@@ -52,21 +54,8 @@ int	cmd_pipeline(t_cmd_tree **head, t_token **now)
 		*now = (*now)->next;
 	}
 	else
-	{
-		if (cmd_command(&(*head)->left, now))
+		if (cmd_command_else(head, now))
 			return (1);
-		while (*now && (*now)->type == T_PIPE)
-		{
-			(*head)->token = *now;
-			*now = (*now)->next;
-			next = wft_calloc(1, sizeof(t_cmd_tree));
-			next->bnf_type = BNF_PIPELINE;
-			next->left = *head;
-			*head = next;
-			if (cmd_command(&next->right, now))
-				return (1);
-		}
-	}
 	return (0);
 }
 
