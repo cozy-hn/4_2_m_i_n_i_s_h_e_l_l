@@ -51,6 +51,8 @@
 
 - [ ] Make file flag 걸고 컴파일 하기 
 
+- [ ] exit시 exit 안나옴
+
 
 
 

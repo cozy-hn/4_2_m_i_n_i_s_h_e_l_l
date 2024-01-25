@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 19:16:32 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/25 21:10:19 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define SHE 0
 # define DFL 1
 # define IGN 2
+# define HED 3
 
 int g_exit_status;
 extern int g_exit_status;

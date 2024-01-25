@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/25 19:18:22 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/25 21:14:11 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ char	*avoid_duplicate_name(void)
 	int		i;
 
 	i = 0;
-	tmp = wft_strdup("./tmp");
+	tmp = wft_strdup("./.tmp");
 	name = tmp;
 	while (access(name, F_OK) == 0)
 	{
 		safe_free(name);
-		tmp = wft_strdup("./tmp");
+		tmp = wft_strdup("./.tmp");
 		name = wft_strjoin(tmp, ft_itoa(++i));
 	}
 	return (name);
@@ -69,6 +69,12 @@ void	heredoc(char **end)
 	while (1)
 	{
 		line = readline("> ");
+		if (!line)
+		{
+			printf("\033[A");
+			printf("> ");
+			break ;
+		}
 		if (ft_strncmp(line, *end, ft_strlen(*end) + 1) == 0)
 		{
 			safe_free(line);

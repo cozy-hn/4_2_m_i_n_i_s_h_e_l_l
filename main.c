@@ -6,7 +6,7 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/25 18:21:44 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/25 21:11:32 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@ void	signal_handler(int signo)
 	}
 }
 
+void	heredoc_handler(int signo)
+{
+	if (signo == SIGINT)
+	{
+		// write(1, "\n", 1);
+		// rl_on_new_line();
+		// rl_replace_line("", 0);
+		// rl_redisplay();
+		;
+	}
+}
+
 void	set_signal(int sig_int, int sig_quit)
 {
 	if (sig_int == IGN)
@@ -42,6 +54,10 @@ void	set_signal(int sig_int, int sig_quit)
 		signal(SIGQUIT, SIG_DFL);
 	if (sig_quit == SHE)
 		signal(SIGQUIT, signal_handler);
+	if (sig_int == HED)
+		signal(SIGINT, heredoc_handler);
+	if (sig_quit == HED)
+		signal(SIGQUIT, SIG_IGN);
 }
 
 t_env	*main_init(int argc, char **argv, char **env)
