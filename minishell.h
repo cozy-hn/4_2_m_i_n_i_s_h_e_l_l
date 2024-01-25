@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 05:07:57 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 05:23:20 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <string.h> // for tmp
 # include "./libft/libft.h"
 # include <termios.h>
 # include <signal.h>
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <dirent.h>
 # include <sys/stat.h>
 
 # define SHE 0
@@ -31,7 +29,6 @@
 # define IGN 2
 # define HED 3
 
-extern int g_exit;
 int	g_exit;
 
 typedef enum type
