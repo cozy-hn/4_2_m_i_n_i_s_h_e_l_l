@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 03:10:03 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 05:07:57 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@
 # include <termios.h>
 # include <signal.h>
 # include <sys/wait.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <dirent.h>
-#include <sys/stat.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <dirent.h>
+# include <sys/stat.h>
 
 # define SHE 0
 # define DFL 1
 # define IGN 2
 # define HED 3
 
-int g_exit;
 extern int g_exit;
+int	g_exit;
 
 typedef enum type
 {
@@ -103,6 +103,15 @@ typedef struct s_arg
 	t_lst			*lst;
 }	t_arg;
 
+typedef struct s_main
+{
+	char			*line;
+	t_token			*token;
+	t_cmd_tree		*cmd_tree;
+	t_env			*env_lst;
+	t_heredoc		*hed_lst;
+}	t_main;
+
 int		remove_space(char *line, int *i);
 int		is_space(char c);
 int		is_pipe(char *line, int *i);
@@ -163,5 +172,9 @@ void	handle_heredoc(t_arg *arg);
 int		throw_error(char *cmd, char *str, char *msg);
 int		heredoc_handler(t_heredoc *hed_lst);
 void	wft_lstadd_back_hed(t_heredoc **lst, t_heredoc *new);
+void	set_signal(int sig_int, int sig_quit);
+void	signal_handler(int signo);
+void	heredoc_free(t_heredoc *hed_lst);
+int		heredoc_handler(t_heredoc *hed_lst);
 
 #endif

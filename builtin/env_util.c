@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 00:47:30 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 03:57:03 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_env	*make_env_lst(char **env)
 		tmp->value = wft_strdup(ft_strchr(env[i], '=') + 1);
 		if (env[i + 1])
 		{
-			tmp->next = (t_env *)malloc(sizeof(t_env));
+			tmp->next = wft_calloc(1, sizeof(t_env));
 			tmp = tmp->next;
 		}
 		else
@@ -76,7 +76,7 @@ char	**env_lst_to_arr(t_env *env)
 	int		i;
 
 	i = env_lst_count(env);
-	ret = (char **)malloc(sizeof(char *) * (i + 1));
+	ret = wft_calloc(i + 1, sizeof(char *));
 	i = -1;
 	while (env)
 	{

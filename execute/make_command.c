@@ -6,11 +6,21 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:48:59 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/25 02:07:11 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 05:00:54 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+int	is_directory(const char *path)
+{
+	struct stat	info;
+
+	if (stat(path, &info) != 0)
+		return (0);
+	else
+		return (((info.st_mode) & S_IFMT) == S_IFDIR);
+}
 
 char	**parse_commands(t_arg *arg, char **cmd)
 {

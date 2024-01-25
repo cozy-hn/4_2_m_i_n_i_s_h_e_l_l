@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wlibft.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 20:38:09 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 03:47:31 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 03:57:57 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,13 @@ char	*wft_strjoin(char const *s1, char const *s2)
 	safe_free((char *)s1);
 	safe_free((char *)s2);
 	return (tmp);
+}
+
+t_lst	*wft_lstlast_lst(t_lst *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }

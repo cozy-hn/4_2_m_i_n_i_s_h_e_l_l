@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 04:34:07 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 03:22:58 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 05:00:47 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*init_new_heredoc(t_heredoc **hed_lst)
+{
+	t_heredoc	*new;
+	char		*name;
+
+	name = avoid_duplicate_name();
+	new = wft_calloc(1, sizeof(t_heredoc));
+	new->name = name;
+	new->next = NULL;
+	wft_lstadd_back_hed(hed_lst, new);
+	return (name);
+}
 
 void	handle_heredoc(t_arg *arg)
 {
@@ -46,16 +59,6 @@ char	*avoid_duplicate_name(void)
 	return (name);
 }
 
-int	is_directory(const char *path)
-{
-	struct stat	info;
-
-	if (stat(path, &info) != 0)
-		return (0);
-	else
-		return (((info.st_mode) & S_IFMT) == S_IFDIR);
-}
-
 void	run_heredoc(char **end, char *name)
 {
 	int		fd;
@@ -87,16 +90,10 @@ int	heredoc(char **end, t_heredoc **hed_lst)
 {
 	int			pid;
 	int			status;
-	char		*name;
 	int			signo;
-	t_heredoc	*new;
+	char		*name;
 
-	name = avoid_duplicate_name();
-	new = wft_calloc(1, sizeof(t_heredoc));
-	new->name = name;
-	new->next = NULL;
-
-	wft_lstadd_back_hed(hed_lst, new);
+	name = init_new_heredoc(hed_lst);
 	set_signal(HED, HED);
 	pid = fork();
 	if (pid == 0)

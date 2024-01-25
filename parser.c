@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:52:55 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 03:22:29 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 05:01:43 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int	cmd_list(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst)
 	}
 	return (0);
 }
-
-
 
 //<pipeline> ::= "(" <list> ")" | <command> {"|" <command>}
 int	cmd_pipeline(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst)

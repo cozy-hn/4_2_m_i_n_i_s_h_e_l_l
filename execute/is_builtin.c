@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:55:14 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 03:08:55 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 04:56:48 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ int	run_builtin(t_lst *lst, t_arg *arg)
 	else if (ft_strncmp(lst->cmd[0], "env", 4) == 0)
 		return (ft_env(arg->env));
 	else if (ft_strncmp(lst->cmd[0], "exit", 5) == 0)
-		return(ft_exit(arg, lst->cmd));
+		return (ft_exit(arg, lst->cmd));
 	return (0);
 }

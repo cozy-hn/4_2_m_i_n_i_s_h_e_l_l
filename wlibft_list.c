@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:37:19 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 01:48:04 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 03:57:39 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	wft_lstadd_back(t_token **lst, t_token *new)
 	}
 }
 
-void wft_lstadd_back_hed(t_heredoc **lst, t_heredoc *new)
+void	wft_lstadd_back_hed(t_heredoc **lst, t_heredoc *new)
 {
 	t_heredoc	*tmp;
 
@@ -79,15 +79,6 @@ int	wft_lstsize(t_token *lst)
 }
 
 t_token	*wft_lstlast(t_token *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
-
-t_lst	*wft_lstlast_lst(t_lst *lst)
 {
 	if (!lst)
 		return (NULL);

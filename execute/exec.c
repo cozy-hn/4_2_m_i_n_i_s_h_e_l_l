@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:57:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 03:46:15 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 04:53:33 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+
+void	last_wait(int last_status, int *i)
+{
+	int		signo;
+
+	signo = WTERMSIG(last_status);
+	if (signo == SIGINT && (*i)++ == 0)
+	{
+		ft_putstr_fd("^C\n", STDERR_FILENO);
+		g_exit = 128 + signo;
+	}
+	else if (signo == SIGQUIT && (*i)++ == 0)
+	{
+		ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
+		g_exit = 128 + signo;
+	}
+}
 
 void	ft_wait(int pid)
 {
@@ -23,19 +40,7 @@ void	ft_wait(int pid)
 	waitpid(pid, &last_status, 0);
 	g_exit = WEXITSTATUS(last_status);
 	if (WIFSIGNALED(last_status))
-	{
-		signo = WTERMSIG(last_status);
-		if (signo == SIGINT && i++ == 0)
-		{
-			ft_putstr_fd("^C\n", STDERR_FILENO);
-			g_exit = 128 + signo;
-		}
-		else if (signo == SIGQUIT && i++ == 0)
-		{
-			ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
-			g_exit = 128 + signo;
-		}
-	}
+		last_wait(last_status, &i);
 	while (wait(&status) != -1)
 	{
 		if (WIFSIGNALED(status))

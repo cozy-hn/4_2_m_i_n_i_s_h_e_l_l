@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 03:44:26 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 03:58:07 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	free_lst(t_lst **lst)
 
 void	add_redir(t_cmd_tree *cmd_tree, t_lst **tmp_lst, t_lst *new)
 {
-	if (cmd_tree->token->type == T_L_REDIR || cmd_tree->token->type == T_L_D_REDIR)
+	if (cmd_tree->token->type == T_L_REDIR
+		|| cmd_tree->token->type == T_L_D_REDIR)
 	{
 		new->fd_in = open(cmd_tree->token->word, O_RDONLY);
 		if (new->fd_in != -1)
