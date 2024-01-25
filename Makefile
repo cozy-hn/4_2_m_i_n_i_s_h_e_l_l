@@ -6,13 +6,12 @@
 #    By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 16:32:40 by jiko              #+#    #+#              #
-#    Updated: 2024/01/24 22:48:54 by jiko             ###   ########.fr        #
+#    Updated: 2024/01/25 18:32:55 by jiko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
-CFLAGS		= 
+# CFLAGS		= -Wall -Wextra -Werror
 LIBFTFLAG	= -Llibft -lft
 LFLAGS		= -lreadline
 RMF			= rm -f
@@ -24,27 +23,14 @@ OBJS		= $(addsuffix .o, $(BASE))
 NOW_DIR = ./
 
 EXECUTE_DIR = ./execute/
-# EXECUTE_BASE = *
-# EXECUTE_SRC = $(addprefix $(EXECUTE_DIR), $(addsuffix .c, $(EXECUTE_BASE)))
-# EXECUTE_OBJ = $(addprefix $(EXECUTE_DIR), $(addsuffix .o, $(EXECUTE_BASE)))
+EXECUTE_BASE = builtin_helper exec execute handle_redirection is_builtin  make_command path
+EXECUTE_SRC = $(addprefix $(EXECUTE_DIR), $(addsuffix .c, $(EXECUTE_BASE)))
+EXECUTE_OBJ = $(addprefix $(EXECUTE_DIR), $(addsuffix .o, $(EXECUTE_BASE)))
 
 BUILTIN_DIR = ./builtin/
-# BUILTIN_BASE = *
-# BUILTIN_SRC = $(addprefix $(BUILTIN_DIR), $(addsuffix .c, $(BUILTIN_BASE)))
-# BUILTIN_OBJ = $(addprefix $(BUILTIN_DIR), $(addsuffix .o, $(BUILTIN_BASE)))
-
-# GNL_DIR = ./get_next_line/
-
-EXECUTE_SRC = $(wildcard $(EXECUTE_DIR)*.c)
-EXECUTE_OBJ = $(patsubst $(EXECUTE_DIR)%.c,$(EXECUTE_DIR)%.o,$(EXECUTE_SRC))
-
-BUILTIN_SRC = $(wildcard $(BUILTIN_DIR)*.c)
-BUILTIN_OBJ = $(patsubst $(BUILTIN_DIR)%.c,$(BUILTIN_DIR)%.o,$(BUILTIN_SRC))
-
-# GNL_SRC = $(wildcard $(GNL_DIR)*.c)
-# GNL_OBJ = $(patsubst $(GNL_DIR)%.c,$(GNL_DIR)%.o,$(GNL_SRC))
-
-
+BUILTIN_BASE = builtin_util builtin_util2 env_util ft_cd ft_echo ft_env ft_exit ft_export ft_pwd ft_unset
+BUILTIN_SRC = $(addprefix $(BUILTIN_DIR), $(addsuffix .c, $(BUILTIN_BASE)))
+BUILTIN_OBJ = $(addprefix $(BUILTIN_DIR), $(addsuffix .o, $(BUILTIN_BASE)))
 
 NAME		= minishell
 
