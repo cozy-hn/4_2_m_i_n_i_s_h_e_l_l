@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 05:07:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 08:04:50 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 12:10:27 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@ void	signal_handler(int signo)
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	if (signo == SIGQUIT)
-	{
-		rl_on_new_line();
 		rl_redisplay();
 	}
 }
@@ -66,7 +61,7 @@ void	set_signal(int sig_int, int sig_quit)
 	if (sig_quit == DFL)
 		signal(SIGQUIT, SIG_DFL);
 	if (sig_quit == SHE)
-		signal(SIGQUIT, signal_handler);
+		signal(SIGQUIT, SIG_IGN);
 	if (sig_int == HED)
 		signal(SIGINT, SIG_DFL);
 	if (sig_quit == HED)

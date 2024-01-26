@@ -1,31 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_util.c                                   :+:      :+:    :+:   */
+/*   expansion_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/03 22:27:20 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 05:29:51 by sumjo            ###   ########.fr       */
+/*   Created: 2024/01/12 22:04:35 by jiko              #+#    #+#             */
+/*   Updated: 2024/01/26 12:21:37 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_bonus.h"
 
-int	remove_space(char *line, int *i)
+char	*expand_env(char **word, t_env *env_lst)
 {
-	int	flag;
+	char	*ret;
+	char	*env;
+	int		i;
 
-	flag = 0;
-	while (line[*i] && is_space(line[*i]))
+	i = 0;
+	(*word)++;
+	ret = wft_calloc(1, sizeof(char));
+	if (**word == '?')
+		i++;
+	else
 	{
-		(*i)++;
-		flag = 1;
+		while (*(*word + i) && ft_is_env_word(*(*word + i), i))
+			i++;
 	}
-	return (flag);
+	env = ft_substr(*word, 0, i);
+	ret = wft_strjoin(ret, get_env_value(env_lst, env));
+	if (i > 0)
+		(*word) += i - 1;
+	safe_free(env);
+	return (ret);
 }
 
-char	*remove_quotes(char *word)
+void	expand_elif(char **word, char **ret, t_env *env_lst)
+{
+	if (ft_is_env_word(*(*word + 1), 0) == 0)
+		*ret = ft_strjoin_char(*ret, '$');
+	else
+		*ret = wft_strjoin(*ret, expand_env(word, env_lst));
+}
+
+char	*expand(char *word, t_env *env_lst)
 {
 	int		s_quote;
 	int		d_quote;
@@ -42,6 +61,8 @@ char	*remove_quotes(char *word)
 			s_quote = !s_quote;
 		else if (*word == '\"' && !s_quote)
 			d_quote = !d_quote;
+		else if (*word == '$' && !s_quote)
+			expand_elif(&word, &ret, env_lst);
 		else
 			ret = ft_strjoin_char(ret, *word);
 		if (*word)
@@ -49,12 +70,4 @@ char	*remove_quotes(char *word)
 	}
 	safe_free(tmp);
 	return (ret);
-}
-
-int	ft_is_env_word(char c, int i)
-{
-	if (i == 0)
-		return (ft_isalpha(c) || c == '_' || c == '?');
-	else
-		return (ft_isalnum(c) || c == '_');
 }

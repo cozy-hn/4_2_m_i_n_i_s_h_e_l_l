@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:57:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 08:43:26 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 11:57:18 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_wait(int pid)
 			if (signo == SIGINT && i++ == 0)
 				ft_putstr_fd("^C\n", STDERR_FILENO);
 			else if (signo == SIGQUIT && i++ == 0)
-				ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
+				ft_putstr_fd("^\\", STDERR_FILENO);
 		}
 	}
 }
