@@ -6,16 +6,25 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 06:26:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 06:02:27 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 09:30:50 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-void	close_in_out_fds(t_lst *lst)
+void	close_in_out_fds(t_arg *arg)
 {
-	close(lst->fd_in);
-	close(lst->fd_out);
+	t_lst	*lst;
+
+	lst = arg->lst;
+	while (lst)
+	{
+		if (lst->fd_in != -1)
+			close(lst->fd_in);
+		if (lst->fd_out != -1)
+			close(lst->fd_out);
+		lst = lst->next;
+	}
 }
 
 int	handle_fd_input(t_lst *lst)
@@ -63,6 +72,9 @@ int	handle_redirection(t_lst *lst)
 	int	error;
 
 	error = handle_fd_input(lst);
-	error = handle_fd_output(lst);
+	if (error)
+		handle_fd_output(lst);
+	else
+		error = handle_fd_output(lst);
 	return (error);
 }

@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:57:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 04:53:33 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 08:43:26 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@ void	ft_wait(int pid)
 	int		i;
 
 	i = 0;
-	waitpid(pid, &last_status, 0);
-	g_exit = WEXITSTATUS(last_status);
-	if (WIFSIGNALED(last_status))
-		last_wait(last_status, &i);
+	if (pid)
+	{
+		waitpid(pid, &last_status, 0);
+		g_exit = WEXITSTATUS(last_status);
+		if (WIFSIGNALED(last_status))
+			last_wait(last_status, &i);
+	}
 	while (wait(&status) != -1)
 	{
 		if (WIFSIGNALED(status))

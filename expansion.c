@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 22:04:35 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 05:37:07 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 08:45:34 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,13 @@ char	*expand_env(char **word, t_env *env_lst)
 	i = 0;
 	(*word)++;
 	ret = wft_calloc(1, sizeof(char));
-	while (*(*word + i) && ft_is_env_word(*(*word + i), i))
+	if (**word == '?')
 		i++;
+	else
+	{
+		while (*(*word + i) && ft_is_env_word(*(*word + i), i))
+			i++;
+	}
 	env = ft_substr(*word, 0, i);
 	ret = wft_strjoin(ret, get_env_value(env_lst, env));
 	if (i > 0)

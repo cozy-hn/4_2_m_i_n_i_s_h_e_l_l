@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 03:23:48 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 09:30:36 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 void	run_middle(t_lst *lst, t_arg *arg, int *pipe_fd)
 {
 	int			pid;
+	int			red;
 
 	set_signal(DFL, DFL);
 	pid = fork();
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
+		red = handle_redirection(lst);
 		if (lst->fd_in != -1)
 			dup2(lst->fd_in, STDIN_FILENO);
 		else
@@ -29,59 +31,67 @@ void	run_middle(t_lst *lst, t_arg *arg, int *pipe_fd)
 			dup2(lst->fd_out, STDOUT_FILENO);
 		else
 			dup2(pipe_fd[1], STDOUT_FILENO);
-		execute(lst, arg);
+		if (!red)
+			execute(lst, arg);
 		exit(0);
 	}
 	set_signal(IGN, IGN);
 	close(lst->prev_pipe);
 	lst->next->prev_pipe = pipe_fd[0];
 	close(pipe_fd[1]);
-	close_in_out_fds(lst);
 }
 
 void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
 {
 	int			pid;
+	int			red;
 
 	set_signal(DFL, DFL);
 	pid = fork();
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
-		dup2(lst->fd_in, STDIN_FILENO);
+		red = handle_redirection(lst);
+		if (lst->fd_in != -1)
+			dup2(lst->fd_in, STDIN_FILENO);
 		if (lst->fd_out != -1)
 			dup2(lst->fd_out, STDOUT_FILENO);
 		else
 			dup2(pipe_fd[1], STDOUT_FILENO);
-		execute(lst, arg);
+		if (!red)
+			execute(lst, arg);
 		exit(0);
 	}
 	set_signal(IGN, IGN);
 	close(pipe_fd[1]);
 	lst->next->prev_pipe = pipe_fd[0];
-	close_in_out_fds(lst);
 }
 
 int	run_last(t_lst *lst, t_arg *arg)
 {
 	int		pid;
 	int		status;
+	int		red;
 
 	set_signal(DFL, DFL);
 	pid = fork();
 	if (pid == 0)
 	{
+		red = handle_redirection(lst);
 		if (lst->fd_in != -1)
 			dup2(lst->fd_in, STDIN_FILENO);
 		else
 			dup2(lst->prev_pipe, STDIN_FILENO);
 		dup2(lst->fd_out, STDOUT_FILENO);
-		status = execute(lst, arg);
+		if (!red)
+			status = execute(lst, arg);
+		else
+			exit(1);
 		exit(status);
 	}
 	set_signal(IGN, IGN);
 	close(lst->prev_pipe);
-	close_in_out_fds(lst);
+	close_in_out_fds(arg);
 	return (pid);
 }
 
@@ -111,6 +121,7 @@ void	executor(t_arg *arg)
 	int		pid;
 	t_lst	*lst;
 
+	pid = 0;
 	if (is_builtin(arg->lst) && arg->lst->next == NULL)
 	{
 		if (handle_redirection(arg->lst) != 0)
@@ -121,33 +132,9 @@ void	executor(t_arg *arg)
 	lst = arg->lst;
 	while (lst)
 	{
-		if (handle_redirection(lst) != 0)
-		{
-			lst = lst->next;
-			continue ;
-		}
 		pid = executor_helper(lst, arg);
 		lst = lst->next;
 	}
 	ft_wait(pid);
 	handle_heredoc(arg);
 }
-
-// int main (int ac, char **av, char **env)
-// {
-// 	ac = 0;
-// 	av = 0;
-// 	t_arg arg;
-// 	t_lst *lst;
-
-// 	arg.env = make_env_lst(env);
-// 	lst = mock_lst();
-
-// 	arg.lst = lst;
-
-// 	executor(&arg);
-
-// 	printf("g_exit = %d\n", g_exit);
-// 	return(g_exit);
-
-// }tcgetattr(STDIN_FILENO, &term);

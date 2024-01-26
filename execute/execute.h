@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 07:45:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 07:14:26 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 09:31:14 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../minishell.h"
 # include "../builtin/builtin.h"
 
-void	close_in_out_fds(t_lst *lst);
+void	close_in_out_fds(t_arg *arg);
 char	**return_commands(t_arg *arg, char **cmd);
 void	get_path(t_arg *arg);
 char	*return_path(t_env *env);
