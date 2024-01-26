@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:46:33 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 03:27:51 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/26 09:42:47 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,16 +123,3 @@ int	ft_export(t_env *env, char **cmd)
 	}
 	return (exit_status);
 }
-// int	main(int argc, char **argv, char **env)
-// {
-// 	argc = 0;
-// 	t_arg arg;
-// 	t_lst lst;
-
-// 	lst.cmd = argv;
-
-// 	make_env_lst(&arg, env);
-// 	ft_export(&arg, lst->cmd);
-// 	char **arr = ft_sort_env(env_lst_to_arr(arg.env));
-// 	ft_print_env(arr);
-// }

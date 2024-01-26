@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 09:30:36 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/26 10:47:38 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,10 @@ void	executor(t_arg *arg)
 	if (is_builtin(arg->lst) && arg->lst->next == NULL)
 	{
 		if (handle_redirection(arg->lst) != 0)
+		{
+			close_in_out_fds(arg);
 			return ;
+		}
 		g_exit = run_builtin_helper(arg->lst, arg);
 		return ;
 	}
