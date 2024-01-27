@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:52:55 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/28 04:25:56 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/28 05:42:08 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int	parser(t_cmd_tree **head, t_token **token, t_main *main)
 		{
 			main->exit_code = 258;
 			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+			g_exit = 0;
 			if (now)
 				ft_putstr_fd(now->word, 2);
 			else
