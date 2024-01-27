@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 12:10:00 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/28 04:34:40 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,20 @@ char	**env_lst_to_arr(t_env *env)
 	return (ret);
 }
 
-char	*get_env_value(t_env *env, char *key)
+char	*get_env_value(t_main *main, char *key)
 {
 	t_env	*tmp;
 
 	if (ft_strncmp(key, "?", 2) == 0)
-		return (ft_itoa(g_exit));
-	tmp = env;
+	{
+		if (g_exit)
+		{
+			g_exit = 0;
+			return (ft_itoa(1));
+		}
+		return (ft_itoa(main->exit_code));
+	}
+	tmp = main->env_lst;
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, key, ft_strlen(key) + 1) == 0)

@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 06:26:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 09:30:50 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/28 01:07:52 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	handle_fd_input(t_lst *lst)
 		if (fd == -1)
 		{
 			throw_error(lst->fd_in_name, 0, strerror(errno));
-			g_exit = 1;
 			return (1);
 		}
 		lst->fd_in = fd;
@@ -59,7 +58,6 @@ int	handle_fd_output(t_lst *lst)
 		if (fd == -1)
 		{
 			throw_error(lst->fd_out_name, 0, strerror(errno));
-			g_exit = 1;
 			return (1);
 		}
 		lst->fd_out = fd;

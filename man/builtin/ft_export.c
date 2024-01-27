@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:46:33 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 12:13:13 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/28 05:08:39 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ void	throw_export_error(char *cmd, char *str, char *msg)
 	ft_putstr_fd("': not a valid identifier\n", 2);
 }
 
-int	set_env(t_env *env, char *key, char *value)
+int	set_env(t_env **env, char *key, char *value)
 {
 	t_env	*tmp;
+	t_env	*new;
 
-	tmp = env;
+	tmp = *env;
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, key, ft_strlen(key) + 1) == 0)
@@ -40,16 +41,15 @@ int	set_env(t_env *env, char *key, char *value)
 		}
 		tmp = tmp->next;
 	}
-	while (env->next)
-		env = env->next;
-	env->next = wft_calloc(1, sizeof(t_env));
-	env->next->key = key;
-	env->next->value = value;
-	env->next->next = NULL;
+	new = wft_calloc(1, sizeof(t_env));
+	new->key = key;
+	new->value = value;
+	new->next = *env;
+	*env = new;
 	return (0);
 }
 
-int	add_env(t_env *env, char *str)
+int	add_env(t_env **env, char *str)
 {
 	char	*key;
 	char	*value;
@@ -100,7 +100,7 @@ int	export_check_str2(char *str, int *exit_status)
 	return (1);
 }
 
-int	ft_export(t_env *env, char **cmd)
+int	ft_export(t_env **env, char **cmd)
 {
 	char	**env_arr;
 	int		exit_status;
@@ -110,8 +110,9 @@ int	ft_export(t_env *env, char **cmd)
 	i = 0;
 	if (cmd[1] == NULL)
 	{
-		env_arr = env_lst_to_arr(env);
-		ft_print_env(ft_sort_env(env_arr, env));
+		env_arr = env_lst_to_arr(*env);
+		ft_sort_env(env_arr);
+		ft_print_env(env_arr);
 		ft_free_arr(env_arr);
 		return (exit_status);
 	}

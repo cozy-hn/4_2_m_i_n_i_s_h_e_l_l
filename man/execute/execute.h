@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 07:45:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 09:31:14 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/28 04:09:00 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,17 @@ char	*return_path(t_env *env);
 int		throw_error(char *cmd, char *str, char *msg);
 char	**parse_commands(t_arg *arg, char **cmd);
 int		is_builtin(t_lst *lst);
-int		run_builtin(t_lst *lst, t_arg *arg);
-int		executor_helper(t_lst *lst, t_arg *arg);
+int		run_builtin(t_lst *lst, t_main *main);
+int		executor_helper(t_lst *lst, t_main *main);
 t_lst	*mock_lst(void);
-int		execute(t_lst *lst, t_arg *arg);
+int		execute(t_lst *lst, t_main *main);
 void	connect_original_fd(t_lst *lst, int *fd);
 int		handle_redirection(t_lst *lst);
 void	connect_redir(t_lst *lst);
 void	duplicate_original_fd(int *fd);
-int		run_builtin_helper(t_lst *lst, t_arg *arg);
-void	ft_wait(int pid);
+int		run_builtin_helper(t_main *main);
+void	ft_wait(int pid, t_main *main);
+void	default_terminal(void);
+void	turn_to_shell_mode(void);
 
 #endif

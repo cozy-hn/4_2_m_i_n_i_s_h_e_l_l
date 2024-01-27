@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:23:52 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 07:46:47 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/28 01:21:25 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	duplicate_original_fd(int *fd)
 	fd[1] = dup(STDOUT_FILENO);
 }
 
-int	run_builtin_helper(t_lst *lst, t_arg *arg)
+int	run_builtin_helper(t_main *main)
 {
 	int	fd[2];
 	int	status;
 
 	duplicate_original_fd(fd);
-	connect_redir(arg->lst);
-	status = run_builtin(arg->lst, arg);
-	connect_original_fd(lst, fd);
+	connect_redir(main->arg->lst);
+	status = run_builtin(main->arg->lst, main);
+	connect_original_fd(main->arg->lst, fd);
 	return (status);
 }

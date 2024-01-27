@@ -6,13 +6,13 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:57:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 11:57:18 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/28 03:53:02 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-void	last_wait(int last_status, int *i)
+void	last_wait(int last_status, int *i, t_main *main)
 {
 	int		signo;
 
@@ -20,16 +20,16 @@ void	last_wait(int last_status, int *i)
 	if (signo == SIGINT && (*i)++ == 0)
 	{
 		ft_putstr_fd("^C\n", STDERR_FILENO);
-		g_exit = 128 + signo;
+		main->exit_code = 128 + signo;
 	}
 	else if (signo == SIGQUIT && (*i)++ == 0)
 	{
 		ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
-		g_exit = 128 + signo;
+		main->exit_code = 128 + signo;
 	}
 }
 
-void	ft_wait(int pid)
+void	ft_wait(int pid, t_main *main)
 {
 	int		last_status;
 	int		status;
@@ -40,9 +40,9 @@ void	ft_wait(int pid)
 	if (pid)
 	{
 		waitpid(pid, &last_status, 0);
-		g_exit = WEXITSTATUS(last_status);
+		main->exit_code = WEXITSTATUS(last_status);
 		if (WIFSIGNALED(last_status))
-			last_wait(last_status, &i);
+			last_wait(last_status, &i, main);
 	}
 	while (wait(&status) != -1)
 	{
@@ -50,20 +50,20 @@ void	ft_wait(int pid)
 		{
 			signo = WTERMSIG(status);
 			if (signo == SIGINT && i++ == 0)
-				ft_putstr_fd("^C\n", STDERR_FILENO);
+				ft_putstr_fd("\n", STDERR_FILENO);
 			else if (signo == SIGQUIT && i++ == 0)
 				ft_putstr_fd("^\\", STDERR_FILENO);
 		}
 	}
 }
 
-int	run_execve(t_lst *lst, t_arg *arg)
+int	run_execve(t_lst *lst, t_main *main)
 {
 	char	**cmd;
 
-	get_path(arg);
-	cmd = return_commands(arg, lst->cmd);
-	if (execve(cmd[0], cmd, env_lst_to_arr(arg->env)) == -1)
+	get_path(main->arg);
+	cmd = return_commands(main->arg, lst->cmd);
+	if (execve(cmd[0], cmd, env_lst_to_arr(*(main->arg->env))) == -1)
 	{
 		throw_error(cmd[0], 0, strerror(errno));
 		if (errno == 21)
@@ -73,10 +73,10 @@ int	run_execve(t_lst *lst, t_arg *arg)
 	return (0);
 }
 
-int	execute(t_lst *lst, t_arg *arg)
+int	execute(t_lst *lst, t_main *main)
 {
 	if (is_builtin(lst))
-		return (run_builtin(lst, arg));
+		return (run_builtin(lst, main));
 	else
-		return (run_execve(lst, arg));
+		return (run_execve(lst, main));
 }

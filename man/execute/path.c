@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:39:21 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/24 07:47:05 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/28 03:13:12 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	get_path(t_arg *arg)
 	int		i;
 
 	i = 0;
-	arr = return_path(arg->env);
+	arr = return_path(*(arg->env));
 	if (!arr)
 	{
 		arg->path = NULL;

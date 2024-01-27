@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 15:33:57 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 00:47:30 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/28 01:50:15 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	word_checker(char *line, int dquote, int squote)
 	return (1);
 }
 
-char	*set_word(char *line, int *i)
+char	*set_word(char *line, int *i, t_main *main)
 {
 	int		dquote;
 	int		squote;
@@ -66,7 +66,7 @@ char	*set_word(char *line, int *i)
 	}
 	if (dquote || squote)
 	{
-		g_exit = 258;
+		main->exit_code = 258;
 		printf("minishell: syntax error(quote)\n");
 		safe_free(word);
 		return (NULL);
@@ -97,7 +97,7 @@ char	*set_meta_word(int type)
 	return (NULL);
 }
 
-int	tokenizer(char *line, t_token **token)
+int	tokenizer(char *line, t_token **token, t_main *main)
 {
 	int		i;
 	t_token	*new;
@@ -109,7 +109,7 @@ int	tokenizer(char *line, t_token **token)
 		if (remove_space(line, &i))
 			continue ;
 		new = wft_calloc(1, sizeof(t_token));
-		tokenizer_if_is_meta(line, &i, new);
+		tokenizer_if_is_meta(line, &i, new, main);
 		wft_lstadd_back(token, new);
 		if (!new->word)
 		{

@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_util.c                                   :+:      :+:    :+:   */
+/*   default_terminal.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/25 18:47:22 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/28 01:49:38 by sumjo            ###   ########.fr       */
+/*   Created: 2024/01/28 03:30:57 by sumjo             #+#    #+#             */
+/*   Updated: 2024/01/28 04:37:53 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	tokenizer_if_is_meta(char *line, int *i, t_token *new, t_main *main)
+void	default_terminal(void)
 {
-	if (is_meta(&line[*i]))
-	{
-		new->type = set_type(line, i);
-		new->word = set_meta_word(new->type);
-	}
-	else
-	{
-		new->type = T_WORD;
-		new->word = set_word(line, i, main);
-	}
+	struct termios	term;
+
+	set_signal(DFL, DFL);
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+void	turn_to_shell_mode(void)
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	set_signal(SHE, SHE);
 }

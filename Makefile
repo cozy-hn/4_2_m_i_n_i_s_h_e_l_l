@@ -6,7 +6,7 @@
 #    By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 16:32:40 by jiko              #+#    #+#              #
-#    Updated: 2024/01/26 12:48:07 by sumjo            ###   ########.fr        #
+#    Updated: 2024/01/28 03:32:49 by sumjo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC = $(addprefix $(MAN_DIR), $(addsuffix .c, $(BASE)))
 OBJ = $(addprefix $(MAN_DIR), $(addsuffix .o, $(BASE)))
 
 EXECUTE_DIR = man/execute/
-EXECUTE_BASE = builtin_helper exec execute handle_redirection is_builtin  make_command path
+EXECUTE_BASE = builtin_helper exec execute handle_redirection is_builtin  make_command path default_terminal
 EXECUTE_SRC = $(addprefix $(EXECUTE_DIR), $(addsuffix .c, $(EXECUTE_BASE)))
 EXECUTE_OBJ = $(addprefix $(EXECUTE_DIR), $(addsuffix .o, $(EXECUTE_BASE)))
 
