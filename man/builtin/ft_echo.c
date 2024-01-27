@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:15:16 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 08:21:19 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/28 07:06:17 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_echo(char **cmd)
 
 	if (cmd[1] == NULL)
 	{
-		write(1, "\n", 1);
+		ft_putstr_fd("\n", 1);
 		return (0);
 	}
 	option_flag = check_option(cmd);

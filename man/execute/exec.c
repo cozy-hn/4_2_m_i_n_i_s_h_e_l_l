@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:57:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/28 03:53:02 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/28 07:16:05 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,8 @@ int	run_execve(t_lst *lst, t_main *main)
 	cmd = return_commands(main->arg, lst->cmd);
 	if (execve(cmd[0], cmd, env_lst_to_arr(*(main->arg->env))) == -1)
 	{
-		throw_error(cmd[0], 0, strerror(errno));
-		if (errno == 21)
-			exit(126);
-		exit(1);
+		throw_error(cmd[0], "command not found", 0);
+		exit(127);
 	}
 	return (0);
 }
