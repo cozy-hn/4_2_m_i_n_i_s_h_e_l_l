@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/30 07:00:21 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/30 07:29:32 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,11 @@ char	*get_env_value(t_env *env, char *key)
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, key, ft_strlen(key) + 1) == 0)
+		{
+			if (tmp->value == NULL)
+				return (NULL);
 			return (wft_strdup(tmp->value));
+		}
 		tmp = tmp->next;
 	}
 	return (NULL);
