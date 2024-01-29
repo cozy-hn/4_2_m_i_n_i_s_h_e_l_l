@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:57:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/28 07:16:05 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/30 07:12:49 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	last_wait(int last_status, int *i, t_main *main)
 	signo = WTERMSIG(last_status);
 	if (signo == SIGINT && (*i)++ == 0)
 	{
-		ft_putstr_fd("^C\n", STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
 		main->exit_code = 128 + signo;
 	}
 	else if (signo == SIGQUIT && (*i)++ == 0)
 	{
-		ft_putstr_fd("^\\Quit: 3\n", STDERR_FILENO);
+		ft_putstr_fd("Quit: 3\n", STDERR_FILENO);
 		main->exit_code = 128 + signo;
 	}
 }
@@ -52,7 +52,7 @@ void	ft_wait(int pid, t_main *main)
 			if (signo == SIGINT && i++ == 0)
 				ft_putstr_fd("\n", STDERR_FILENO);
 			else if (signo == SIGQUIT && i++ == 0)
-				ft_putstr_fd("^\\", STDERR_FILENO);
+				ft_putstr_fd("", STDERR_FILENO);
 		}
 	}
 }

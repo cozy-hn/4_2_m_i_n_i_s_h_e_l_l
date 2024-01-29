@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/28 06:34:47 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/30 07:19:46 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	run_middle(t_lst *lst, t_main *main, int *pipe_fd)
 	int			pid;
 	int			red;
 
-	default_terminal();
+	set_signal(DFL, DFL);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -35,7 +35,7 @@ void	run_middle(t_lst *lst, t_main *main, int *pipe_fd)
 			execute(lst, main);
 		exit(0);
 	}
-	set_signal(IGN, IGN);
+	turn_off_default();
 	close(lst->prev_pipe);
 	lst->next->prev_pipe = pipe_fd[0];
 	close(pipe_fd[1]);
@@ -46,7 +46,7 @@ void	run_first(t_lst *lst, t_main *main, int *pipe_fd)
 	int			pid;
 	int			red;
 
-	default_terminal();
+	set_signal(DFL, DFL);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -62,7 +62,7 @@ void	run_first(t_lst *lst, t_main *main, int *pipe_fd)
 			execute(lst, main);
 		exit(0);
 	}
-	set_signal(IGN, IGN);
+	turn_off_default();
 	close(pipe_fd[1]);
 	lst->next->prev_pipe = pipe_fd[0];
 }
@@ -73,7 +73,7 @@ int	run_last(t_lst *lst, t_main *main)
 	int		status;
 	int		red;
 
-	default_terminal();
+	set_signal(DFL, DFL);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -89,7 +89,7 @@ int	run_last(t_lst *lst, t_main *main)
 			exit(1);
 		exit(status);
 	}
-	set_signal(IGN, IGN);
+	turn_off_default();
 	close(lst->prev_pipe);
 	close_in_out_fds(main->arg);
 	return (pid);

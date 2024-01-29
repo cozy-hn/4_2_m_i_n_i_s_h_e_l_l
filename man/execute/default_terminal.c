@@ -6,17 +6,17 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 03:30:57 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/28 04:37:53 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/30 07:25:00 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	default_terminal(void)
+void	turn_off_default(void)
 {
 	struct termios	term;
 
-	set_signal(DFL, DFL);
+	set_signal(IGN, IGN);
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag |= ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);

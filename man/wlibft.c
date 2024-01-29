@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 20:38:09 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/28 01:34:23 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/30 07:04:04 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*wft_strdup(const char *src)
 	char	*cp;
 	char	*tmp;
 
+	if (!src)
+		return (NULL);
 	cp = wft_calloc(ft_strlen(src) + 1, 1);
 	tmp = cp;
 	if (tmp != NULL)
