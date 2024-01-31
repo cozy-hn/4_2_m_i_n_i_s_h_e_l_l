@@ -6,11 +6,20 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/31 17:21:30 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:07 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
+
+void	main_signal_exit(t_main *main)
+{
+	ft_putstr_fd("\033[A", 1);
+	ft_putstr_fd("minishell$ exit\n", STDERR_FILENO);
+	if (g_exit)
+		exit(1);
+	exit(main->exit_code);
+}
 
 t_env	*main_init(int argc, char **argv, char **env)
 {
@@ -27,7 +36,7 @@ t_env	*main_init(int argc, char **argv, char **env)
 
 void	main_second(t_main *main)
 {
-	start_exec(main->cmd_tree, main->env_lst, main->hed_lst);
+	start_exec(main->cmd_tree, main);
 	heredoc_free(main->hed_lst);
 	free_cmd_tree(main->cmd_tree);
 	free_token(main->token);
@@ -47,24 +56,20 @@ int	main(int argc, char **argv, char **env)
 
 	tcgetattr(STDIN_FILENO, &term);
 	main.env_lst = main_init(argc, argv, env);
+	main.exit_code = 0;
 	while (1)
 	{
 		main_init_second(&main);
 		main.line = readline("minishell$ ");
 		if (!main.line)
-		{
-			ft_putstr_fd("\033[A", 1);
-			ft_putstr_fd("minishell$ exit\n", STDERR_FILENO);
-			exit(g_exit);
-		}
+			main_signal_exit(&main);
 		add_history(main.line);
-		if (tokenizer(main.line, &main.token)
-			|| parser(&main.cmd_tree, &main.token, &main.hed_lst))
+		if (tokenizer(main.line, &main.token, &main)
+			|| parser(&main.cmd_tree, &main.token, &main))
 			continue ;
-		// test_tr_print_tree(main.cmd_tree);
 		main_second(&main);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	exit(g_exit);
-	return (g_exit);
+	exit(main.exit_code);
+	return (main.exit_code);
 }

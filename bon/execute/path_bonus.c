@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:39:21 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 12:22:23 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:52 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	get_path(t_arg *arg)
 	int		i;
 
 	i = 0;
-	arr = return_path(arg->env);
+	arr = return_path(*(arg->env));
 	if (!arr)
 	{
 		arg->path = NULL;

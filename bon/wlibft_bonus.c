@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wlibft_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 20:38:09 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 12:21:37 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:07 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*wft_calloc(size_t count, size_t size)
 
 	rtm = malloc(count * size);
 	if (!rtm)
-		exit(g_exit);
+		exit(1);
 	ft_memset(rtm, 0, count * size);
 	return (rtm);
 }
@@ -41,6 +41,8 @@ char	*wft_strdup(const char *src)
 	char	*cp;
 	char	*tmp;
 
+	if (!src)
+		return (NULL);
 	cp = wft_calloc(ft_strlen(src) + 1, 1);
 	tmp = cp;
 	if (tmp != NULL)

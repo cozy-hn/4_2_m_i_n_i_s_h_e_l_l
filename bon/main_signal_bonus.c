@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_signal_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 05:07:10 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 12:21:37 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:07 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	signal_handler(int signo)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_exit = 1;
 	}
 }
 
@@ -44,7 +45,6 @@ int	heredoc_handler(t_heredoc *hed_lst)
 {
 	ft_putstr_fd("\n", 1);
 	heredoc_free(hed_lst);
-	g_exit = 1;
 	return (1);
 }
 

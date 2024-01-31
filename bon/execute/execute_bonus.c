@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 20:06:22 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 12:22:23 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:52 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute_bonus.h"
 
-void	run_middle(t_lst *lst, t_arg *arg, int *pipe_fd)
+void	run_middle(t_lst *lst, t_main *main, int *pipe_fd)
 {
 	int			pid;
 	int			red;
@@ -32,16 +32,16 @@ void	run_middle(t_lst *lst, t_arg *arg, int *pipe_fd)
 		else
 			dup2(pipe_fd[1], STDOUT_FILENO);
 		if (!red)
-			execute(lst, arg);
+			execute(lst, main);
 		exit(0);
 	}
-	set_signal(IGN, IGN);
+	turn_off_default();
 	close(lst->prev_pipe);
 	lst->next->prev_pipe = pipe_fd[0];
 	close(pipe_fd[1]);
 }
 
-void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
+void	run_first(t_lst *lst, t_main *main, int *pipe_fd)
 {
 	int			pid;
 	int			red;
@@ -59,15 +59,15 @@ void	run_first(t_lst *lst, t_arg *arg, int *pipe_fd)
 		else
 			dup2(pipe_fd[1], STDOUT_FILENO);
 		if (!red)
-			execute(lst, arg);
+			execute(lst, main);
 		exit(0);
 	}
-	set_signal(IGN, IGN);
+	turn_off_default();
 	close(pipe_fd[1]);
 	lst->next->prev_pipe = pipe_fd[0];
 }
 
-int	run_last(t_lst *lst, t_arg *arg)
+int	run_last(t_lst *lst, t_main *main)
 {
 	int		pid;
 	int		status;
@@ -84,60 +84,61 @@ int	run_last(t_lst *lst, t_arg *arg)
 			dup2(lst->prev_pipe, STDIN_FILENO);
 		dup2(lst->fd_out, STDOUT_FILENO);
 		if (!red)
-			status = execute(lst, arg);
+			status = execute(lst, main);
 		else
 			exit(1);
 		exit(status);
 	}
-	set_signal(IGN, IGN);
+	turn_off_default();
 	close(lst->prev_pipe);
-	close_in_out_fds(arg);
+	close_in_out_fds(main->arg);
 	return (pid);
 }
 
-int	executor_helper(t_lst *lst, t_arg *arg)
+int	executor_helper(t_lst *lst, t_main *main)
 {
 	int	pipe_fd[2];
 	int	pid;
 
 	if (!lst->next)
 	{
-		pid = run_last(lst, arg);
+		pid = run_last(lst, main);
 		return (pid);
 	}
 	else
 	{
 		pipe(pipe_fd);
 		if (lst->prev_pipe == -1)
-			run_first(lst, arg, pipe_fd);
+			run_first(lst, main, pipe_fd);
 		else
-			run_middle(lst, arg, pipe_fd);
+			run_middle(lst, main, pipe_fd);
 	}
 	return (0);
 }
 
-void	executor(t_arg *arg)
+void	executor(t_main *main)
 {
 	int		pid;
 	t_lst	*lst;
 
 	pid = 0;
-	if (is_builtin(arg->lst) && arg->lst->next == NULL)
+	if (is_builtin(main->arg->lst) && main->arg->lst->next == NULL)
 	{
-		if (handle_redirection(arg->lst) != 0)
+		if (handle_redirection(main->arg->lst) != 0)
 		{
-			close_in_out_fds(arg);
+			main->exit_code = 1;
+			close_in_out_fds(main->arg);
 			return ;
 		}
-		g_exit = run_builtin_helper(arg->lst, arg);
+		main->exit_code = run_builtin_helper(main);
 		return ;
 	}
-	lst = arg->lst;
+	lst = main->arg->lst;
 	while (lst)
 	{
-		pid = executor_helper(lst, arg);
+		pid = executor_helper(lst, main);
 		lst = lst->next;
 	}
-	ft_wait(pid);
-	handle_heredoc(arg);
+	ft_wait(pid, main);
+	handle_heredoc(main->arg);
 }

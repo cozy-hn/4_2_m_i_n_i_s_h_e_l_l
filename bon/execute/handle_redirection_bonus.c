@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirection_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 06:26:15 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 12:22:23 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:52 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	handle_fd_input(t_lst *lst)
 		if (fd == -1)
 		{
 			throw_error(lst->fd_in_name, 0, strerror(errno));
-			g_exit = 1;
 			return (1);
 		}
 		lst->fd_in = fd;
@@ -59,7 +58,6 @@ int	handle_fd_output(t_lst *lst)
 		if (fd == -1)
 		{
 			throw_error(lst->fd_out_name, 0, strerror(errno));
-			g_exit = 1;
 			return (1);
 		}
 		lst->fd_out = fd;

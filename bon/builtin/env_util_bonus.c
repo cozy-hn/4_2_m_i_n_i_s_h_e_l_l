@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_util_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:57:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/30 07:29:32 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:32 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,21 +93,21 @@ char	**env_lst_to_arr(t_env *env)
 	return (ret);
 }
 
-char	*get_env_value(t_env *env, char *key)
+char	*get_env_value(t_main *main, char *key)
 {
 	t_env	*tmp;
 
 	if (ft_strncmp(key, "?", 2) == 0)
-		return (ft_itoa(g_exit));
-	tmp = env;
+	{
+		if (g_exit)
+			return (ft_itoa(1));
+		return (ft_itoa(main->exit_code));
+	}
+	tmp = main->env_lst;
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->key, key, ft_strlen(key) + 1) == 0)
-		{
-			if (tmp->value == NULL)
-				return (NULL);
 			return (wft_strdup(tmp->value));
-		}
 		tmp = tmp->next;
 	}
 	return (NULL);

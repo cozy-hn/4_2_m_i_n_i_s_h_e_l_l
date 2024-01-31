@@ -6,16 +6,16 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 06:00:48 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/31 17:21:39 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:07 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-void	start_play_executor(t_lst **tmp_lst, t_env *env_lst, t_heredoc *hed_lst)
+void	start_play_executor(t_lst **tmp_lst, t_main *main)
 {
-	print_lst(*tmp_lst);
-	play_executor(tmp_lst, env_lst, hed_lst);
+	g_exit = 0;
+	play_executor(tmp_lst, main);
 	free_lst(tmp_lst);
 }
 

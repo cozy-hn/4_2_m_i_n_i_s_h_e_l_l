@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_command_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:48:59 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 12:22:23 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:52 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ char	**parse_commands(t_arg *arg, char **cmd)
 	int		i;
 	char	*arr;
 
-	i = 0;
+	i = -1;
 	if (arg->path == NULL)
 		throw_error_exit(cmd[0], "No Such file or directory", 0);
-	while (arg->path[i])
+	if (access(arr, F_OK) == 0)
+		return (cmd);
+	while (arg->path[++i])
 	{
 		arr = wft_strdup(arg->path[i]);
 		arr = wft_strjoin(arr, wft_strdup(cmd[0]));
@@ -61,12 +63,13 @@ char	**parse_commands(t_arg *arg, char **cmd)
 			return (cmd);
 		}
 		free(arr);
-		i++;
 	}
 	if (has_char(cmd[0], '/'))
-		throw_error_exit(cmd[0], "No Such file or directory", 0);
-	throw_error_exit(cmd[0], "command not found", 0);
-	return (0);
+	{
+		throw_error(cmd[0], "Not a directory", 0);
+		exit(126);
+	}
+	return (cmd);
 }
 
 char	**return_commands(t_arg	*arg, char **cmd)
@@ -76,7 +79,7 @@ char	**return_commands(t_arg	*arg, char **cmd)
 		throw_error(cmd[0], "command not found", 0);
 		exit(127);
 	}
-	if (cmd[0][0] != '/' && cmd[0][0] != '.' && !has_char(cmd[0], '/'))
+	if (cmd[0][0] != '/' && cmd[0][0] != '.')
 		return (parse_commands(arg, cmd));
 	if (access(cmd[0], F_OK) == -1)
 	{

@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_util2_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 03:09:27 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 12:22:09 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:32 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_bonus.h"
+
+int	compare_strings(char *s1, char *s2, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (s1[i] == '=' || s2[i] == '=')
+			break ;
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	if (s2[i] == '=')
+		return (1);
+	return (0);
+}
 
 int	ft_print_env(char **env)
 {
@@ -36,27 +54,28 @@ int	ft_print_env(char **env)
 	return (0);
 }
 
-char	**ft_sort_env(char **env_arr, t_env *env_lst)
+char	**ft_sort_env(char **env_arr)
 {
-	char	*tmp;
-	t_env	*tmp_lst;
 	int		i;
 	int		j;
+	char	*tmp;
 
 	i = 0;
 	while (env_arr[i])
 	{
 		j = i + 1;
-		tmp_lst = env_lst->next;
-		if (tmp_lst && ft_strncmp(env_lst->key, tmp_lst->key,
-				ft_strlen(env_lst->key) + 1) > 0)
+		while (env_arr[j])
 		{
-			tmp = env_arr[i];
-			env_arr[i] = env_arr[j];
-			env_arr[j] = tmp;
+			if (compare_strings(env_arr[i], env_arr[j],
+					env_len(env_arr[i])) > 0)
+			{
+				tmp = env_arr[i];
+				env_arr[i] = env_arr[j];
+				env_arr[j] = tmp;
+			}
+			j++;
 		}
 		i++;
-		env_lst = env_lst->next;
 	}
 	return (env_arr);
 }

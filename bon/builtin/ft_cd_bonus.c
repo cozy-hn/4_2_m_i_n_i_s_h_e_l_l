@@ -6,13 +6,13 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/31 17:35:26 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:32 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_bonus.h"
 
-int	set_pwd(t_arg *arg)
+int	set_pwd(t_main *main)
 {
 	char	**pwd;
 	char	**oldpwd;
@@ -30,32 +30,33 @@ int	set_pwd(t_arg *arg)
 	pwd[1] = wft_strjoin(ft_strdup("PWD="), now_path);
 	oldpwd[0] = wft_strdup("export");
 	oldpwd[1] = wft_strjoin(ft_strdup("OLDPWD="),
-			get_env_value(arg->env, "PWD"));
-	ft_export(arg->env, pwd);
-	ft_export(arg->env, oldpwd);
+			get_env_value(main, "PWD"));
+	ft_export(main->arg->env, pwd);
+	ft_export(main->arg->env, oldpwd);
 	ft_free_arr(pwd);
 	ft_free_arr(oldpwd);
 	return (0);
 }
 
-int	ft_cd(t_arg *arg, char **cmd)
+int	ft_cd(t_main *main, char **cmd)
 {
 	char	*home;
 
 	if (cmd[1] == NULL)
 	{
-		home = get_env_value(arg->env, "HOME");
+		home = get_env_value(main, "HOME");
 		if (home == NULL)
 			return (throw_error("cd", 0, "HOME not set"));
 		if (chdir(home) != 0)
-			return (throw_error("cd", home, strerror(errno)));
+		{
+			throw_error("cd", home, strerror(errno));
+			safe_free(home);
+			return (1);
+		}
+		safe_free(home);
 		return (0);
 	}
-	else
-	{
-		if (chdir(cmd[1]) == -1)
-			return (throw_error("cd", cmd[1], strerror(errno)));
-		set_pwd(arg);
-	}
-	return (0);
+	if (chdir(cmd[1]) == -1)
+		return (throw_error("cd", cmd[1], strerror(errno)));
+	return (set_pwd(main));
 }

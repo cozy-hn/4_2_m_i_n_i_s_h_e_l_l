@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:17 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 12:22:09 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:32 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,15 @@ int	is_all_digits(const char *str)
 	return (1);
 }
 
-int	ft_exit(t_arg *arg, char **cmd)
+int	ft_exit(t_main *main, char **cmd)
 {
-	int	exit_code;
-
-	exit_code = 0;
-	if (ft_strncmp(arg->lst->cmd[0], "exit", 5) == 0 && arg->lst->next == NULL)
+	if (ft_strncmp(main->arg->lst->cmd[0], "exit", 5) == 0
+		&& main->arg->lst->next == NULL)
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (!cmd[1])
 	{
-		heredoc_free(arg->hed_lst);
-		exit(exit_code);
+		heredoc_free(main->arg->hed_lst);
+		exit(main->exit_code);
 	}
 	else if (!is_all_digits(cmd[1]))
 	{
@@ -82,8 +80,8 @@ int	ft_exit(t_arg *arg, char **cmd)
 		return (1);
 	}
 	else
-		g_exit = return_exit_code(cmd[1], 0);
-	heredoc_free(arg->hed_lst);
-	exit(g_exit);
+		main->exit_code = return_exit_code(cmd[1], 0);
+	heredoc_free(main->arg->hed_lst);
+	exit(main->exit_code);
 	return (0);
 }

@@ -1,47 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_checker_3_bonus.c                            :+:      :+:    :+:   */
+/*   default_terminal_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/07 22:44:38 by jiko              #+#    #+#             */
+/*   Created: 2024/01/28 03:30:57 by sumjo             #+#    #+#             */
 /*   Updated: 2024/01/31 20:28:07 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_bonus.h"
+#include "../minishell_bonus.h"
 
-int	is_l_par(char *line, int *i)
+void	turn_off_default(void)
 {
-	if (line[*i] && line[*i] == '(')
-	{
-		(*i)++;
-		return (1);
-	}
-	return (0);
+	struct termios	term;
+
+	set_signal(IGN, IGN);
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-int	is_r_par(char *line, int *i)
+void	turn_to_shell_mode(void)
 {
-	if (line[*i] && line[*i] == ')')
-	{
-		(*i)++;
-		return (1);
-	}
-	return (0);
-}
+	struct termios	term;
 
-int	is_quote(char c)
-{
-	if (c == '\'')
-		return (1);
-	return (0);
-}
-
-int	is_d_quote(char c)
-{
-	if (c == '\"')
-		return (1);
-	return (0);
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	set_signal(SHE, SHE);
 }

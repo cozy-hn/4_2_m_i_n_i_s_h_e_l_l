@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 02:41:48 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 12:22:09 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:32 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_bonus.h"
 
-int	ft_env(t_env *env)
+int	ft_env(t_env **env_lst)
 {
+	t_env	*env;
+
+	env = *env_lst;
 	while (env)
 	{
 		if (env->value)

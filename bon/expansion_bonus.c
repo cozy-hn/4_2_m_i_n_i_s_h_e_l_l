@@ -6,13 +6,13 @@
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 22:04:35 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/31 17:21:27 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:07 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-char	*expand_env(char **word, t_env *env_lst)
+char	*expand_env(char **word, t_main *main)
 {
 	char	*ret;
 	char	*env;
@@ -29,22 +29,22 @@ char	*expand_env(char **word, t_env *env_lst)
 			i++;
 	}
 	env = ft_substr(*word, 0, i);
-	ret = wft_strjoin(ret, get_env_value(env_lst, env));
+	ret = wft_strjoin(ret, get_env_value(main, env));
 	if (i > 0)
 		(*word) += i - 1;
 	safe_free(env);
 	return (ret);
 }
 
-void	expand_elif(char **word, char **ret, t_env *env_lst)
+void	expand_elif(char **word, char **ret, t_main *main)
 {
 	if (ft_is_env_word(*(*word + 1), 0) == 0)
 		*ret = ft_strjoin_char(*ret, '$');
 	else
-		*ret = wft_strjoin(*ret, expand_env(word, env_lst));
+		*ret = wft_strjoin(*ret, expand_env(word, main));
 }
 
-char	*expand(char *word, t_env *env_lst)
+char	*expand(char *word, t_main *main)
 {
 	int		s_quote;
 	int		d_quote;
@@ -62,7 +62,7 @@ char	*expand(char *word, t_env *env_lst)
 		else if (*word == '\"' && !s_quote)
 			d_quote = !d_quote;
 		else if (*word == '$' && !s_quote)
-			expand_elif(&word, &ret, env_lst);
+			expand_elif(&word, &ret, main);
 		else
 			ret = ft_strjoin_char(ret, *word);
 		if (*word)

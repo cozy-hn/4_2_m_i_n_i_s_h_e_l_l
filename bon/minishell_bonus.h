@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_bonus.h                                  :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:26 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/31 17:21:34 by jiko             ###   ########.fr       */
+/*   Updated: 2024/01/31 20:26:41 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_env
 
 typedef struct s_arg
 {
-	t_env			*env;
+	t_env			**env;
 	t_heredoc		*hed_lst;
 	char			**path;
 	t_lst			*lst;
@@ -106,7 +106,9 @@ typedef struct s_main
 	t_token			*token;
 	t_cmd_tree		*cmd_tree;
 	t_env			*env_lst;
+	t_arg			*arg;
 	t_heredoc		*hed_lst;
+	int				exit_code;
 }	t_main;
 
 int		remove_space(char *line, int *i);
@@ -127,14 +129,14 @@ char	*ft_strjoin_char(char const *s1, char const s2);
 void	free_token(t_token *token);
 int		set_type(char *line, int *i);
 int		word_checker(char *line, int dquote, int squote);
-char	*set_word(char *line, int *i);
-int		tokenizer(char *line, t_token **token);
-int		parser(t_cmd_tree **head, t_token **token, t_heredoc **hed_lst);
+char	*set_word(char *line, int *i, t_main *main);
+int		parser(t_cmd_tree **head, t_token **token, t_main *main);
 int		cmd_list(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst);
 int		cmd_pipeline(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst);
 int		cmd_command(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst);
 int		cmd_command_part(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst);
 int		cmd_command_else(t_cmd_tree **head, t_token **now, t_heredoc **hed_lst);
+int		tokenizer(char *line, t_token **token, t_main *main);
 void	free_cmd_tree(t_cmd_tree *cmd_tree);
 void	safe_free(void *str);
 char	*wft_strdup(const char *src);
@@ -143,32 +145,31 @@ t_token	*wft_lstlast(t_token *lst);
 int		ft_is_env_word(char c, int i);
 int		expander(t_cmd_tree **cmd_tree, t_env *env_lst);
 char	*wft_strjoin(char const *s1, char const *s2);
-void	start_exec(t_cmd_tree *cmd_tree, t_env *env_lst, t_heredoc *hed_lst);
+void	start_exec(t_cmd_tree *cmd_tree, t_main *main);
 void	wft_lstadd_back_lst(t_lst **lst, t_lst *new);
 void	free_env_lst(t_env *env_lst);
 char	*avoid_duplicate_name(void);
 t_lst	*wft_lstlast_lst(t_lst *lst);
-char	*expand(char *word, t_env *env_lst);
-char	*expand_env(char **word, t_env *env_lst);
+char	*expand(char *word, t_main *main);
+char	*expand_env(char **word, t_main *main);
 void	set_signal(int sig_int, int sig_quit);
-void	tokenizer_if_is_meta(char *line, int *i, t_token *new);
 char	*set_meta_word(int type);
 void	heredoc_free(t_heredoc *hed_lst);
 char	*remove_quotes(char *word);
 void	free_double_char(char **str);
 void	free_lst(t_lst **lst);
-void	start_play_executor(t_lst **t_lst, t_env *e_lst, t_heredoc *hed_lst);
 void	stack_cmd_else(t_cmd_tree *ct, char ***cmd);
-void	play_executor(t_lst **tmp_lst, t_env *env_lst, t_heredoc *hed_lst);
-
-void	print_lst(t_lst *lst);
+void	start_play_executor(t_lst **tmp_lst, t_main *main);
+void	play_executor(t_lst **tmp_lst, t_main *main);
+void	tokenizer_if_is_meta(char *line, int *i, t_token *new, t_main *main);
+void	turn_to_shell_mode(void);
 
 int		is_directory(const char *path);
 t_env	*make_env_lst(char **env);
-void	executor(t_arg *arg);
+void	executor(t_main *main);
 int		heredoc(char **end, t_heredoc **hed_lst);
 
-char	*get_env_value(t_env *env, char *key);
+char	*get_env_value(t_main *main, char *key);
 void	handle_heredoc(t_arg *arg);
 int		throw_error(char *cmd, char *str, char *msg);
 void	wft_lstadd_back_hed(t_heredoc **lst, t_heredoc *new);

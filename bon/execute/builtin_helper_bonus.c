@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_helper_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 00:23:52 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/26 12:22:23 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:52 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	duplicate_original_fd(int *fd)
 	fd[1] = dup(STDOUT_FILENO);
 }
 
-int	run_builtin_helper(t_lst *lst, t_arg *arg)
+int	run_builtin_helper(t_main *main)
 {
 	int	fd[2];
 	int	status;
 
 	duplicate_original_fd(fd);
-	connect_redir(arg->lst);
-	status = run_builtin(arg->lst, arg);
-	connect_original_fd(lst, fd);
+	connect_redir(main->arg->lst);
+	status = run_builtin(main->arg->lst, main);
+	connect_original_fd(main->arg->lst, fd);
 	return (status);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_util_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 18:47:22 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 12:21:37 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:07 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-void	tokenizer_if_is_meta(char *line, int *i, t_token *new)
+void	tokenizer_if_is_meta(char *line, int *i, t_token *new, t_main *main)
 {
 	if (is_meta(&line[*i]))
 	{
@@ -22,6 +22,6 @@ void	tokenizer_if_is_meta(char *line, int *i, t_token *new)
 	else
 	{
 		new->type = T_WORD;
-		new->word = set_word(line, i);
+		new->word = set_word(line, i, main);
 	}
 }

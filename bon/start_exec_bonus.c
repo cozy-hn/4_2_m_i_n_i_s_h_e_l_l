@@ -3,26 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   start_exec_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/26 12:21:37 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:28:07 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_bonus.h"
 
-void	play_executor(t_lst **tmp_lst, t_env *env_lst, t_heredoc *hed_lst)
+void	play_executor(t_lst **tmp_lst, t_main *main)
 {
 	t_arg	*arg;
 
 	arg = wft_calloc(1, sizeof(t_arg));
-	arg->env = env_lst;
+	arg->env = &(main->env_lst);
 	arg->lst = *tmp_lst;
-	arg->hed_lst = hed_lst;
-	executor(arg);
-	safe_free(arg);
-	set_signal(SHE, SHE);
+	arg->hed_lst = main->hed_lst;
+	main->arg = arg;
+	executor(main);
+	safe_free(main->arg);
+	turn_to_shell_mode();
 }
 
 void	add_redir(t_cmd_tree *ct, t_lst **tmp_lst, t_lst *new)
@@ -52,13 +53,13 @@ void	add_redir(t_cmd_tree *ct, t_lst **tmp_lst, t_lst *new)
 	}
 }
 
-void	stack_cmd(t_cmd_tree *ct, t_lst **tmp_lst, char ***cmd, t_env *env_lst)
+void	stack_cmd(t_cmd_tree *ct, t_lst **tmp_lst, char ***cmd, t_main *main)
 {
 	if (ct == NULL || (*tmp_lst)->error_flag)
 		return ;
 	if (ct->bnf_type == BNF_COMMAND_PART)
 	{
-		ct->token->word = expand(ct->token->word, env_lst);
+		ct->token->word = expand(ct->token->word, main);
 		if (6 <= ct->token->type && ct->token->type <= 9)
 			add_redir(ct, tmp_lst, wft_lstlast_lst(*tmp_lst));
 		else
@@ -67,12 +68,12 @@ void	stack_cmd(t_cmd_tree *ct, t_lst **tmp_lst, char ***cmd, t_env *env_lst)
 	}
 	else
 	{
-		stack_cmd(ct->left, tmp_lst, cmd, env_lst);
-		stack_cmd(ct->right, tmp_lst, cmd, env_lst);
+		stack_cmd(ct->left, tmp_lst, cmd, main);
+		stack_cmd(ct->right, tmp_lst, cmd, main);
 	}
 }
 
-void	play_cmd(t_cmd_tree *ct, t_env *env_lst, t_lst **tmp_lst)
+void	play_cmd(t_cmd_tree *ct, t_main *main, t_lst **tmp_lst)
 {
 	t_lst	*new;
 	char	**cmd;
@@ -88,17 +89,17 @@ void	play_cmd(t_cmd_tree *ct, t_env *env_lst, t_lst **tmp_lst)
 		new->fd_in = -1;
 		new->fd_out = -1;
 		new->prev_pipe = -1;
-		stack_cmd(ct, tmp_lst, &cmd, env_lst);
+		stack_cmd(ct, tmp_lst, &cmd, main);
 		new->cmd = cmd;
 	}
 	else if (ct->bnf_type == BNF_PIPELINE)
 	{
-		play_cmd(ct->left, env_lst, tmp_lst);
-		play_cmd(ct->right, env_lst, tmp_lst);
+		play_cmd(ct->left, main, tmp_lst);
+		play_cmd(ct->right, main, tmp_lst);
 	}
 }
 
-void	start_exec(t_cmd_tree *ct, t_env *env_lst, t_heredoc *hed_lst)
+void	start_exec(t_cmd_tree *ct, t_main *main)
 {
 	t_lst	*tmp_lst;
 
@@ -106,23 +107,23 @@ void	start_exec(t_cmd_tree *ct, t_env *env_lst, t_heredoc *hed_lst)
 		return ;
 	if (ct -> bnf_type == BNF_LIST)
 	{
-		start_exec(ct->left, env_lst, hed_lst);
-		if (ct->left->token && ((ct->left->token->type == T_OR && g_exit) \
-		|| (ct->left->token->type == T_AND && !g_exit)))
-			start_exec(ct->right, env_lst, hed_lst);
+		start_exec(ct->left, main);
+		if (ct->left->token && ((ct->left->token->type == T_OR && main->exit_code) \
+		|| (ct->left->token->type == T_AND && !main->exit_code)))
+			start_exec(ct->right, main);
 	}
 	else if (ct -> bnf_type == BNF_PIPELINE)
 	{
 		tmp_lst = NULL;
 		if (ct -> left -> bnf_type == BNF_LIST)
-			start_exec(ct->left, env_lst, hed_lst);
+			start_exec(ct->left, main);
 		else
-			play_cmd(ct->left, env_lst, &tmp_lst);
+			play_cmd(ct->left, main, &tmp_lst);
 		if (ct -> right && ct -> right -> bnf_type == BNF_LIST)
-			start_exec(ct->right, env_lst, hed_lst);
+			start_exec(ct->right, main);
 		else
-			play_cmd(ct->right, env_lst, &tmp_lst);
+			play_cmd(ct->right, main, &tmp_lst);
 		if (tmp_lst)
-			start_play_executor(&tmp_lst, env_lst, hed_lst);
+			start_play_executor(&tmp_lst, main);
 	}
 }
