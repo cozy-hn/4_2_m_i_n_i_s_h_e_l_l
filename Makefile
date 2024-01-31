@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+         #
+#    By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/27 16:32:40 by jiko              #+#    #+#              #
-#    Updated: 2024/01/28 03:32:49 by sumjo            ###   ########.fr        #
+#    Updated: 2024/01/31 19:52:15 by jiko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,26 +60,29 @@ lib :
 $(NAME) : $(OBJ) $(EXECUTE_OBJ) $(BUILTIN_OBJ)
 	$(CC) $(OBJ) $(EXECUTE_OBJ) $(BUILTIN_OBJ) -o $(NAME) $(LFLAGS) $(LIBFTFLAG)
 
-$(MAN_DIR)%.o : $(MAN_DIR)%.c
+%.o : %.c
 	$(CC) $(CFLAGS) -I . -c $< -o $@
+	
+# $(MAN_DIR)%.o : $(MAN_DIR)%.c
+# 	$(CC) $(CFLAGS) -I . -c $< -o $@
 
-$(BUILTIN_DIR)%.o : $(BUILTIN_DIR)%.c
-	$(CC) $(CFLAGS) -I. -c $< -o $@
+# $(BUILTIN_DIR)%.o : $(BUILTIN_DIR)%.c
+# 	$(CC) $(CFLAGS) -I. -c $< -o $@
 
-$(EXECUTE_DIR)%.o : $(EXECUTE_DIR)%.c
-	$(CC) $(CFLAGS) -I. -c $< -o $@
+# $(EXECUTE_DIR)%.o : $(EXECUTE_DIR)%.c
+# 	$(CC) $(CFLAGS) -I. -c $< -o $@
 	
 $(BON_NAME) : $(BON_OBJ) $(BON_EXECUTE_OBJ) $(BON_BUILTIN_OBJ)
 	$(CC) $(BON_OBJ) $(BON_EXECUTE_OBJ) $(BON_BUILTIN_OBJ) -o $(BON_NAME) $(LFLAGS) $(LIBFTFLAG)
 
-$(BON_DIR)%.o : $(BON_DIR)%.c
-	$(CC) $(CFLAGS) -I . -c $< -o $@
+# $(BON_DIR)%.o : $(BON_DIR)%.c
+# 	$(CC) $(CFLAGS) -I . -c $< -o $@
 
-$(BON_BUILTIN_DIR)%.o : $(BON_BUILTIN_DIR)%.c
-	$(CC) $(CFLAGS) -I. -c $< -o $@
+# $(BON_BUILTIN_DIR)%.o : $(BON_BUILTIN_DIR)%.c
+# 	$(CC) $(CFLAGS) -I. -c $< -o $@
 
-$(BON_EXECUTE_DIR)%.o : $(BON_EXECUTE_DIR)%.c
-	$(CC) $(CFLAGS) -I. -c $< -o $@
+# $(BON_EXECUTE_DIR)%.o : $(BON_EXECUTE_DIR)%.c
+# 	$(CC) $(CFLAGS) -I. -c $< -o $@
 
 clean :
 	@make clean -C ./libft

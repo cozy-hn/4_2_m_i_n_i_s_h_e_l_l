@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 19:27:37 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/30 07:01:20 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/01/31 20:00:20 by jiko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,12 @@ int	ft_cd(t_main *main, char **cmd)
 		if (home == NULL)
 			return (throw_error("cd", 0, "HOME not set"));
 		if (chdir(home) != 0)
-			return (throw_error("cd", home, strerror(errno)));
+		{
+			throw_error("cd", home, strerror(errno));
+			safe_free(home);
+			return (1);
+		}
+		safe_free(home);
 		return (0);
 	}
 	if (chdir(cmd[1]) == -1)
