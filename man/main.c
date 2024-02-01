@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 17:53:03 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/28 06:30:22 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/01 14:55:37 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int	main(int argc, char **argv, char **env)
 		main_init_second(&main);
 		main.line = readline("minishell$ ");
 		if (!main.line)
+		{
+			tcsetattr(STDIN_FILENO, TCSANOW, &term);
 			main_signal_exit(&main);
+		}
 		add_history(main.line);
 		if (tokenizer(main.line, &main.token, &main)
 			|| parser(&main.cmd_tree, &main.token, &main))

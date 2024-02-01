@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jiko <jiko@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 07:45:41 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/31 20:32:20 by jiko             ###   ########.fr       */
+/*   Updated: 2024/02/01 14:37:06 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	connect_redir(t_lst *lst);
 void	duplicate_original_fd(int *fd);
 int		run_builtin_helper(t_main *main);
 void	ft_wait(int pid, t_main *main);
-void	default_terminal(void);
 void	turn_to_shell_mode(void);
 void	turn_off_default(void);
 
