@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 04:22:43 by sumjo             #+#    #+#             */
-/*   Updated: 2024/01/28 03:00:03 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/01 14:19:53 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	ft_pwd(t_main *main)
 {
 	char	*pwd;
 
-	main = 0;
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
 	{
