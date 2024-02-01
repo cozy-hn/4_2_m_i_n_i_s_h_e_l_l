@@ -6,7 +6,7 @@
 /*   By: sumjo <sumjo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 03:10:47 by jiko              #+#    #+#             */
-/*   Updated: 2024/01/28 07:10:56 by sumjo            ###   ########.fr       */
+/*   Updated: 2024/02/01 14:05:27 by sumjo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,16 +103,15 @@ void	start_exec(t_cmd_tree *ct, t_main *main)
 {
 	t_lst	*tmp_lst;
 
-	if (ct == NULL)
-		return ;
-	if (ct -> bnf_type == BNF_LIST)
+	if (ct != NULL && ct -> bnf_type == BNF_LIST)
 	{
 		start_exec(ct->left, main);
-		if (ct->left->token && ((ct->left->token->type == T_OR && main->exit_code) \
+		if (ct->left->token
+			&& ((ct->left->token->type == T_OR && main->exit_code) \
 		|| (ct->left->token->type == T_AND && !main->exit_code)))
 			start_exec(ct->right, main);
 	}
-	else if (ct -> bnf_type == BNF_PIPELINE)
+	else if (ct != NULL && ct -> bnf_type == BNF_PIPELINE)
 	{
 		tmp_lst = NULL;
 		if (ct -> left -> bnf_type == BNF_LIST)
